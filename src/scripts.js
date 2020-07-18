@@ -266,7 +266,7 @@ stepsTrendingButton.addEventListener('click', function() {
 
 stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
 
-stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
+stepsFriendAverageStepGoal.innerText = `${userRepository.calculateCommunityAvgStepGoal()}`;
 
 stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
 

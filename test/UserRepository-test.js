@@ -74,7 +74,7 @@ describe('UserRepository', function() {
   })
 
   it('calculateAverageStepGoal should return average step goal for all users', function() {
-    expect(userRepository.calculateAverageStepGoal()).to.equal(10000);
+    expect(userRepository.calculateCommunityAvgStepGoal()).to.equal(10000);
   })
 
 
