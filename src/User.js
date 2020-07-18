@@ -4,10 +4,10 @@
     this.name = this.checkName(user.name);
     this.address = user.address || 'No address added.';
     this.email = user.email || 'No email address added.';
-    this.strideLength = user.strideLength;
-    this.dailyStepGoal = user.dailyStepGoal;
+    this.strideLength = user.strideLength || 'No stride length added.';
+    this.dailyStepGoal = user.dailyStepGoal || 'No daily step goal added.';
+    this.friends = user.friends || 'Add friends for fun competition!';
     this.totalStepsThisWeek = 0;
-    this.friends = user.friends;
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
     this.hoursSleptAverage = 0;
@@ -43,7 +43,6 @@
       this.ouncesAverage = amount;
     }
   }
-
 
   addDailyOunces(date) {
     return this.ouncesRecord.reduce((sum, record) => {

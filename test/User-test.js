@@ -75,6 +75,12 @@ describe('User', function() {
     expect(user.getFirstName()).to.equal("LUISA");
   });
 
+  it('should return default first name if only given first name', function() {
+    const user2 = new User({});
+    expect(user2.getFirstName()).to.equal("CURRENTUSER");
+
+  });
+
   it('should have a stride length', function() {
     expect(user.strideLength).to.equal(4.3);
   });
@@ -83,8 +89,14 @@ describe('User', function() {
     expect(user.dailyStepGoal).to.equal(10000);
   });
 
-  it('should have friends', function() {
-    expect(user.friends).to.deep.equal([16, 4, 8])
+  it.only('should have friends', function() {
+    expect(user.friends).to.deep.equal([16, 4, 8]);
+  });
+
+  it.only('should have default message if no friends are added', function() {
+    let user2 = new User({});
+    expect(user2.friends).to.deep.equal('Add friends for fun competition!');
+
   });
 
   it('should have a default ouncesAverage of 0', function() {
