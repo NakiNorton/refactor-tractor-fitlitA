@@ -4,7 +4,7 @@ import User from '../src/User';
 
 
 describe('User', function() {
-  let user;
+  let user, user2;
   beforeEach(() => {
     user = new User({
       'id': 1,
@@ -18,7 +18,8 @@ describe('User', function() {
         4,
         8
       ]
-    })
+    });
+    user2 = new User({});
   })
 
   it('should be a function', function() {
@@ -34,7 +35,7 @@ describe('User', function() {
   });
 
   it('if user id is not a number or undefined, set to Date.now()', function() {
-    const user2 = new User({id: 'five'});
+    user2 = new User({id: 'five'});
     const user3 = new User({name: 'Jane Doe'});
     expect(user2.id).to.be.a('number');
     expect(user2.id).to.equal(Date.now());
@@ -47,8 +48,7 @@ describe('User', function() {
   });
 
   it('if name is not a string or undefined, set name to currentUser Doe', function() {
-    const user2 = new User({id: 1, name: 123});
-    const user3 = new User({id: 1});
+    const user3 = new User({id: 1, name: 123});
     expect(user2.name).to.equal('currentUser Doe');
     expect(user3.name).to.equal('currentUser Doe');
   }); 
@@ -58,7 +58,6 @@ describe('User', function() {
   });
 
   it('if address is not given, have default message', function() {
-    const user2 =  new User({});
     expect(user2.address).to.equal('No address added.');
   })
 
@@ -67,7 +66,6 @@ describe('User', function() {
   });
 
   it('if email is not given, have default message', function() {
-    const user2 = new User({});
     expect(user2.email).to.equal('No email address added.');
   })
 
@@ -76,27 +74,31 @@ describe('User', function() {
   });
 
   it('should return default first name if only given first name', function() {
-    const user2 = new User({});
     expect(user2.getFirstName()).to.equal("CURRENTUSER");
-
   });
 
   it('should have a stride length', function() {
     expect(user.strideLength).to.equal(4.3);
   });
 
+  it('should have default message if stride length is not found', function() {
+    expect(user2.strideLength).to.equal('Stride length not added.');
+  });
+
   it('should have a daily step goal', function() {
     expect(user.dailyStepGoal).to.equal(10000);
   });
 
-  it.only('should have friends', function() {
+  it('should have default message if daily step goal not found', function() {
+    expect(user2.dailyStepGoal).to.equal('Daily step goal not added.')
+  });
+
+  it('should have friends', function() {
     expect(user.friends).to.deep.equal([16, 4, 8]);
   });
 
-  it.only('should have default message if no friends are added', function() {
-    let user2 = new User({});
+  it('should have default message if no friends are added', function() {
     expect(user2.friends).to.deep.equal('Add friends for fun competition!');
-
   });
 
   it('should have a default ouncesAverage of 0', function() {
