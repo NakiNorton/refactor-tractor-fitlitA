@@ -13,12 +13,8 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 
 
-let userRepository = new UserRepository(userData).users;
-let currentUser = new User(userRepository[0]); // should keep an eye out for when the variable `user` is being used when it should be currentUser
-// userData.forEach(user => {
-//   user = new User(user);
-//   userRepository.users.push(user)
-// });
+const userRepository = new UserRepository(userData);
+const currentUser = new User(userRepository.users[0]); // should keep an eye out for when the variable `user` is being used when it should be currentUser
 
 activityData.forEach(activity => {
   activity = new Activity(activity, userRepository);
@@ -32,7 +28,7 @@ sleepData.forEach(sleep => {
   sleep = new Sleep(sleep, userRepository);
 });
 
-let user = userRepository.users[0];
+// let user = userRepository.users[0];
 let todayDate = "2019/09/22";
 user.findFriendsNames(userRepository.users);
 
@@ -109,7 +105,6 @@ stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
 stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
 
 function displayUserInfo(e) {
-  console.log('current user in event listener', currentUser)
   let headerName = document.querySelector('#header-name');
   headerName.innerText = `${currentUser.getFirstName()}'S `;
 }
