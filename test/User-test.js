@@ -98,7 +98,7 @@ describe('User', function() {
   });
 
   it('should have default message if no friends are added', function() {
-    expect(user2.friends).to.deep.equal('Add friends for fun competition!');
+    expect(user2.friends).to.deep.equal('Add friends for friendly competition!');
   });
 
   it('should have a default ouncesAverage of 0', function() {

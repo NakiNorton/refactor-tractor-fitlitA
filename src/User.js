@@ -6,7 +6,7 @@
     this.email = user.email || 'No email address added.';
     this.strideLength = user.strideLength || 'Stride length not added.';
     this.dailyStepGoal = user.dailyStepGoal || 'Daily step goal not added.';
-    this.friends = user.friends || 'Add friends for fun competition!';
+    this.friends = user.friends || 'Add friends for friendly competition!';
     this.totalStepsThisWeek = 0;
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
