@@ -1,4 +1,8 @@
- class User {
+import UserRepository from './UserRepository';
+import userData from './data/users';
+let userRepository = new UserRepository(userData) // Get rid of this eventually
+
+class User {
   constructor(user) {
     this.id = this.checkUserId(user.id);
     this.name = this.checkName(user.name);
@@ -193,6 +197,13 @@
       'totalWeeklySteps': this.totalStepsThisWeek
     });
     this.friendsActivityRecords = this.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
+  }
+
+  compareUserGoalWithCommunityGoal() {
+    let communityStepGoal = userRepository.calculateCommunityAvgStepGoal()
+    console.log(communityStepGoal)
+    let difference = communityStepGoal - this.dailyStepGoal;
+    return difference; 
   }
 }
 

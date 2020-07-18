@@ -91,6 +91,7 @@ let stairsUserStairsToday = document.querySelector('#stairs-user-stairs-today');
 let stepsCalendarTotalActiveMinutesWeekly = document.querySelector('#steps-calendar-total-active-minutes-weekly');
 let stepsCalendarTotalStepsWeekly = document.querySelector('#steps-calendar-total-steps-weekly');
 let stepsFriendAverageStepGoal = document.querySelector('#steps-friend-average-step-goal');
+let stepsGoalComparison = document.querySelector('#steps-goal-comparison');
 let stepsInfoActiveMinutesToday = document.querySelector('#steps-info-active-minutes-today');
 let stepsInfoMilesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
 let stepsFriendActiveMinutesAverageToday = document.querySelector('#steps-friend-active-minutes-average-today');
@@ -274,6 +275,9 @@ stepsTrendingButton.addEventListener('click', function() {
 stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
 
 stepsFriendAverageStepGoal.innerText = `${userRepository.calculateCommunityAvgStepGoal()}`;
+
+stepsGoalComparison.innerText = `${user.
+  compareUserGoalWithCommunityGoal()}`; // Add more test to explain comparison
 
 stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
 

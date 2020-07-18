@@ -1,10 +1,10 @@
 import { expect } from 'chai';
-
 import User from '../src/User';
+import UserRepository from '../src/UserRepository'; // import userRepo
 
 
 describe('User', function() {
-  let user, user2;
+  let user, user2, user3, mockUserRepository;
   beforeEach(() => {
     user = new User({
       'id': 1,
@@ -20,6 +20,21 @@ describe('User', function() {
       ]
     });
     user2 = new User({});
+    user3 = new User({
+      "id": 3,
+      "name": "Herminia Witting",
+      "address": "85823 Bosco Fork, East Oscarstad MI 85126-5660",
+      "email": "Elwin.Tromp@yahoo.com",
+      "strideLength": 4.4,
+      "dailyStepGoal": 5000,
+      "friends": [
+        19,
+        11,
+        42,
+        33
+      ]
+    }),
+    mockUserRepository = new UserRepository([user, user2, user3])
   })
 
   it('should be a function', function() {
@@ -336,4 +351,10 @@ describe('User', function() {
     user.findFriendsTotalStepsForWeek(users, '2019/06/29');
     expect(user.friendsActivityRecords).to.deep.equal([{"id": 4, "totalWeeklySteps": 734}, {"id": 16, "totalWeeklySteps": 248}, {"id": 8, "totalWeeklySteps": 34}]);
   });
+  
+  it('should compare users step goal with community step goal and return the difference', function() {
+    mockUserRepository.calculateCommunityAvgStepGoal() 
+    expect(user.compareUserGoalWithCommunityGoal()).to.equal(-3300)
+  })
 });
+
