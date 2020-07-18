@@ -34,8 +34,8 @@ describe('User', function() {
   });
 
   it('if user id is not a number or undefined, set to Date.now()', function() {
-    const user2 = new User({id: "five"});
-    const user3 = new User({name: "Jane Doe"});
+    const user2 = new User({id: 'five'});
+    const user3 = new User({name: 'Jane Doe'});
     expect(user2.id).to.be.a('number');
     expect(user2.id).to.equal(Date.now());
     expect(user3.id).to.equal(Date.now());
@@ -49,58 +49,84 @@ describe('User', function() {
   it('if name is not a string or undefined, set name to currentUser Doe', function() {
     const user2 = new User({id: 1, name: 123});
     const user3 = new User({id: 1});
-    expect(user2.name).to.equal("currentUser Doe");
-    expect(user3.name).to.equal("currentUser Doe");
+    expect(user2.name).to.equal('currentUser Doe');
+    expect(user3.name).to.equal('currentUser Doe');
   }); 
 
   it('should have an address', function() {
     expect(user.address).to.equal('15195 Nakia Tunnel, Erdmanport VA 19901-1697');
   });
-  it('should have an email address', function() {
+
+  it('if address is not given, have default message', function() {
+    const user2 =  new User({});
+    expect(user2.address).to.equal('No address added.');
+  })
+
+  it.only('should have an email address', function() {
     expect(user.email).to.equal('Diana.Hayes1@hotmail.com');
   });
+
+  it.only('if email is not given, have default message', function() {
+    const user2 = new User({});
+    expect(user2.email).to.equal('No email address added.');
+  })
+
+  it("getFirstName should return the first name of the user", function () {
+   expect(user.getFirstName()).to.equal("LUISA");
+  });
+
   it('should have a stride length', function() {
     expect(user.strideLength).to.equal(4.3);
   });
+
   it('should have a daily step goal', function() {
     expect(user.dailyStepGoal).to.equal(10000);
   });
+
   it('should have friends', function() {
     expect(user.friends).to.deep.equal([16, 4, 8])
   });
+
   it('should have a default ouncesAverage of 0', function() {
     expect(user.ouncesAverage).to.equal(0);
   });
+
   it('should have a default ouncesRecord of []', function() {
     expect(user.ouncesRecord).to.deep.equal([]);
   });
+
   it('should have a default hoursSleptAverage of 0', function() {
     expect(user.hoursSleptAverage).to.equal(0);
   });
+
   it('should have a default sleepQualityAverage of 0', function() {
     expect(user.sleepQualityAverage).to.equal(0);
   });
+
   it('should have a default sleepHoursRecord of []', function() {
     expect(user.sleepHoursRecord).to.deep.equal([]);
   });
+
   it('should have a default sleepQualityRecord of []', function() {
     expect(user.sleepQualityRecord).to.deep.equal([]);
   });
+
   it('should have a default activityRecord of []', function() {
     expect(user.activityRecord).to.deep.equal([]);
   });
+
   it('should have a default value of [] for accomplishedDays', function() {
     expect(user.accomplishedDays).to.deep.equal([]);
   });
+
   it('should have a default value of [] for trendingStepDays', function() {
     expect(user.trendingStepDays).to.deep.equal([]);
   });
+
   it('should have a default value of [] for trendingStairsDays', function() {
     expect(user.trendingStairsDays).to.deep.equal([]);
   });
-  it('getFirstName should return the first name of the user', function () {
-    expect(user.getFirstName()).to.equal('LUISA');
-  });
+
   it('addDailyOunces should show the last week of water', function() {
     user.ouncesRecord = [
       {"2019/06/15": 1},

@@ -2,8 +2,8 @@
   constructor(user) {
     this.id = this.checkUserId(user.id);
     this.name = this.checkName(user.name);
-    this.address = user.address;
-    this.email = user.email;
+    this.address = user.address || 'No address added.';
+    this.email = user.email || 'No email address added.';
     this.strideLength = user.strideLength;
     this.dailyStepGoal = user.dailyStepGoal;
     this.totalStepsThisWeek = 0;
