@@ -13,12 +13,13 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 
 
-let userRepository = new UserRepository();
+let userRepository = new UserRepository(userData);
+let currentUser = new User(userRepository[0]); // should keep an eye out for when the variable `user` is being used when it should be currentUser
 
-userData.forEach(user => {
-  user = new User(user);
-  userRepository.users.push(user)
-});
+// userData.forEach(user => {
+//   user = new User(user);
+//   userRepository.users.push(user)
+// });
 
 activityData.forEach(activity => {
   activity = new Activity(activity, userRepository);
@@ -101,6 +102,7 @@ let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phras
 let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
 
+// window.addEventListener('onload')
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
