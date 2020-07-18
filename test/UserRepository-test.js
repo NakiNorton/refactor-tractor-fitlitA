@@ -8,6 +8,7 @@ describe('UserRepository', function() {
   let user1;
   let user2;
   let user3;
+  let mockUserData;
   let userRepository;
   beforeEach(() => {
     user1 = new User({
@@ -51,25 +52,33 @@ describe('UserRepository', function() {
         33
       ]
     })
-    userRepository = new UserRepository();
-    userRepository.users.push(user1, user2, user3);
+    mockUserData = [user1, user2, user3]
+    userRepository = new UserRepository(mockUserData);
   })
+
   it('should be a function', function() {
     expect(UserRepository).to.be.a('function');
   });
+
   it('should be an instance of user repository', function() {
     expect(userRepository).to.be.an.instanceof(UserRepository);
   });
+
   it('should hold an array of users', function() {
     expect(userRepository.users).to.deep.equal([user1, user2, user3]);
     expect(userRepository.users.length).to.equal(3);
   });
+
   it('getUser should return user object when given a user id', function() {
     expect(userRepository.getUser(2)).to.equal(user2);
   })
+
   it('calculateAverageStepGoal should return average step goal for all users', function() {
     expect(userRepository.calculateAverageStepGoal()).to.equal(10000);
   })
+
+
+  
   it('calculateAverageSleepQuality should return average sleep quality for all users', function() {
     user1.sleepQualityAverage = 3.3;
     user2.sleepQualityAverage = 5;

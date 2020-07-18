@@ -13,7 +13,6 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 
 
-
 let userRepository = new UserRepository();
 
 userData.forEach(user => {

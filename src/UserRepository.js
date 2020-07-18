@@ -1,8 +1,9 @@
 import sleepData from './data/sleep';
+import userData from './data/users';
 
 class UserRepository {
-  constructor() {
-    this.users = [];
+  constructor(userData) {
+    this.users = userData;
   }
   getUser(id) {
     return this.users.find(function(user) {
@@ -19,6 +20,8 @@ class UserRepository {
     }, 0);
     return total / this.users.length;
   }
+
+  
   calculateAverageSleepQuality() {
     let totalSleepQuality = this.users.reduce((sum, user) => {
       sum += user.sleepQualityAverage;
