@@ -13,7 +13,6 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 
 
-
 let userRepository = new UserRepository();
 
 userData.forEach(user => {
@@ -267,7 +266,7 @@ stepsTrendingButton.addEventListener('click', function() {
 
 stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
 
-stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
+stepsFriendAverageStepGoal.innerText = `${userRepository.calculateCommunityAvgStepGoal()}`;
 
 stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
 

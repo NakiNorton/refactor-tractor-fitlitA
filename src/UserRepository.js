@@ -1,24 +1,25 @@
 import sleepData from './data/sleep';
+import userData from './data/users';
 
 class UserRepository {
-  constructor() {
-    this.users = [];
+  constructor(userData) {
+    this.users = userData;
   }
+
   getUser(id) {
-    return this.users.find(function(user) {
-      return user.id === id;
-    })
+    return this.users.find(user => user.id === id);
   }
-  calculateAverageStepGoal() {
-    let goals = this.users.map(function(user) {
-      return user.dailyStepGoal;
-    });
-    let total = goals.reduce(function(sum, goal) {
+
+  calculateCommunityAvgStepGoal() {
+    let communityStepGoals = this.users.map(user => user.dailyStepGoal);
+    let communityTotal = communityStepGoals.reduce((sum, goal) => {
       sum += goal;
       return sum;
     }, 0);
-    return total / this.users.length;
+    return communityTotal / this.users.length;
   }
+
+  
   calculateAverageSleepQuality() {
     let totalSleepQuality = this.users.reduce((sum, user) => {
       sum += user.sleepQualityAverage;
