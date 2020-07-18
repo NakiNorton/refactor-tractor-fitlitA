@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-
 import User from '../src/User';
+import UserRepository from '../src/UserRepository'; // import userRepo
 
 
 describe('User', function() {
@@ -274,4 +274,43 @@ describe('User', function() {
     user.findFriendsTotalStepsForWeek(users, '2019/06/29');
     expect(user.friendsActivityRecords).to.deep.equal([{"id": 4, "totalWeeklySteps": 734}, {"id": 16, "totalWeeklySteps": 248}, {"id": 8, "totalWeeklySteps": 34}]);
   });
+  
+  it('should compare users step goal with community step goal and return the difference', function() {
+    // in the beforeEach function: need to add a second user in order for the function calculateCommunityAvgStepGoal() to work
+    // i.e:
+    // let user, user2;
+    // let userRepository; 
+    // beforeEach(() => {
+    //   user = new User({
+    //     'id': 1,
+    //     'name': 'Luisa Hane',
+    //     'address': '15195 Nakia Tunnel, Erdmanport VA 19901-1697',
+    //     'email': 'Diana.Hayes1@hotmail.com',
+    //     'strideLength': 4.3,
+    //     'dailyStepGoal': 10000,
+    //     'friends': [
+    //       16,
+    //       4,
+    //       8
+    //     ]
+    //   })
+    //   user2 = new User({
+    //     "id": 2,
+    //     "name": "Jarvis Considine",
+    //     "address": "30086 Kathryn Port, Ciceroland NE 07273",
+    //     "email": "Dimitri.Bechtelar11@gmail.com",
+    //     "strideLength": 4.5,
+    //     "dailyStepGoal": 5000,
+    //     "friends": [
+    //       9,
+    //       18,
+    //       24,
+    //       19
+    //     ]
+    //   })
+    // userRepository = new UserRepository([user, user2]);
+    userRepository.calculateCommunityAvgStepGoal() 
+    expect(user.compareUserGoalWithCommunityGoal()).to.equal(-3300)
+  })
 });
+
