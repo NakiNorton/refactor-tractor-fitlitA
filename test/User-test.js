@@ -4,7 +4,7 @@ import UserRepository from '../src/UserRepository'; // import userRepo
 
 
 describe('User', function() {
-  let user;
+  let user, user2, user3, mockUserRepository;
   beforeEach(() => {
     user = new User({
       'id': 1,
@@ -18,68 +18,144 @@ describe('User', function() {
         4,
         8
       ]
-    })
+    });
+    user2 = new User({});
+    user3 = new User({
+      "id": 3,
+      "name": "Herminia Witting",
+      "address": "85823 Bosco Fork, East Oscarstad MI 85126-5660",
+      "email": "Elwin.Tromp@yahoo.com",
+      "strideLength": 4.4,
+      "dailyStepGoal": 5000,
+      "friends": [
+        19,
+        11,
+        42,
+        33
+      ]
+    }),
+    mockUserRepository = new UserRepository([user, user2, user3])
   })
+
   it('should be a function', function() {
     expect(User).to.be.a('function');
   });
+
   it('should be an instance of user', function() {
     expect(user).to.be.an.instanceof(User);
   });
+
   it('should have an id', function() {
     expect(user.id).to.equal(1);
   });
+
+  it('if user id is not a number or undefined, set to Date.now()', function() {
+    user2 = new User({id: 'five'});
+    const user3 = new User({name: 'Jane Doe'});
+    expect(user2.id).to.be.a('number');
+    expect(user2.id).to.equal(Date.now());
+    expect(user3.id).to.equal(Date.now());
+    // Note: may fail by one millisecond if internet is lagging or Webpack is being used.
+  });
+
   it('should have a name', function() {
     expect(user.name).to.equal('Luisa Hane');
   });
+
+  it('if name is not a string or undefined, set name to currentUser Doe', function() {
+    const user3 = new User({id: 1, name: 123});
+    expect(user2.name).to.equal('currentUser Doe');
+    expect(user3.name).to.equal('currentUser Doe');
+  }); 
+
   it('should have an address', function() {
     expect(user.address).to.equal('15195 Nakia Tunnel, Erdmanport VA 19901-1697');
   });
+
+  it('if address is not given, have default message', function() {
+    expect(user2.address).to.equal('No address added.');
+  })
+
   it('should have an email address', function() {
     expect(user.email).to.equal('Diana.Hayes1@hotmail.com');
   });
+
+  it('if email is not given, have default message', function() {
+    expect(user2.email).to.equal('No email address added.');
+  })
+
+  it("should return the first name of the user", function () {
+    expect(user.getFirstName()).to.equal("LUISA");
+  });
+
+  it('should return default first name if only given first name', function() {
+    expect(user2.getFirstName()).to.equal("CURRENTUSER");
+  });
+
   it('should have a stride length', function() {
     expect(user.strideLength).to.equal(4.3);
   });
+
+  it('should have default message if stride length is not found', function() {
+    expect(user2.strideLength).to.equal('Stride length not added.');
+  });
+
   it('should have a daily step goal', function() {
     expect(user.dailyStepGoal).to.equal(10000);
   });
-  it('should have friends', function() {
-    expect(user.friends).to.deep.equal([16, 4, 8])
+
+  it('should have default message if daily step goal not found', function() {
+    expect(user2.dailyStepGoal).to.equal('Daily step goal not added.')
   });
+
+  it('should have friends', function() {
+    expect(user.friends).to.deep.equal([16, 4, 8]);
+  });
+
+  it('should have default message if no friends are added', function() {
+    expect(user2.friends).to.deep.equal('Add friends for friendly competition!');
+  });
+
   it('should have a default ouncesAverage of 0', function() {
     expect(user.ouncesAverage).to.equal(0);
   });
+
   it('should have a default ouncesRecord of []', function() {
     expect(user.ouncesRecord).to.deep.equal([]);
   });
+
   it('should have a default hoursSleptAverage of 0', function() {
     expect(user.hoursSleptAverage).to.equal(0);
   });
+
   it('should have a default sleepQualityAverage of 0', function() {
     expect(user.sleepQualityAverage).to.equal(0);
   });
+
   it('should have a default sleepHoursRecord of []', function() {
     expect(user.sleepHoursRecord).to.deep.equal([]);
   });
+
   it('should have a default sleepQualityRecord of []', function() {
     expect(user.sleepQualityRecord).to.deep.equal([]);
   });
+
   it('should have a default activityRecord of []', function() {
     expect(user.activityRecord).to.deep.equal([]);
   });
+
   it('should have a default value of [] for accomplishedDays', function() {
     expect(user.accomplishedDays).to.deep.equal([]);
   });
+
   it('should have a default value of [] for trendingStepDays', function() {
     expect(user.trendingStepDays).to.deep.equal([]);
   });
+
   it('should have a default value of [] for trendingStairsDays', function() {
     expect(user.trendingStairsDays).to.deep.equal([]);
   });
-  it('getFirstName should return the first name of the user', function () {
-    expect(user.getFirstName()).to.equal('LUISA');
-  });
+
   it('addDailyOunces should show the last week of water', function() {
     user.ouncesRecord = [
       {"2019/06/15": 1},
@@ -88,6 +164,7 @@ describe('User', function() {
     ]
     expect(user.addDailyOunces("2019/06/15")).to.equal(2);
   });
+
   describe('updateSleep', function() {
     beforeEach(() => {
       user.updateSleep("2019/06/15", 7, 4.7);
@@ -276,40 +353,7 @@ describe('User', function() {
   });
   
   it('should compare users step goal with community step goal and return the difference', function() {
-    // in the beforeEach function: need to add a second user in order for the function calculateCommunityAvgStepGoal() to work
-    // i.e:
-    // let user, user2;
-    // let userRepository; 
-    // beforeEach(() => {
-    //   user = new User({
-    //     'id': 1,
-    //     'name': 'Luisa Hane',
-    //     'address': '15195 Nakia Tunnel, Erdmanport VA 19901-1697',
-    //     'email': 'Diana.Hayes1@hotmail.com',
-    //     'strideLength': 4.3,
-    //     'dailyStepGoal': 10000,
-    //     'friends': [
-    //       16,
-    //       4,
-    //       8
-    //     ]
-    //   })
-    //   user2 = new User({
-    //     "id": 2,
-    //     "name": "Jarvis Considine",
-    //     "address": "30086 Kathryn Port, Ciceroland NE 07273",
-    //     "email": "Dimitri.Bechtelar11@gmail.com",
-    //     "strideLength": 4.5,
-    //     "dailyStepGoal": 5000,
-    //     "friends": [
-    //       9,
-    //       18,
-    //       24,
-    //       19
-    //     ]
-    //   })
-    // userRepository = new UserRepository([user, user2]);
-    userRepository.calculateCommunityAvgStepGoal() 
+    mockUserRepository.calculateCommunityAvgStepGoal() 
     expect(user.compareUserGoalWithCommunityGoal()).to.equal(-3300)
   })
 });
