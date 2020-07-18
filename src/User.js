@@ -1,13 +1,13 @@
  class User {
-  constructor(userData) {
-    this.id = userData.id;
-    this.name = userData.name;
-    this.address = userData.address;
-    this.email = userData.email;
-    this.strideLength = userData.strideLength;
-    this.dailyStepGoal = userData.dailyStepGoal;
+  constructor(user) {
+    this.id = this.checkUserId(user.id);
+    this.name = user.name;
+    this.address = user.address;
+    this.email = user.email;
+    this.strideLength = user.strideLength;
+    this.dailyStepGoal = user.dailyStepGoal;
     this.totalStepsThisWeek = 0;
-    this.friends = userData.friends;
+    this.friends = user.friends;
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
     this.hoursSleptAverage = 0;
@@ -21,10 +21,17 @@
     this.friendsNames = [];
     this.friendsActivityRecords = []
   }
+
+  checkUserId(user) {
+    return typeof user === 'number' ? user : Date.now();
+  }
+
   getFirstName() {
     var names = this.name.split(' ');
     return names[0].toUpperCase();
   }
+
+
   updateHydration(date, amount) {
     this.ouncesRecord.unshift({[date]: amount});
     if (this.ouncesRecord.length) {
@@ -33,6 +40,8 @@
       this.ouncesAverage = amount;
     }
   }
+
+
   addDailyOunces(date) {
     return this.ouncesRecord.reduce((sum, record) => {
       let amount = record[date];
@@ -42,6 +51,8 @@
       return sum
     }, 0)
   }
+
+
   updateSleep(date, hours, quality) {
     this.sleepHoursRecord.unshift({
       'date': date,

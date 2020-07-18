@@ -20,15 +20,26 @@ describe('User', function() {
       ]
     })
   })
+
   it('should be a function', function() {
     expect(User).to.be.a('function');
   });
+
   it('should be an instance of user', function() {
     expect(user).to.be.an.instanceof(User);
   });
-  it('should have an id', function() {
+
+  it.only('should have an id', function() {
     expect(user.id).to.equal(1);
   });
+
+  it.only('if user id is not a number or undefined, set to Date.now()', function() {
+    const user2 = new User({id: "five"});
+    expect(user2.id).to.be.a('number');
+    expect(user2.id).to.equal(Date.now());
+
+  });
+
   it('should have a name', function() {
     expect(user.name).to.equal('Luisa Hane');
   });
@@ -88,6 +99,7 @@ describe('User', function() {
     ]
     expect(user.addDailyOunces("2019/06/15")).to.equal(2);
   });
+
   describe('updateSleep', function() {
     beforeEach(() => {
       user.updateSleep("2019/06/15", 7, 4.7);
