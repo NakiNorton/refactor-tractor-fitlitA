@@ -13,12 +13,12 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 
 
-let userRepository = new UserRepository();
-
-userData.forEach(user => {
-  user = new User(user);
-  userRepository.users.push(user)
-});
+let userRepository = new UserRepository(userData).users;
+let currentUser = new User(userRepository[0]); // should keep an eye out for when the variable `user` is being used when it should be currentUser
+// userData.forEach(user => {
+//   user = new User(user);
+//   userRepository.users.push(user)
+// });
 
 activityData.forEach(activity => {
   activity = new Activity(activity, userRepository);
@@ -41,7 +41,7 @@ let dropdownEmail = document.querySelector('#dropdown-email');
 let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
 let dropdownGoal = document.querySelector('#dropdown-goal');
 let dropdownName = document.querySelector('#dropdown-name');
-let headerName = document.querySelector('#header-name');
+
 let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
 let hydrationFriendOuncesToday = document.querySelector('#hydration-friend-ounces-today');
 let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
@@ -101,10 +101,17 @@ let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phras
 let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
 
+window.addEventListener('load', displayUserInfo)
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
 stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
+
+function displayUserInfo(e) {
+  console.log('current user in event listener', currentUser)
+  let headerName = document.querySelector('#header-name');
+  headerName.innerText = `${currentUser.getFirstName()}'S `;
+}
 
 function flipCard(cardToHide, cardToShow) {
   cardToHide.classList.add('hide');
@@ -115,7 +122,7 @@ function showDropdown() {
   userInfoDropdown.classList.toggle('hide');
 }
 
-function showInfo() {
+function showInfo() {//We should consider renaming this handler to something more semantic
   if (event.target.classList.contains('steps-info-button')) {
     flipCard(stepsMainCard, stepsInfoCard);
   }
@@ -192,7 +199,7 @@ dropdownEmail.innerText = `EMAIL | ${user.email}`;
 
 dropdownName.innerText = user.name.toUpperCase();
 
-headerName.innerText = `${user.getFirstName()}'S `;
+
 
 hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
   return hydration.userID === user.id && hydration.date === todayDate;
