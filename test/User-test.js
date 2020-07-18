@@ -62,17 +62,17 @@ describe('User', function() {
     expect(user2.address).to.equal('No address added.');
   })
 
-  it.only('should have an email address', function() {
+  it('should have an email address', function() {
     expect(user.email).to.equal('Diana.Hayes1@hotmail.com');
   });
 
-  it.only('if email is not given, have default message', function() {
+  it('if email is not given, have default message', function() {
     const user2 = new User({});
     expect(user2.email).to.equal('No email address added.');
   })
 
-  it("getFirstName should return the first name of the user", function () {
-   expect(user.getFirstName()).to.equal("LUISA");
+  it("should return the first name of the user", function () {
+    expect(user.getFirstName()).to.equal("LUISA");
   });
 
   it('should have a stride length', function() {

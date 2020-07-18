@@ -31,10 +31,9 @@
   }
 
   getFirstName() {
-    var names = this.name.split(' ');
+    let names = this.name.split(' ');
     return names[0].toUpperCase();
   }
-
 
   updateHydration(date, amount) {
     this.ouncesRecord.unshift({[date]: amount});
