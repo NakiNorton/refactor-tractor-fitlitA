@@ -1,13 +1,13 @@
  class User {
-  constructor(userData) {
-    this.id = userData.id;
-    this.name = userData.name;
-    this.address = userData.address;
-    this.email = userData.email;
-    this.strideLength = userData.strideLength;
-    this.dailyStepGoal = userData.dailyStepGoal;
+  constructor(user) {
+    this.id = this.checkUserId(user.id);
+    this.name = this.checkName(user.name);
+    this.address = user.address || 'No address added.';
+    this.email = user.email || 'No email address added.';
+    this.strideLength = user.strideLength || 'Stride length not added.';
+    this.dailyStepGoal = user.dailyStepGoal || 'Daily step goal not added.';
+    this.friends = user.friends || 'Add friends for friendly competition!';
     this.totalStepsThisWeek = 0;
-    this.friends = userData.friends;
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
     this.hoursSleptAverage = 0;
@@ -21,10 +21,20 @@
     this.friendsNames = [];
     this.friendsActivityRecords = []
   }
+
+  checkUserId(user) {
+    return typeof user === 'number' ? user : Date.now();
+  }
+
+  checkName(user) {
+    return typeof user === 'string' ? user : "currentUser Doe";
+  }
+
   getFirstName() {
-    var names = this.name.split(' ');
+    let names = this.name.split(' ');
     return names[0].toUpperCase();
   }
+
   updateHydration(date, amount) {
     this.ouncesRecord.unshift({[date]: amount});
     if (this.ouncesRecord.length) {
@@ -33,6 +43,7 @@
       this.ouncesAverage = amount;
     }
   }
+
   addDailyOunces(date) {
     return this.ouncesRecord.reduce((sum, record) => {
       let amount = record[date];
@@ -42,6 +53,8 @@
       return sum
     }, 0)
   }
+
+
   updateSleep(date, hours, quality) {
     this.sleepHoursRecord.unshift({
       'date': date,
