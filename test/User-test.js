@@ -29,20 +29,30 @@ describe('User', function() {
     expect(user).to.be.an.instanceof(User);
   });
 
-  it.only('should have an id', function() {
+  it('should have an id', function() {
     expect(user.id).to.equal(1);
   });
 
-  it.only('if user id is not a number or undefined, set to Date.now()', function() {
+  it('if user id is not a number or undefined, set to Date.now()', function() {
     const user2 = new User({id: "five"});
+    const user3 = new User({name: "Jane Doe"});
     expect(user2.id).to.be.a('number');
     expect(user2.id).to.equal(Date.now());
-
+    expect(user3.id).to.equal(Date.now());
+    // Note: may fail by one millisecond if internet is lagging or Webpack is being used.
   });
 
   it('should have a name', function() {
     expect(user.name).to.equal('Luisa Hane');
   });
+
+  it('if name is not a string or undefined, set name to currentUser Doe', function() {
+    const user2 = new User({id: 1, name: 123});
+    const user3 = new User({id: 1});
+    expect(user2.name).to.equal("currentUser Doe");
+    expect(user3.name).to.equal("currentUser Doe");
+  }); 
+
   it('should have an address', function() {
     expect(user.address).to.equal('15195 Nakia Tunnel, Erdmanport VA 19901-1697');
   });

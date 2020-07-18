@@ -1,7 +1,7 @@
  class User {
   constructor(user) {
     this.id = this.checkUserId(user.id);
-    this.name = user.name;
+    this.name = this.checkName(user.name);
     this.address = user.address;
     this.email = user.email;
     this.strideLength = user.strideLength;
@@ -24,6 +24,10 @@
 
   checkUserId(user) {
     return typeof user === 'number' ? user : Date.now();
+  }
+
+  checkName(user) {
+    return typeof user === 'string' ? user : "currentUser Doe";
   }
 
   getFirstName() {
