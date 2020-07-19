@@ -50,7 +50,7 @@ const showDropdown = () => {
   // showLeaderBoard(); // currently broken
 }
   
-// leaderboard in dropdown menu stuff, not sure what's happening here, will need to follow HTML, method is broken in User file
+// leaderboard in dropdown menu, not sure what's happening here, will need to follow HTML, method is broken in User file
 // const showLeaderBoard = () => {
 //   let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
 //   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
@@ -77,29 +77,27 @@ const showDropdown = () => {
 
 // STEP SECTION ///
 
-// main step info quick glance
-document.querySelector('#steps-user-steps-today').innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).numSteps;
+const stepCardDisplay = () => {
+  // main step info quick glance
+  document.querySelector('#steps-user-steps-today').innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).numSteps;
+  // today's step info
+  document.querySelector('#steps-info-active-minutes-today').innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).minutesActive;
+  document.querySelector('#steps-info-miles-walked-today').innerText = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.userId === currentUser.id).calculateMiles(userRepository);
+  //friend card
+  document.querySelector('#steps-friend-steps-average-today').innerText = userRepository.calculateAverageMinutesActive(todayDate);
+  document.querySelector('#steps-friend-average-step-goal').innerText = `${userRepository.calculateCommunityAvgStepGoal()}`;
+  document.querySelector('#steps-friend-active-minutes-average-today').innerText = userRepository.calculateAverageSteps(todayDate);
+  // weekly/trend card
+  document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = currentUser.calculateAverageMinutesActiveThisWeek(todayDate);
+  document.querySelector('#steps-calendar-total-steps-weekly').innerText = currentUser.calculateAverageStepsThisWeek(todayDate);
+}
   
-// today's step info
-document.querySelector('#steps-info-active-minutes-today').innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).minutesActive;
-document.querySelector('#steps-info-miles-walked-today').innerText = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.userId === currentUser.id).calculateMiles(userRepository);
-  
-//friend card
-document.querySelector('#steps-friend-steps-average-today').innerText = userRepository.calculateAverageMinutesActive(todayDate);
-document.querySelector('#steps-friend-average-step-goal').innerText = `${userRepository.calculateCommunityAvgStepGoal()}`;
-document.querySelector('#steps-friend-active-minutes-average-today').innerText = userRepository.calculateAverageSteps(todayDate);
-
 //trending card
-let stepsTrendingButton = document.querySelector('.steps-trending-button');
-stepsTrendingButton.addEventListener('click', function() {
+const updateTrendingStepsDays = () => {
   let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
   currentUser.findTrendingStepDays();
   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStepDays[0]}</p>`;
-});
-  
-// weekly/trend card
-document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = currentUser.calculateAverageMinutesActiveThisWeek(todayDate);
-document.querySelector('#steps-calendar-total-steps-weekly').innerText = currentUser.calculateAverageStepsThisWeek(todayDate);
+};
   
 const stepCardHandler = () => {
   let stepsMainCard = document.querySelector('#steps-main-card');
@@ -115,6 +113,7 @@ const stepCardHandler = () => {
   }
   if (event.target.classList.contains('steps-trending-button')) {
     flipCard(stepsMainCard, stepsTrendingCard);
+    updateTrendingStepsDays();
   }
   if (event.target.classList.contains('steps-calendar-button')) {
     flipCard(stepsMainCard, stepsCalendarCard);
@@ -127,6 +126,51 @@ const stepCardHandler = () => {
 ///END of STEPS //
 
 
+// CLIMB SECTION //
+const climbCardDisplay = () => {
+  // main card
+  document.querySelector("#stairs-user-stairs-today").innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).flightsOfStairs * 12;
+  // today's insight
+  document.querySelector("#stairs-info-flights-today").innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).flightsOfStairs;
+  // friends
+  document.querySelector("#stairs-friend-flights-average-today").innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
+  // week
+  document.querySelector("#stairs-calendar-flights-average-weekly").innerText = currentUser.calculateAverageFlightsThisWeek(todayDate);
+  document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (currentUser.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+},
+
+const updateTrendingStairsDays = () => {
+  currentUser.findTrendingStairsDays();
+  let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
+  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
+}
+
+const climbCardHandler = () => {
+  let stairsMainCard = document.querySelector("#stairs-main-card");
+  let stairsInfoCard = document.querySelector("#stairs-info-card");
+  let stairsFriendsCard = document.querySelector("#stairs-friends-card");
+  let stairsCalendarCard = document.querySelector("#stairs-calendar-card");
+  let stairsTrendingCard = document.querySelector("#stairs-trending-card");
+  if (event.target.classList.contains('stairs-info-button')) {
+    flipCard(stairsMainCard, stairsInfoCard);
+  }
+  if (event.target.classList.contains('stairs-friends-button')) {
+    flipCard(stairsMainCard, stairsFriendsCard);
+  }
+  if (event.target.classList.contains('stairs-trending-button')) {
+    flipCard(stairsMainCard, stairsTrendingCard);
+    updateTrendingStairsDays();
+  }
+  if (event.target.classList.contains('stairs-calendar-button')) {
+    flipCard(stairsMainCard, stairsCalendarCard);
+  }
+  if (event.target.classList.contains("stairs-go-back-button")) {
+    flipCard(event.target.parentNode, stairsMainCard);
+  }
+}
+
+/// END of CLIMB ///
+
 // ~~~~~~~~~~~~~~~~~~~~WATER STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
 // let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
@@ -138,7 +182,7 @@ let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-
 let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
 let dailyOz = document.querySelectorAll('.daily-oz');
 
-// WATER FUNCTIONS
+// WATER FUNCTIONS // 
 let sortedHydrationDataByDate = currentUser.ouncesRecord.sort((a, b) => {
   if (Object.keys(a)[0] > Object.keys(b)[0]) {
     return -1;
@@ -183,7 +227,7 @@ function waterCardHandler() {
   }
 }
 
-// END OF HYDRATION
+// END OF HYDRATION //
 
 // ~~~~~~~~~~~~~~~~~SLEEP STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
@@ -246,64 +290,22 @@ function sleepCardHandler() {
 
 //// END OF SLEEP //
 
-// CLIMB SECTION //
-
-document.querySelector("#stairs-user-stairs-today").innerText = activityData.find(activity => {
-  return activity.userID === currentUser.id && activity.date === todayDate;
-}).flightsOfStairs * 12;
-
-document.querySelector("#stairs-info-flights-today").innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).flightsOfStairs;
-
-document.querySelector("#stairs-friend-flights-average-today").innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
-
-document.querySelector("#stairs-calendar-flights-average-weekly").innerText = currentUser.calculateAverageFlightsThisWeek(todayDate);
-document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (currentUser.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
-
-let stairsTrendingButton = document.querySelector(".stairs-trending-button");
-stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
-function updateTrendingStairsDays() {
-  currentUser.findTrendingStairsDays();
-  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
-}
-
-const climbCardHandler = () => {
-  let stairsMainCard = document.querySelector("#stairs-main-card");
-  let stairsInfoCard = document.querySelector("#stairs-info-card");
-  let stairsFriendsCard = document.querySelector("#stairs-friends-card");
-  let stairsCalendarCard = document.querySelector("#stairs-calendar-card");
-  let stairsTrendingCard = document.querySelector("#stairs-trending-card");
-  if (event.target.classList.contains('stairs-info-button')) {
-    flipCard(stairsMainCard, stairsInfoCard);
-  }
-  if (event.target.classList.contains('stairs-friends-button')) {
-    flipCard(stairsMainCard, stairsFriendsCard);
-  }
-  if (event.target.classList.contains('stairs-trending-button')) {
-    flipCard(stairsMainCard, stairsTrendingCard);
-  }
-  if (event.target.classList.contains('stairs-calendar-button')) {
-    flipCard(stairsMainCard, stairsCalendarCard);
-  }
-  if (event.target.classList.contains("stairs-go-back-button")) {
-    flipCard(event.target.parentNode, stairsMainCard);
-  }
-}
-
-/// END of CLIMB ///
-
-const mainClickHandler = () => {
-  waterCardHandler();
-  sleepCardHandler();
-  climbCardHandler();
+const mainClickHandler = (e) => {
+  // if click happened on step card section:
   stepCardHandler();
+  // if click happened on climb card section:
+  climbCardHandler();
+  // if click happened on water card section:
+  waterCardHandler();
+  // if click happened on sleep card section:
+  sleepCardHandler();
 }
+// ^^ discuss if we want this. may need to check out / modify html. wonder if html modification is part of refactoring.
 
 // EVENT LISTENERS //
 
-let profileButton = document.querySelector("#profile-button");
-profileButton.addEventListener("click", showDropdown);
-// ^^ these 2 should go in the main handler
-
-let mainPage = document.querySelector('main');
+let mainPage = document.querySelector('main'); // do we need a main handler?
 mainPage.addEventListener('click', mainClickHandler);
+document.querySelector("#profile-button").addEventListener("click", showDropdown);
+// ^^ if so, let's add this
 window.addEventListener("load", displayHeader);
