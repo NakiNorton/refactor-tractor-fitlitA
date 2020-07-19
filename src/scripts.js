@@ -89,40 +89,38 @@ friendsStepsParagraphs.forEach(paragraph => {
 // CLIMB/STAIRS SECTION
 // const climbHandler = () => {
 
-  // let stairsFriendFlightsAverageToday = document.querySelector("#stairs-friend-flights-average-today");
+// document.querySelector("#stairs-friend-flights-average-today").innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
   // let stairsFriendsCard = document.querySelector("#stairs-friends-card");
-  // let stairsInfoCard = document.querySelector("#stairs-info-card");
-  // let stairsInfoFlightsToday = document.querySelector("#stairs-info-flights-today");
   // let stairsMainCard = document.querySelector("#stairs-main-card");
-  // let stairsTrendingButton = document.querySelector(".stairs-trending-button");
+  // let stairsInfoCard = document.querySelector("#stairs-info-card");
   // let stairsTrendingCard = document.querySelector("#stairs-trending-card");
-  // let stairsUserStairsToday = document.querySelector("#stairs-user-stairs-today");
-  // let trendingStairsPhraseContainer = document.querySelector(".trending-stairs-phrase-container");
   // let stairsCalendarCard = document.querySelector("#stairs-calendar-card");
-  // let stairsCalendarFlightsAverageWeekly = document.querySelector("#stairs-calendar-flights-average-weekly");
-  // let stairsCalendarStairsAverageWeekly = document.querySelector("#stairs-calendar-stairs-average-weekly");
-  // stairsCalendarFlightsAverageWeekly.innerText = currentUser.calculateAverageFlightsThisWeek(todayDate);
-  // stairsCalendarStairsAverageWeekly.innerText = (currentUser.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
-  // stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
-  // stairsInfoFlightsToday.innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).flightsOfStairs;
-  // stairsUserStairsToday.innerText = activityData.find(activity => {
-  //   return activity.userID === currentUser.id && activity.date === todayDate;
-  // }).flightsOfStairs * 12;
-  // stairsCalendarFlightsAverageWeekly.innerText = currentUser.calculateAverageFlightsThisWeek(todayDate);
-  // stairsCalendarStairsAverageWeekly.innerText = (currentUser.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
-// }
-// stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
+//  document.querySelector("#stairs-info-flights-today").innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).flightsOfStairs;
+  // document.querySelector("#stairs-user-stairs-today").innerText = activityData.find(activity => {
+    //   return activity.userID === currentUser.id && activity.date === todayDate;
+    // }).flightsOfStairs * 12;
+    // document.querySelector("#stairs-calendar-flights-average-weekly").innerText = currentUser.calculateAverageFlightsThisWeek(todayDate);
+    // document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (currentUser.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+    // }
 
+
+// let trendingStairsPhraseContainer = document.querySelector(".trending-stairs-phrase-container");
+// let stairsTrendingButton = document.querySelector(".stairs-trending-button");
+
+// why are 2 event listeners on stairsTrendingButton?
+// stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
 // stairsTrendingButton.addEventListener('click', function() {
 //   currentUser.findTrendingStairsDays();
 //   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
 // });
 
-
 // function updateTrendingStairsDays() {
 //   currentUser.findTrendingStairsDays();
 //   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
 // }
+
+
+
 
 
 
