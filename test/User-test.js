@@ -62,10 +62,10 @@ describe('User', function() {
     expect(user.name).to.equal('Luisa Hane');
   });
 
-  it('if name is not a string or undefined, set name to currentUser Doe', function() {
+  it('if name is not a string or undefined, set name to guest', function() {
     const user3 = new User({id: 1, name: 123});
-    expect(user2.name).to.equal('currentUser Doe');
-    expect(user3.name).to.equal('currentUser Doe');
+    expect(user2.name).to.equal('guest');
+    expect(user3.name).to.equal('guest');
   }); 
 
   it('should have an address', function() {
@@ -89,7 +89,7 @@ describe('User', function() {
   });
 
   it('should return default first name if only given first name', function() {
-    expect(user2.getFirstName()).to.equal("CURRENTUSER");
+    expect(user2.getFirstName()).to.equal("GUEST");
   });
 
   it('should have a stride length', function() {
