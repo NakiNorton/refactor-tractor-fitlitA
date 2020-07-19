@@ -19,89 +19,83 @@ const currentUser = new User(userRepository.users[0]);
 // HEADER 
 const displayHeader = (e) => {
   document.querySelector("#header-name").innerText = `${currentUser.getFirstName()}'S `;
+}
+
+const showDropdown = () => {
   document.querySelector('#user-info-dropdown').classList.toggle("hide");
   document.querySelector("#dropdown-name").innerText = currentUser.name.toUpperCase();
   document.querySelector("#dropdown-goal").innerText = `DAILY STEP GOAL | ${currentUser.dailyStepGoal}`;
   document.querySelector("#dropdown-email").innerText = `EMAIL | ${currentUser.email}`;
- 
 }
-
-window.addEventListener('load', displayHeader);
-
   
-  // friend stuff 
-const displayFriendsSteps = () => {
-  let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
-  let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
-  currentUser.friendsActivityRecords.forEach(friend => {
-    dropdownFriendsStepsContainer.innerHTML += `
-    <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>`;
-  });
-friendsStepsParagraphs.forEach(paragraph => {
-  if (friendsStepsParagraphs[0] === paragraph) {
-    paragraph.classList.add('green-text');
-  }
-  if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
-    paragraph.classList.add('red-text');
-  }
-  if (paragraph.innerText.includes('YOU')) {
-    paragraph.classList.add('yellow-text');
-  }
-},
-  // currentUser.findFriendsNames(userRepository.users);
+// leaderboard in dropdown menu stuff 
+// const displayFriendsSteps = () => {
+// let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
+// let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
+// currentUser.findFriendsNames(userRepository.users);
 // currentUser.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
-
+//   currentUser.friendsActivityRecords.forEach(friend => {
+//     dropdownFriendsStepsContainer.innerHTML += `
+//     <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>`;
+//   });
+// friendsStepsParagraphs.forEach(paragraph => {
+//   if (friendsStepsParagraphs[0] === paragraph) {
+//     paragraph.classList.add('green-text');
+//   }
+//   if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
+//     paragraph.classList.add('red-text');
+//   }
+//   if (paragraph.innerText.includes('YOU')) {
+//     paragraph.classList.add('yellow-text');
+//   }
+// },
 
 
 // STEP SECTION 
 // const stepHandler = () => {
-  // let stepsMainCard = document.querySelector('#steps-main-card');
-  // let stepsInfoCard = document.querySelector('#steps-info-card');
-  // let stepsFriendsCard = document.querySelector('#steps-friends-card');
-  // let stepsTrendingCard = document.querySelector('#steps-trending-card');
-  // let stepsCalendarCard = document.querySelector('#steps-calendar-card');
-  // let stepsCalendarTotalStepsWeekly = document.querySelector('#steps-calendar-total-steps-weekly');
-  // let stepsFriendAverageStepGoal = document.querySelector('#steps-friend-average-step-goal');
-  // let stepsGoalComparison = document.querySelector('#steps-goal-comparison');
-  // let stepsInfoActiveMinutesToday = document.querySelector('#steps-info-active-minutes-today');
-  // let stepsInfoMilesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
-  // let stepsFriendActiveMinutesAverageToday = document.querySelector('#steps-friend-active-minutes-average-today');
-  // let stepsFriendStepsAverageToday = document.querySelector('#steps-friend-steps-average-today');
-  // let stepsTrendingButton = document.querySelector('.steps-trending-button');
-  // let stepsUserStepsToday = document.querySelector('#steps-user-steps-today');
-  // let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
-  // let stepsCalendarTotalActiveMinutesWeekly = document.querySelector('#steps-calendar-total-active-minutes-weekly');
-  // stepsCalendarTotalActiveMinutesWeekly.innerText = currentUser.calculateAverageMinutesActiveThisWeek(todayDate);
-  // stepsCalendarTotalStepsWeekly.innerText = currentUser.calculateAverageStepsThisWeek(todayDate);
-  // stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
-  // stepsFriendAverageStepGoal.innerText = `${userRepository.calculateCommunityAvgStepGoal()}`;
-  // stepsGoalComparison.innerText = `${currentUser.compareUserGoalWithCommunityGoal()}`; // Add more test to explain comparison
-  // stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
-  // stepsInfoActiveMinutesToday.innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).minutesActive;
-  // stepsUserStepsToday.innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).numSteps;
+//   let stepsMainCard = document.querySelector('#steps-main-card');
+//   let stepsInfoCard = document.querySelector('#steps-info-card');
+//   let stepsFriendsCard = document.querySelector('#steps-friends-card');
+//   let stepsTrendingCard = document.querySelector('#steps-trending-card');
+//   let stepsCalendarCard = document.querySelector('#steps-calendar-card');
+//   document.querySelector('#steps-user-steps-today').innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).numSteps;
+//   document.querySelector('#steps-info-active-minutes-today').innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).minutesActive;
+//   document.querySelector('#steps-info-miles-walked-today').innerText = user.activityRecord.find(activity => activity.date === todayDate && activity.userId === user.id).calculateMiles(userRepository);
+//   document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = currentUser.calculateAverageMinutesActiveThisWeek(todayDate);
+//   document.querySelector('#steps-calendar-total-steps-weekly').innerText = currentUser.calculateAverageStepsThisWeek(todayDate);
+//   document.querySelector('#steps-friend-steps-average-today').innerText = userRepository.calculateAverageMinutesActive(todayDate);
+//   document.querySelector('#steps-friend-average-step-goal').innerText = `${userRepository.calculateCommunityAvgStepGoal()}`;
+//   document.querySelector('#steps-friend-active-minutes-average-today').innerText = userRepository.calculateAverageSteps(todayDate);
+//   document.querySelector('#steps-goal-comparison').innerText = `${currentUser.compareUserGoalWithCommunityGoal()}`; // Add more test to explain comparison
 // },
 
+// let stepsTrendingButton = document.querySelector('.steps-trending-button');
+// let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
 // stepsTrendingButton.addEventListener('click', function() {
 //   currentUser.findTrendingStepDays();
 //   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStepDays[0]}</p>`;
 // });
 
+
+///END of STEPS
+
+
 // CLIMB/STAIRS SECTION
 // const climbHandler = () => {
 
 // document.querySelector("#stairs-friend-flights-average-today").innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
-  // let stairsFriendsCard = document.querySelector("#stairs-friends-card");
-  // let stairsMainCard = document.querySelector("#stairs-main-card");
-  // let stairsInfoCard = document.querySelector("#stairs-info-card");
-  // let stairsTrendingCard = document.querySelector("#stairs-trending-card");
-  // let stairsCalendarCard = document.querySelector("#stairs-calendar-card");
+// let stairsMainCard = document.querySelector("#stairs-main-card");
+// let stairsInfoCard = document.querySelector("#stairs-info-card");
+// let stairsFriendsCard = document.querySelector("#stairs-friends-card");
+// let stairsTrendingCard = document.querySelector("#stairs-trending-card");
+// let stairsCalendarCard = document.querySelector("#stairs-calendar-card");
 //  document.querySelector("#stairs-info-flights-today").innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).flightsOfStairs;
-  // document.querySelector("#stairs-user-stairs-today").innerText = activityData.find(activity => {
-    //   return activity.userID === currentUser.id && activity.date === todayDate;
-    // }).flightsOfStairs * 12;
-    // document.querySelector("#stairs-calendar-flights-average-weekly").innerText = currentUser.calculateAverageFlightsThisWeek(todayDate);
-    // document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (currentUser.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
-    // }
+// document.querySelector("#stairs-user-stairs-today").innerText = activityData.find(activity => {
+//   return activity.userID === currentUser.id && activity.date === todayDate;
+// }).flightsOfStairs * 12;
+// document.querySelector("#stairs-calendar-flights-average-weekly").innerText = currentUser.calculateAverageFlightsThisWeek(todayDate);
+// document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (currentUser.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+// }
 
 
 // let trendingStairsPhraseContainer = document.querySelector(".trending-stairs-phrase-container");
@@ -120,9 +114,7 @@ friendsStepsParagraphs.forEach(paragraph => {
 // }
 
 
-
-
-
+/////// END of CLIMB
 
 
 // activityData.forEach(activity => {
@@ -296,4 +288,8 @@ friendsStepsParagraphs.forEach(paragraph => {
 // }).hoursSlept;
 
 
+// EVENT LISTENERS
 
+let profileButton = document.querySelector("#profile-button");
+profileButton.addEventListener("click", showDropdown);
+window.addEventListener("load", displayHeader);
