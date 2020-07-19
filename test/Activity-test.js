@@ -93,19 +93,19 @@ describe('Activity', function() {
     expect(user1.activityRecord.length).to.equal(1);
   });
 
-  it.only('should have a method that calculate miles walked', function() {
+  it('should have a method that calculate miles walked', function() {
     expect(activity1.calculateMiles(mockRepository)).to.equal('3.0');
   });
 
-  describe('compareStepGoal', function() {
+  // describe('compareStepGoal', function() {
     it('should return false if goal isn\'t met', function() {
       activity1.compareStepGoal(mockRepository);
       expect(activity1.reachedStepGoal).to.equal(false);
-    });
+    // });
 
     it('should return true if goal is met', function() {
       activity2.compareStepGoal(mockRepository);
       expect(activity2.reachedStepGoal).to.equal(true);
     });
-  });
+  // });
 });
