@@ -58,7 +58,6 @@ class User {
     }, 0)
   }
 
-
   updateSleep(date, hours, quality) {
     this.sleepHoursRecord.unshift({
       'date': date,
@@ -68,7 +67,7 @@ class User {
       'date': date,
       'quality': quality
     });
-    if(this.sleepHoursRecord.length) {
+    if (this.sleepHoursRecord.length) {
       this.hoursSleptAverage = ((hours + (this.hoursSleptAverage * (this.sleepHoursRecord.length - 1))) / this.sleepHoursRecord.length).toFixed(1);
     } else {
       this.hoursSleptAverage = hours;
@@ -79,6 +78,7 @@ class User {
       this.sleepQualityAverage = quality;
     }
   }
+
   calculateAverageHoursThisWeek(todayDate) {
     return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
       let index = this.sleepHoursRecord.indexOf(this.sleepHoursRecord.find(sleep => sleep.date === todayDate));
@@ -88,6 +88,7 @@ class User {
       return sum;
     }, 0) / 7).toFixed(1);
   }
+
   calculateAverageQualityThisWeek(todayDate) {
     return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
       let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todayDate));
@@ -97,17 +98,20 @@ class User {
       return sum;
     }, 0) / 7).toFixed(1);
   }
+
   updateActivities(activity) {
     this.activityRecord.unshift(activity);
     if (activity.numSteps >= this.dailyStepGoal) {
       this.accomplishedDays.unshift(activity.date);
     }
   }
+
   findClimbingRecord() {
     return this.activityRecord.sort((a, b) => {
       return b.flightsOfStairs - a.flightsOfStairs;
     })[0].flightsOfStairs;
   }
+
   calculateDailyCalories(date) {
     let totalMinutes = this.activityRecord.filter(activity => {
       return activity.date === date
@@ -116,6 +120,7 @@ class User {
     }, 0);
     return Math.round(totalMinutes * 7.6);
   }
+
   calculateAverageMinutesActiveThisWeek(todayDate) {
     return (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
@@ -125,6 +130,7 @@ class User {
       return sum;
     }, 0) / 7).toFixed(0);
   }
+
   calculateAverageStepsThisWeek(todayDate) {
     return (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
@@ -134,6 +140,7 @@ class User {
       return sum;
     }, 0) / 7).toFixed(0);
   }
+
   calculateAverageFlightsThisWeek(todayDate) {
     return (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
@@ -143,6 +150,7 @@ class User {
       return sum;
     }, 0) / 7).toFixed(1);
   }
+
   findTrendingStepDays() {
     let positiveDays = [];
     for (var i = 0; i < this.activityRecord.length; i++) {
@@ -154,6 +162,7 @@ class User {
       }
     }
   }
+
   findTrendingStairsDays() {
     let positiveDays = [];
     for (var i = 0; i < this.activityRecord.length; i++) {
@@ -165,11 +174,13 @@ class User {
       }
     }
   }
+
   findFriendsNames(users) {
     this.friends.forEach(friend => {
       this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
     })
   }
+
   calculateTotalStepsThisWeek(todayDate) {
     this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
@@ -179,6 +190,7 @@ class User {
       return sum;
     }, 0));
   }
+
   findFriendsTotalStepsForWeek(users, date) {
     this.friends.map(friend => {
       let matchedFriend = users.find(user => user.id === friend);
@@ -196,14 +208,14 @@ class User {
       'firstName': 'YOU',
       'totalWeeklySteps': this.totalStepsThisWeek
     });
-    this.friendsActivityRecords = this.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
+    this.friendsActivityRecords = this.friendsActivityRecords
+      .sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
   }
 
   compareUserGoalWithCommunityGoal() {
     let communityStepGoal = userRepository.calculateCommunityAvgStepGoal()
-    console.log(communityStepGoal)
-    let difference = communityStepGoal - this.dailyStepGoal;
-    return difference; 
+    let goalDifference = communityStepGoal - this.dailyStepGoal;
+    return goalDifference; 
   }
 }
 
