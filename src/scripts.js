@@ -137,7 +137,7 @@ const climbCardDisplay = () => {
   // week
   document.querySelector("#stairs-calendar-flights-average-weekly").innerText = currentUser.calculateAverageFlightsThisWeek(todayDate);
   document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (currentUser.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
-},
+}
 
 const updateTrendingStairsDays = () => {
   currentUser.findTrendingStairsDays();
