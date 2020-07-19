@@ -31,7 +31,7 @@ class User {
   }
 
   checkName(user) {
-    return typeof user === 'string' ? user : "currentUser Doe";
+    return typeof user === 'string' ? user : "guest";
   }
 
   getFirstName() {
