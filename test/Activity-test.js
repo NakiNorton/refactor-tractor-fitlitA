@@ -97,15 +97,15 @@ describe('Activity', function() {
     expect(activity1.calculateMiles(mockRepository)).to.equal('3.0');
   });
 
-  // describe('compareStepGoal', function() {
+  describe('compareStepGoal', function() {
     it('should return false if goal isn\'t met', function() {
       activity1.compareStepGoal(mockRepository);
       expect(activity1.reachedStepGoal).to.equal(false);
-    // });
+    });
 
     it('should return true if goal is met', function() {
       activity2.compareStepGoal(mockRepository);
       expect(activity2.reachedStepGoal).to.equal(true);
     });
-  // });
-});
+  });
+})
