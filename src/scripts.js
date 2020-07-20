@@ -171,17 +171,18 @@ const showLeaderBoard = () => {
 // /// END of CLIMB ///
 
 // // ~~~~~~~~~~~~~~~~~~~~WATER STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// // let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
-// // let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
-// // let hydrationInfoCard = document.querySelector('#hydration-info-card');
-// // let hydrationMainCard = document.querySelector('#hydration-main-card'); 
-// // ^^^ added to handler
-// let hydrationFriendOuncesToday = document.querySelector('#hydration-friend-ounces-today');
-// let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
-// let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
-// let dailyOz = document.querySelectorAll('.daily-oz');
 
-// // WATER FUNCTIONS // 
+// WATER FUNCTIONS // 
+
+const hydrationCardDisplay = () => {
+  let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
+  hydrationUserOuncesToday.innerText = hydrationData.find(hydration => hydration.userID === currentUser.id && hydration.date === todayDate).numOunces;
+  let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
+  hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => hydration.userID === currentUser.id && hydration.date === todayDate).numOunces / 8;
+  // document.querySelector("#hydration-friend-ounces-today").innerText = userRepository.calculateAverageDailyWater(todayDate);
+  let dailyOz = document.querySelectorAll('.daily-oz');
+}
+
 // let sortedHydrationDataByDate = currentUser.ouncesRecord.sort((a, b) => {
 //   if (Object.keys(a)[0] > Object.keys(b)[0]) {
 //     return -1;
@@ -196,35 +197,28 @@ const showLeaderBoard = () => {
 //   dailyOz[i].innerText = currentUser.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
 // }
 
-// hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
-//   return hydration.userID === currentUser.id && hydration.date === todayDate;
-// }).numOunces;
 
-// hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
+function hydrationCardHandler() {
+  let hydrationMainCard = document.querySelector('#hydration-main-card');
+  let hydrationInfoCard = document.querySelector('#hydration-info-card');
+  let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
+  let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
+  if (event.target.className === 'info-button hydration-info-button') {
+    flipCard(hydrationMainCard, hydrationInfoCard);
+  }
+  if (event.target.classList.contains('hydration-friends-button')) {
+    flipCard(hydrationMainCard, hydrationFriendsCard);
+  }
+  if (event.target.classList.contains('hydration-calendar-button')) {
+    flipCard(hydrationMainCard, hydrationCalendarCard);
+  }
+  if (event.target.classList.contains("hydration-go-back-button")) {
+    flipCard(event.target.parentNode, hydrationMainCard);
+  }
+}
 
-// hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
-//   return hydration.userID === currentUser.id && hydration.date === todayDate;
-// }).numOunces / 8;
-
-
-// function waterCardHandler() {
-//   let hydrationMainCard = document.querySelector('#hydration-main-card');
-//   let hydrationInfoCard = document.querySelector('#hydration-info-card');
-//   let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
-//   let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
-//   if (event.target.classList.contains('hydration-info-button')) {
-//     flipCard(hydrationMainCard, hydrationInfoCard);
-//   }
-//   if (event.target.classList.contains('hydration-friends-button')) {
-//     flipCard(hydrationMainCard, hydrationFriendsCard);
-//   }
-//   if (event.target.classList.contains('hydration-calendar-button')) {
-//     flipCard(hydrationMainCard, hydrationCalendarCard);
-//   }
-//   if (event.target.classList.contains("hydration-go-back-button")) {
-//     flipCard(event.target.parentNode, hydrationMainCard);
-//   }
-// }
+let hydrationSection = document.querySelector('#hydration-card-container');
+hydrationSection.addEventListener('click', hydrationCardHandler);
 
 // // END OF HYDRATION //
 
@@ -289,23 +283,30 @@ const showLeaderBoard = () => {
 
 // //// END OF SLEEP //
 
-// const mainClickHandler = (e) => {
+// const mainClickHandler = () => {
+//   if (event.target.closest('.card-container hydration')) {
+//     console.log('here');
+//     waterCardHandler();
+//   }
+// }
 //   // if click happened on step card section:
 //   stepCardHandler();
 //   // if click happened on climb card section:
 //   climbCardHandler();
-//   // if click happened on water card section:
-//   waterCardHandler();
 //   // if click happened on sleep card section:
 //   sleepCardHandler();
 // }
-// ^^ discuss if we want this. may need to check out / modify html. wonder if html modification is part of refactoring.
 
 // EVENT LISTENERS //
 
 // let mainPage = document.querySelector('main'); // do we need a main handler?
 // mainPage.addEventListener('click', mainClickHandler);
-let profileButton = document.querySelector("#profile-button");
+let profileButton = document.querySelector('#profile-button');
 profileButton.addEventListener("click", showDropdown);
-// ^^ if so, let's add this
-window.addEventListener("load", displayHeader);
+
+const loadHandler = () => {
+  displayHeader();
+  hydrationCardDisplay();
+}
+
+window.addEventListener("load", loadHandler);

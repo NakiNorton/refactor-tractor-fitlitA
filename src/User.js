@@ -52,9 +52,9 @@ class User {
     return this.ouncesRecord.reduce((sum, record) => {
       let amount = record[date];
       if (amount) {
-        sum += amount
+        sum += amount;
       }
-      return sum
+      return sum;
     }, 0)
   }
 
