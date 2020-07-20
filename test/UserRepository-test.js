@@ -64,7 +64,7 @@ describe('UserRepository', function() {
     expect(userRepository).to.be.an.instanceof(UserRepository);
   });
 
-  it('should hold an array of users', function() {
+  it.only('should hold an array of instantiated users', function() {
     expect(userRepository.users).to.deep.equal([user1, user2, user3]);
     expect(userRepository.users.length).to.equal(3);
   });

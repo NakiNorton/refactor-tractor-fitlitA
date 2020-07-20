@@ -1,16 +1,16 @@
-import UserRepository from './UserRepository';
-import userData from './data/users';
-let userRepository = new UserRepository(userData) // Get rid of this eventually
+// import UserRepository from './UserRepository';
+// import userData from './data/users';
+// let userRepository = new UserRepository(userData); // Get rid of this eventually
 
 class User {
-  constructor(user) {
-    this.id = this.checkUserId(user.id);
-    this.name = this.checkName(user.name);
-    this.address = user.address || 'No address added.';
-    this.email = user.email || 'No email address added.';
-    this.strideLength = user.strideLength || 'Stride length not added.';
-    this.dailyStepGoal = user.dailyStepGoal || 'Daily step goal not added.';
-    this.friends = user.friends || 'Add friends for friendly competition!';
+  constructor(userDetails) {
+    this.id = this.checkUserId(userDetails.id);
+    this.name = this.checkName(userDetails.name);
+    this.address = userDetails.address || 'No address added.';
+    this.email = userDetails.email || 'No email address added.';
+    this.strideLength = userDetails.strideLength || 'Stride length not added.';
+    this.dailyStepGoal = userDetails.dailyStepGoal || 'Daily step goal not added.';
+    this.friends = userDetails.friends || 'Add friends for friendly competition!';
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
     // this.totalStepsThisWeek = 0;
@@ -214,11 +214,11 @@ class User {
   //     .sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
   // }
 
-  compareUserGoalWithCommunityGoal() {
-    let communityStepGoal = userRepository.calculateCommunityAvgStepGoal()
-    let goalDifference = communityStepGoal - this.dailyStepGoal;
-    return goalDifference; 
-  }
+  // compareUserGoalWithCommunityGoal(userRepository) {
+  //   let communityStepGoal = userRepository.calculateCommunityAvgStepGoal()
+  //   let goalDifference = communityStepGoal - this.dailyStepGoal;
+  //   return goalDifference; 
+  // }
 }
 
 export default User;

@@ -14,6 +14,7 @@ import Sleep from './Sleep';
 import { htmlPrefilter } from 'jquery';
 
 const userRepository = new UserRepository(userData);
+console.log(userRepository);
 const currentUser = new User(userRepository.users[0]); 
 let todayDate = "2019/09/22";
 let hydrationSection = document.querySelector("#hydration-card-container");

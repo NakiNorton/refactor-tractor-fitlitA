@@ -4,11 +4,7 @@ import User from './User';
 
 class UserRepository {
   constructor(rawUserData) {
-    this.users = this.instantiateRawUserData(rawUserData);
-  }
-
-  instantiateRawUserData(rawUserData) {
-    rawUserData.forEach(data => new User(data);
+    this.users = rawUserData;
   }
 
   getUser(id) {
