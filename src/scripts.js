@@ -170,15 +170,6 @@ const showLeaderBoard = () => {
 
 // WATER FUNCTIONS // 
 
-const hydrationCardDisplay = () => {
-  let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
-  hydrationUserOuncesToday.innerText = hydrationData.find(hydration => hydration.userID === currentUser.id && hydration.date === todayDate).numOunces;
-  let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
-  hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => hydration.userID === currentUser.id && hydration.date === todayDate).numOunces / 8;
-  // ^^ use of raw hydration data -- do we need a hydrationRepo?
-  // listDailyOz();
-}
-
 // const listDailyOz = () => {
 // let dailyOz = document.querySelectorAll('.daily-oz');
 // let sortedHydrationDataByDate = currentUser.ouncesRecord.sort((a, b) => Object.keys(a) - Object.keys(b));
@@ -191,18 +182,29 @@ const hydrationCardDisplay = () => {
 //   }
 //   return 0;
 // });
+      
 // dailyOz.forEach(day => (ounce.innerText = currentUser.addDailyOunces(Object.keys(sortedHydrationDataByDate[indexOf day])[0])));
 // }
 // ^^ dive into daily oz in html, hydration class
-
+      
 // document.querySelector("#hydration-friend-ounces-today").innerText = userRepository.calculateAverageDailyWater(todayDate);
-// ^^iteration 5
+// ^^iteration 5, broken anyhow.
+
+const hydrationCardDisplay = () => {
+  let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
+  hydrationUserOuncesToday.innerText = hydrationData.find(hydration => hydration.userID === currentUser.id && hydration.date === todayDate).numOunces;
+  let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
+  hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => hydration.userID === currentUser.id && hydration.date === todayDate).numOunces / 8;
+  // ^^ use of raw hydration data -- do we need a hydrationRepo?
+  // listDailyOz();
+}
+
 function hydrationCardHandler() {
   let hydrationMainCard = document.querySelector('#hydration-main-card');
   let hydrationInfoCard = document.querySelector('#hydration-info-card');
   let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
   let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
-  if (event.target.className === 'info-button hydration-info-button') {
+  if (event.target.classList.contains('hydration-info-button')) {
     flipCard(hydrationMainCard, hydrationInfoCard);
   }
   if (event.target.classList.contains('hydration-friends-button')) {
