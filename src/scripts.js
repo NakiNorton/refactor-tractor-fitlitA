@@ -11,13 +11,13 @@ import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
-
+import { htmlPrefilter } from 'jquery';
 
 const userRepository = new UserRepository(userData);
 const currentUser = new User(userRepository.users[0]); 
-
 let todayDate = "2019/09/22";
-// currentUser.findFriendsNames(userRepository.users); idk what this is or where it came from
+let hydrationSection = document.querySelector("#hydration-card-container");
+
 
 // activityData.forEach(activity => {
 //   activity = new Activity(activity, userRepository);
@@ -37,10 +37,6 @@ const flipCard = (cardToHide, cardToShow) => {
 }
 
 // HEADER //
-const displayHeader = (e) => {
-  document.querySelector("#header-name").innerText = `${currentUser.getFirstName()}'S `;
-}
-
 const showDropdown = () => {
   document.querySelector('#user-info-dropdown').classList.toggle("hide");
   document.querySelector("#dropdown-name").innerText = currentUser.name.toUpperCase();
@@ -179,11 +175,14 @@ const hydrationCardDisplay = () => {
   hydrationUserOuncesToday.innerText = hydrationData.find(hydration => hydration.userID === currentUser.id && hydration.date === todayDate).numOunces;
   let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
   hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => hydration.userID === currentUser.id && hydration.date === todayDate).numOunces / 8;
-  // document.querySelector("#hydration-friend-ounces-today").innerText = userRepository.calculateAverageDailyWater(todayDate);
-  let dailyOz = document.querySelectorAll('.daily-oz');
+  // ^^ use of raw hydration data -- do we need a hydrationRepo?
+  // listDailyOz();
 }
 
-// let sortedHydrationDataByDate = currentUser.ouncesRecord.sort((a, b) => {
+// const listDailyOz = () => {
+// let dailyOz = document.querySelectorAll('.daily-oz');
+// let sortedHydrationDataByDate = currentUser.ouncesRecord.sort((a, b) => Object.keys(a) - Object.keys(b));
+// ^^ attempt to refactor the beast below. need to look at hydration class more
 //   if (Object.keys(a)[0] > Object.keys(b)[0]) {
 //     return -1;
 //   }
@@ -192,12 +191,12 @@ const hydrationCardDisplay = () => {
 //   }
 //   return 0;
 // });
-
-// for (var i = 0; i < dailyOz.length; i++) {
-//   dailyOz[i].innerText = currentUser.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
+// dailyOz.forEach(day => (ounce.innerText = currentUser.addDailyOunces(Object.keys(sortedHydrationDataByDate[indexOf day])[0])));
 // }
+// ^^ dive into daily oz in html, hydration class
 
-
+// document.querySelector("#hydration-friend-ounces-today").innerText = userRepository.calculateAverageDailyWater(todayDate);
+// ^^iteration 5
 function hydrationCardHandler() {
   let hydrationMainCard = document.querySelector('#hydration-main-card');
   let hydrationInfoCard = document.querySelector('#hydration-info-card');
@@ -217,7 +216,6 @@ function hydrationCardHandler() {
   }
 }
 
-let hydrationSection = document.querySelector('#hydration-card-container');
 hydrationSection.addEventListener('click', hydrationCardHandler);
 
 // // END OF HYDRATION //
@@ -305,7 +303,7 @@ let profileButton = document.querySelector('#profile-button');
 profileButton.addEventListener("click", showDropdown);
 
 const loadHandler = () => {
-  displayHeader();
+  document.querySelector("#header-name").innerText = `${currentUser.getFirstName()}'S `;
   hydrationCardDisplay();
 }
 
