@@ -93,6 +93,7 @@ const showLeaderBoard = () => {
 //   currentUser.findTrendingStepDays();
 //   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStepDays[0]}</p>`;
 // };
+// ^^ iteration 5
   
 // const stepCardHandler = () => {
 //   let stepsMainCard = document.querySelector('#steps-main-card');
@@ -283,24 +284,8 @@ hydrationSection.addEventListener('click', hydrationCardHandler);
 
 // //// END OF SLEEP //
 
-// const mainClickHandler = () => {
-//   if (event.target.closest('.card-container hydration')) {
-//     console.log('here');
-//     waterCardHandler();
-//   }
-// }
-//   // if click happened on step card section:
-//   stepCardHandler();
-//   // if click happened on climb card section:
-//   climbCardHandler();
-//   // if click happened on sleep card section:
-//   sleepCardHandler();
-// }
-
 // EVENT LISTENERS //
 
-// let mainPage = document.querySelector('main'); // do we need a main handler?
-// mainPage.addEventListener('click', mainClickHandler);
 let profileButton = document.querySelector('#profile-button');
 profileButton.addEventListener("click", showDropdown);
 

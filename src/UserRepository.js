@@ -75,16 +75,17 @@ class UserRepository {
   //   return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
   // }
 
-  calculateAverageDailyWater(date) {
-    let todaysDrinkers = this.users.filter(user => {
-      return user.addDailyOunces(date) > 0;
-    });
-    console.log(todaysDrinkers);
-    let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
-      return sum += drinker.addDailyOunces(date);
-    }, 0)
-    return Math.floor(sumDrankOnDate / todaysDrinkers.length);
-  }
+  // calculateAverageDailyWater(date) {
+  //   let todaysDrinkers = this.users.filter(user => {
+  //     return user.addDailyOunces(date) > 0;
+  //   });
+  //   let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
+  //     return sum += drinker.addDailyOunces(date);
+  //   }, 0)
+  //   return Math.floor(sumDrankOnDate / todaysDrinkers.length);
+  // }
+  // ^^ do they mean this for community? if so, this may be iteration 5. 
+
 
   // findBestSleepers(date) {
   //   return this.users.filter(user =>
