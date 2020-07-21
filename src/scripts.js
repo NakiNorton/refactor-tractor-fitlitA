@@ -1,6 +1,8 @@
 import './css/base.scss';
 import './css/styles.scss';
 
+import domUpdates from './domUpdates.js'
+
 import userData from './data/users';
 import activityData from './data/activity';
 import sleepData from './data/sleep';
