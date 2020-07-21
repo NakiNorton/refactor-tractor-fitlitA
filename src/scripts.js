@@ -7,6 +7,7 @@ import activityData from './data/activity';
 import sleepData from './data/sleep';
 import hydrationData from './data/hydration';
 import HydrationRepository from './HydrationRepository';
+import SleepRepository from "./SleepRepository";
 import UserRepository from './UserRepository';
 import User from './User';
 import Activity from './Activity';
@@ -18,6 +19,7 @@ let userRepository;
 let currentUser;
 let todayDate;
 let hydrationRepository;
+let sleepRepository;
 
 const hydrationSection = document.querySelector("#hydration-card-container");
 const sleepSection = document.querySelector("#sleep-card-container");
