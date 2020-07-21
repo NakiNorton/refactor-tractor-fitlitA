@@ -264,63 +264,58 @@ hydrationSection.addEventListener('click', hydrationCardHandler);
 // // END OF HYDRATION //
 
 // // ~~~~~~~~~~~~~~~~~SLEEP STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// // let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
-// // let sleepFriendsCard = document.querySelector('#sleep-friends-card');
-// // let sleepInfoCard = document.querySelector('#sleep-info-card');
-// // let sleepMainCard = document.querySelector('#sleep-main-card');
-// // ^^ added to handler
-// let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
-// let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
-// let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
-// let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleeper');
-// let sleepInfoHoursAverageAllTime = document.querySelector('#sleep-info-hours-average-alltime');
-// let sleepInfoQualityAverageAllTime = document.querySelector('#sleep-info-quality-average-alltime');
-// let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
-// let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
+let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
+let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
+let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
+let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleeper');
+let sleepInfoHoursAverageAllTime = document.querySelector('#sleep-info-hours-average-alltime');
+let sleepInfoQualityAverageAllTime = document.querySelector('#sleep-info-quality-average-alltime');
+let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
+let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
 
-// // SLEEPER FUNCTIONS
-// sleepCalendarHoursAverageWeekly.innerText = currentUser.calculateAverageHoursThisWeek(todayDate);
+// SLEEPER FUNCTIONS
+sleepCalendarHoursAverageWeekly.innerText = currentUser.calculateAverageHoursThisWeek(todayDate);
 
-// sleepCalendarQualityAverageWeekly.innerText = currentUser.calculateAverageQualityThisWeek(todayDate);
+sleepCalendarQualityAverageWeekly.innerText = currentUser.calculateAverageQualityThisWeek(todayDate);
 
-// sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
-//   return currentUser.id === userRepository.getLongestSleepers(todayDate)
-// }).getFirstName();
+sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
+  return currentUser.id === userRepository.getLongestSleepers(todayDate)
+}).getFirstName();
 
-// sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
-//   return currentUser.id === userRepository.getWorstSleepers(todayDate)
-// }).getFirstName();
+sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
+  return currentUser.id === userRepository.getWorstSleepers(todayDate)
+}).getFirstName();
 
-// sleepInfoHoursAverageAllTime.innerText = currentUser.hoursSleptAverage;
+sleepInfoHoursAverageAllTime.innerText = currentUser.hoursSleptAverage;
 
-// sleepInfoQualityAverageAllTime.innerText = currentUser.sleepQualityAverage;
+sleepInfoQualityAverageAllTime.innerText = currentUser.sleepQualityAverage;
 
-// sleepInfoQualityToday.innerText = sleepData.find(sleep => {
-//   return sleep.userID === currentUser.id && sleep.date === todayDate;
-// }).sleepQuality;
+sleepInfoQualityToday.innerText = sleepData.find(sleep => {
+  return sleep.userID === currentUser.id && sleep.date === todayDate;
+}).sleepQuality;
 
-// sleepUserHoursToday.innerText = sleepData.find(sleep => {
-//   return sleep.userID === currentUser.id && sleep.date === todayDate;
-// }).hoursSlept;
+sleepUserHoursToday.innerText = sleepData.find(sleep => {
+  return sleep.userID === currentUser.id && sleep.date === todayDate;
+}).hoursSlept;
 
-// function sleepCardHandler() {
-//   let sleepMainCard = document.querySelector('#sleep-main-card');
-//   let sleepInfoCard = document.querySelector('#sleep-info-card');
-//   let sleepFriendsCard = document.querySelector('#sleep-friends-card');
-//   let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
-//   if (event.target.classList.contains('sleep-info-button')) {
-//     flipCard(sleepMainCard, sleepInfoCard);
-//   }
-//   if (event.target.classList.contains('sleep-friends-button')) {
-//     flipCard(sleepMainCard, sleepFriendsCard);
-//   }
-//   if (event.target.classList.contains('sleep-calendar-button')) {
-//     flipCard(sleepMainCard, sleepCalendarCard);
-//   }
-//   if (event.target.classList.contains("sleep-go-back-button")) {
-//     flipCard(event.target.parentNode, sleepMainCard);
-//   }
-// }
+function sleepCardHandler() {
+  let sleepMainCard = document.querySelector('#sleep-main-card');
+  let sleepInfoCard = document.querySelector('#sleep-info-card');
+  let sleepFriendsCard = document.querySelector('#sleep-friends-card');
+  let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
+  if (event.target.classList.contains('sleep-info-button')) {
+    flipCard(sleepMainCard, sleepInfoCard);
+  }
+  if (event.target.classList.contains('sleep-friends-button')) {
+    flipCard(sleepMainCard, sleepFriendsCard);
+  }
+  if (event.target.classList.contains('sleep-calendar-button')) {
+    flipCard(sleepMainCard, sleepCalendarCard);
+  }
+  if (event.target.classList.contains("sleep-go-back-button")) {
+    flipCard(event.target.parentNode, sleepMainCard);
+  }
+}
 
 // //// END OF SLEEP //
 
