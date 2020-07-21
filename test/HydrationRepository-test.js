@@ -3,11 +3,11 @@ import HydrationRepository from '../src/HydrationRepository';
 import Hydration from "../src/Hydration";
 
 describe('HydrationRepository', function() {
-  let hydrate1, hydrate2, hydrate3, mockRawData, HydrationRepository, mockHydroRepo;
+  let hydrate1, hydrate2, hydrate3, mockRawData, mockHydroRepo;
   beforeEach(() => {
-    hydrate1 = {userId: 1, date: "07/20/2020", ounces: 40}
-    hydrate2 = { userId: 2, date: "07/19/2020", ounces: 30 }
-    hydrate3 = { userId: 3, date: "07/18/2020", ounces: 20 }
+    hydrate1 = {userID: 1, date: "07/20/2020", numOunces: 40}
+    hydrate2 = { userID: 2, date: "07/19/2020", numOunces: 30 }
+    hydrate3 = { userID: 3, date: "07/18/2020", numOunces: 20 }
     mockRawData = [hydrate1, hydrate2, hydrate3]
     mockHydroRepo = new HydrationRepository(mockRawData)
   })
@@ -21,8 +21,12 @@ describe('HydrationRepository', function() {
   });
 
   it("should hold an array of instantiated users", function () {
-    expect(mockHydroRepo.hydrationData).to.deep.equal([hydrate1, hydrate2, hydrate3]);
-    expect(mockHydroRepo.hydrationData).to.equal(3);
+    expect(mockHydroRepo.hydrationData[0]).to.deep.equal({
+      userId: 1,
+      date: "07/20/2020",
+      ounces: 40,
+    });
+    expect(mockHydroRepo.hydrationData.length).to.deep.equal(3);
   });
 
 

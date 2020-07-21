@@ -6,9 +6,9 @@ class HydrationRepository {
   }
 
   instantiateHydroData(rawHydrationData) {
-    rawHydrationData.forEach((data) => new Hydration(data));
+    return rawHydrationData.map((data) => new Hydration(data));
   }
 }
 
 
-export default HydrationRepository
+export default HydrationRepository;

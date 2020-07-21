@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 import UserRepository from '../src/UserRepository';
-import User from '../src/User';
+// import User from '../src/User';
 import Sleep from '../src/Sleep';
 
 describe('UserRepository', function() {
@@ -81,7 +81,7 @@ describe('UserRepository', function() {
   });
 
   it('getUser should return user object when given a user id', function() {
-    expect(userRepository.getUser(2)).to.equal(user2);
+    expect(userRepository.getUser(1)).to.equal(userRepository.users[0]);
   })
 
   it('calculateAverageStepGoal should return average step goal for all users', function () {

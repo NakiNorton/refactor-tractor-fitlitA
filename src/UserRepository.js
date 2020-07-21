@@ -7,7 +7,7 @@ class UserRepository {
   }
 
   instantiateRawData(rawUserData) {
-   return rawUserData.map(data => new User(data));
+    return rawUserData.map(data => new User(data));
   }
 
   getUser(id) {
