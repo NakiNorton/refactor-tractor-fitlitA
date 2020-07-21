@@ -13,11 +13,11 @@ class User {
     this.friends = userDetails.friends || 'Add friends for friendly competition!';
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
+    this.sleepQualityAverage = 0;
+    this.sleepHoursRecord = [];
+    this.sleepQualityRecord = [];
     // this.totalStepsThisWeek = 0;
     // this.hoursSleptAverage = 0;
-    // this.sleepQualityAverage = 0;
-    // this.sleepHoursRecord = [];
-    // this.sleepQualityRecord = [];
     // this.activityRecord = [];
     // this.accomplishedDays = [];
     // this.trendingStepDays = [];
@@ -100,25 +100,25 @@ class User {
   //   }
   // }
 
-  // calculateAverageHoursThisWeek(todayDate) {
-  //   return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
-  //     let index = this.sleepHoursRecord.indexOf(this.sleepHoursRecord.find(sleep => sleep.date === todayDate));
-  //     if (index <= this.sleepHoursRecord.indexOf(sleepAct) && this.sleepHoursRecord.indexOf(sleepAct) <= (index + 6)) {
-  //       sum += sleepAct.hours;
-  //     }
-  //     return sum;
-  //   }, 0) / 7).toFixed(1);
-  // }
+  calculateAverageHoursThisWeek(todayDate) {
+    return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
+      let index = this.sleepHoursRecord.indexOf(this.sleepHoursRecord.find(sleep => sleep.date === todayDate));
+      if (index <= this.sleepHoursRecord.indexOf(sleepAct) && this.sleepHoursRecord.indexOf(sleepAct) <= (index + 6)) {
+        sum += sleepAct.hours;
+      }
+      return sum;
+    }, 0) / 7).toFixed(1);
+  }
 
-  // calculateAverageQualityThisWeek(todayDate) {
-  //   return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
-  //     let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todayDate));
-  //     if (index <= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
-  //       sum += sleepAct.quality;
-  //     }
-  //     return sum;
-  //   }, 0) / 7).toFixed(1);
-  // }
+  calculateAverageQualityThisWeek(todayDate) {
+    return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
+      let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todayDate));
+      if (index <= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
+        sum += sleepAct.quality;
+      }
+      return sum;
+    }, 0) / 7).toFixed(1);
+  }
 
   // updateActivities(activity) {
   //   this.activityRecord.unshift(activity);

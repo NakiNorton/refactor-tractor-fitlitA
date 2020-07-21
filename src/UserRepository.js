@@ -23,13 +23,13 @@ class UserRepository {
     return communityTotal / this.users.length;
   }
 
-  // calculateAverageSleepQuality() {
-  //   let totalSleepQuality = this.users.reduce((sum, user) => {
-  //     sum += user.sleepQualityAverage;
-  //     return sum;
-  //   }, 0);
-  //   return totalSleepQuality / this.users.length;
-  // }
+  calculateAverageSleepQuality() {
+    let totalSleepQuality = this.users.reduce((sum, user) => {
+      sum += user.sleepQualityAverage;
+      return sum;
+    }, 0);
+    return totalSleepQuality / this.users.length;
+  }
 
   // calculateAverageSteps(date) {
   //   let allUsersStepsCount = this.users.map(user => {
@@ -91,25 +91,25 @@ class UserRepository {
   // ^^ do they mean this for community? if so, this may be iteration 5. 
 
 
-  // findBestSleepers(date) {
-  //   return this.users.filter(user =>
-  //     user.calculateAverageQualityThisWeek(date) > 3);
-  // }
+  findBestSleepers(date) {
+    return this.users.filter(user =>
+      user.calculateAverageQualityThisWeek(date) > 3);
+  }
 
-  // getLongestSleepers(date) {
-  //   return sleepData.filter(sleep => {
-  //     return sleep.date === date;
-  //   }).sort((a, b) => {
-  //     return b.hoursSlept - a.hoursSlept;
-  //   })[0].userID;
-  // }
+  getLongestSleepers(date) {
+    return sleepData.filter(sleep => {
+      return sleep.date === date;
+    }).sort((a, b) => {
+      return b.hoursSlept - a.hoursSlept;
+    })[0].userID;
+  }
 
-  // getWorstSleepers(date) {
-  //   return sleepData.filter(sleep => sleep.date === date)
-  //     .sort((a, b) => {
-  //       return a.hoursSlept - b.hoursSlept;
-  //     })[0].userID;
-  // }
+  getWorstSleepers(date) {
+    return sleepData.filter(sleep => sleep.date === date)
+      .sort((a, b) => {
+        return a.hoursSlept - b.hoursSlept;
+      })[0].userID;
+  }
 }
 
 export default UserRepository;

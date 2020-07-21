@@ -1,6 +1,7 @@
 import './css/base.scss';
 import './css/styles.scss';
 
+import fetchData from './fetchData';
 import userData from './data/users';
 import activityData from './data/activity';
 import sleepData from './data/sleep';
@@ -12,50 +13,19 @@ import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
 import moment from 'moment';
-import { on } from 'chai-spies';
 
-const userRepository = new UserRepository(userData);
-const hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
-const currentUser = new User(userRepository.users[0]); 
-const todayDate = moment().format("L");
 const hydrationSection = document.querySelector("#hydration-card-container");
+const sleepSection = document.querySelector("#sleep-card-container");
 
+const createDataSets = () => {
+  userRepository = new UserRepository(userData).users;
+  hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
+  // activityRepo = new ActivityRepository(activityData);
+  // sleepRepo = new SleepRepository(sleepData);
+  currentUser = new User(userRepository.users[0]); 
+  todayDate = moment().format("L");
 
-// activityData.forEach(activity => {
-//   activity = new Activity(activity, userRepository);
-// });
-
-// hydrationData.forEach(hydration => {
-//   hydration = new Hydration(hydration, userRepository);
-// });
-
-// sleepData.forEach(sleep => {
-//   sleep = new Sleep(sleep, userRepository);
-// });
-
-// Promise.all([
-//   fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData")
-//     .then((response) => response.json()),
-//   fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData")
-//     .then((response) => response.json()),
-// ])
-//   .then(data => createDataSets(data[0].userData, data[1].hydrationData));
-//   .catch(err => console.error(err));
-
-// const createDataSets = (rawUserData, rawHydroData) => {
-//   createUserRepo(rawUserData);
-//   createHydroRepo(rawHydroData);
-// }
-
-// const createUserRepo = (rawUserData) => {
-//   const userRepository = new UserRepository(rawUserData);
-//   // may need more code to randomize user
-// }
-
-// const createHydroRepo = (rawHydroData) => {
-//   const hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
-//   return hydrationRepository;
-// }
+}
 
 const flipCard = (cardToHide, cardToShow) => {
   cardToHide.classList.add('hide');
@@ -264,39 +234,40 @@ hydrationSection.addEventListener('click', hydrationCardHandler);
 // // END OF HYDRATION //
 
 // // ~~~~~~~~~~~~~~~~~SLEEP STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
 let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
-let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
-let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleeper');
-let sleepInfoHoursAverageAllTime = document.querySelector('#sleep-info-hours-average-alltime');
-let sleepInfoQualityAverageAllTime = document.querySelector('#sleep-info-quality-average-alltime');
-let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
-let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
+// let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
+// let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleeper');
+// let sleepInfoHoursAverageAllTime = document.querySelector('#sleep-info-hours-average-alltime');
+// let sleepInfoQualityAverageAllTime = document.querySelector('#sleep-info-quality-average-alltime');
+// let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
+// let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
 
 // SLEEPER FUNCTIONS
 sleepCalendarHoursAverageWeekly.innerText = currentUser.calculateAverageHoursThisWeek(todayDate);
 
 sleepCalendarQualityAverageWeekly.innerText = currentUser.calculateAverageQualityThisWeek(todayDate);
 
-sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
-  return currentUser.id === userRepository.getLongestSleepers(todayDate)
-}).getFirstName();
+// sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
+//   return currentUser.id === userRepository.getLongestSleepers(todayDate)
+// }).getFirstName();
 
-sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
-  return currentUser.id === userRepository.getWorstSleepers(todayDate)
-}).getFirstName();
+// sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
+//   return currentUser.id === userRepository.getWorstSleepers(todayDate)
+// }).getFirstName();
 
-sleepInfoHoursAverageAllTime.innerText = currentUser.hoursSleptAverage;
+// sleepInfoHoursAverageAllTime.innerText = currentUser.hoursSleptAverage;
 
-sleepInfoQualityAverageAllTime.innerText = currentUser.sleepQualityAverage;
+// sleepInfoQualityAverageAllTime.innerText = currentUser.sleepQualityAverage;
 
-sleepInfoQualityToday.innerText = sleepData.find(sleep => {
-  return sleep.userID === currentUser.id && sleep.date === todayDate;
-}).sleepQuality;
+// sleepInfoQualityToday.innerText = sleepData.find(sleep => {
+//   return sleep.userID === currentUser.id && sleep.date === todayDate;
+// }).sleepQuality;
 
-sleepUserHoursToday.innerText = sleepData.find(sleep => {
-  return sleep.userID === currentUser.id && sleep.date === todayDate;
-}).hoursSlept;
+// sleepUserHoursToday.innerText = sleepData.find(sleep => {
+//   return sleep.userID === currentUser.id && sleep.date === todayDate;
+// }).hoursSlept;
 
 function sleepCardHandler() {
   let sleepMainCard = document.querySelector('#sleep-main-card');
@@ -317,6 +288,9 @@ function sleepCardHandler() {
   }
 }
 
+sleepSection.addEventListener('click', sleepCardHandler);
+
+
 // //// END OF SLEEP //
 
 // EVENT LISTENERS //
@@ -325,6 +299,7 @@ let profileButton = document.querySelector('#profile-button');
 profileButton.addEventListener("click", showDropdown);
 
 const loadHandler = () => {
+  createDataSets();
   document.querySelector("#header-name").innerText = `${currentUser.getFirstName()}'S `;
   hydrationCardDisplay();
 }
