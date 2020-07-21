@@ -48,6 +48,7 @@ class User {
     }
   }
 
+
   addDailyOunces(date) {
     return this.ouncesRecord.reduce((sum, record) => {
       let amount = record[date];

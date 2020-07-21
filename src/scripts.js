@@ -5,19 +5,18 @@ import userData from './data/users';
 import activityData from './data/activity';
 import sleepData from './data/sleep';
 import hydrationData from './data/hydration';
-
+import HydrationRepository from './HydrationRepository';
 import UserRepository from './UserRepository';
 import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
-import { htmlPrefilter } from 'jquery';
 
 const userRepository = new UserRepository(userData);
-console.log(userRepository);
 const currentUser = new User(userRepository.users[0]); 
-let todayDate = "2019/09/22";
-let hydrationSection = document.querySelector("#hydration-card-container");
+const todayDate = "2019/09/22";
+const hydrationSection = document.querySelector("#hydration-card-container");
+const hydrationRepository = new HydrationRepository(hydrationData, userRepository);
 
 
 // activityData.forEach(activity => {
@@ -43,31 +42,31 @@ const showDropdown = () => {
   document.querySelector("#dropdown-name").innerText = currentUser.name.toUpperCase();
   document.querySelector("#dropdown-goal").innerText = `DAILY STEP GOAL | ${currentUser.dailyStepGoal}`;
   document.querySelector("#dropdown-email").innerText = `EMAIL | ${currentUser.email}`;
-  showLeaderBoard(); // currently broken
+  // showLeaderBoard(); // currently broken
 }
   
 // leaderboard in dropdown menu, not sure what's happening here, will need to follow HTML, method is broken in User file
-const showLeaderBoard = () => {
-  let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
-  let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
-  currentUser.findFriendsNames(userRepository.users); // went thru original JS, couldn't find this, don't know where it came from
-  currentUser.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
-  currentUser.friendsActivityRecords.forEach(friend => {
-    dropdownFriendsStepsContainer.innerHTML += `
-        <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>`;
-  });
-  friendsStepsParagraphs.forEach(paragraph => {
-    if (friendsStepsParagraphs[0] === paragraph) {
-      paragraph.classList.add('green-text');
-    }
-    if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
-      paragraph.classList.add('red-text');
-    }
-    if (paragraph.innerText.includes('YOU')) {
-      paragraph.classList.add('yellow-text');
-    }
-  });
-}
+// const showLeaderBoard = () => {
+//   let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
+//   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
+//   currentUser.findFriendsNames(userRepository.users); // went thru original JS, couldn't find this, don't know where it came from
+//   currentUser.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
+//   currentUser.friendsActivityRecords.forEach(friend => {
+//     dropdownFriendsStepsContainer.innerHTML += `
+//         <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>`;
+//   });
+//   friendsStepsParagraphs.forEach(paragraph => {
+//     if (friendsStepsParagraphs[0] === paragraph) {
+//       paragraph.classList.add('green-text');
+//     }
+//     if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
+//       paragraph.classList.add('red-text');
+//     }
+//     if (paragraph.innerText.includes('YOU')) {
+//       paragraph.classList.add('yellow-text');
+//     }
+//   });
+// }
 
 //  END OF HEADER //
 
@@ -194,11 +193,16 @@ const showLeaderBoard = () => {
 
 const hydrationCardDisplay = () => {
   let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
-  hydrationUserOuncesToday.innerText = hydrationData.find(hydration => hydration.userID === currentUser.id && hydration.date === todayDate).numOunces;
-  let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
-  hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => hydration.userID === currentUser.id && hydration.date === todayDate).numOunces / 8;
-  // ^^ use of raw hydration data -- do we need a hydrationRepo?
+  hydrationUserOuncesToday.innerText = hydrationRepository.find(hydration => hydration.userID === currentUser.id && hydration.date === todayDate).numOunces;
   // listDailyOz();
+}
+
+const saveInput = (input, category) => {
+  if (category === hydroCategory) {
+    // add input to records arr
+    // add and reassign 
+  }
+
 }
 
 function hydrationCardHandler() {
@@ -217,6 +221,13 @@ function hydrationCardHandler() {
   }
   if (event.target.classList.contains("hydration-go-back-button")) {
     flipCard(event.target.parentNode, hydrationMainCard);
+  }
+  if (event.target.classList.contains('user-ounces-submit')) {
+    let hydrationInput = document.querySelector('#input-ounces').value;
+    let hydroCategory = event.target.classList.contains('user-ounces-submit');
+    saveInput(hydrationInput, hydroCategory);
+    flipCard(event.target.parentNode, hydrationMainCard);
+
   }
 }
 
