@@ -1,3 +1,5 @@
+import Sleep from "../src/Sleep";
+
 class SleepRepository {
   constructor(rawSleepData) {
     this.sleepData = this.instantiateRawData(rawSleepData);
