@@ -240,8 +240,13 @@ hydrationSection.addEventListener('click', hydrationCardHandler);
 // // ~~~~~~~~~~~~~~~~~SLEEP STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 const sleepCardDisplay = () => {
-  let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
-  let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
+  let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
+  let foundTodaySleepAmount = sleepData.find(sleep => sleep.userID === currentUser.id && sleep.date === todayDate);
+  foundTodaySleepAmount ? sleepUserHoursToday.innerText = `${foundTodaySleepAmount.hoursSlept}` : sleepUserHoursToday.innerText = "0";
+  // let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
+  // let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
+  // sleepCalendarHoursAverageWeekly.innerText = currentUser.calculateAverageHoursThisWeek(todayDate);
+  // sleepCalendarQualityAverageWeekly.innerText = currentUser.calculateAverageQualityThisWeek(todayDate);
 
 
 }
@@ -251,12 +256,9 @@ const sleepCardDisplay = () => {
 // let sleepInfoHoursAverageAllTime = document.querySelector('#sleep-info-hours-average-alltime');
 // let sleepInfoQualityAverageAllTime = document.querySelector('#sleep-info-quality-average-alltime');
 // let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
-// let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
 
 // SLEEPER FUNCTIONS
-// sleepCalendarHoursAverageWeekly.innerText = currentUser.calculateAverageHoursThisWeek(todayDate);
 
-// sleepCalendarQualityAverageWeekly.innerText = currentUser.calculateAverageQualityThisWeek(todayDate);
 
 // sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
 //   return currentUser.id === userRepository.getLongestSleepers(todayDate)
@@ -274,9 +276,6 @@ const sleepCardDisplay = () => {
 //   return sleep.userID === currentUser.id && sleep.date === todayDate;
 // }).sleepQuality;
 
-// sleepUserHoursToday.innerText = sleepData.find(sleep => {
-//   return sleep.userID === currentUser.id && sleep.date === todayDate;
-// }).hoursSlept;
 
 function sleepCardHandler() {
   let sleepMainCard = document.querySelector('#sleep-main-card');
