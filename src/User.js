@@ -12,8 +12,8 @@ class User {
     this.sleepQualityAverage = 0;
     this.sleepHoursRecord = [];
     this.sleepQualityRecord = [];
+    this.hoursSleptAverage = 0;
     // this.totalStepsThisWeek = 0;
-    // this.hoursSleptAverage = 0;
     // this.activityRecord = [];
     // this.accomplishedDays = [];
     // this.trendingStepDays = [];
@@ -84,16 +84,6 @@ class User {
       return sum;
     }, 0) / 7).toFixed(1);
   }
-
-  // addDailyOunces(date) {
-  //   return this.ouncesRecord.reduce((sum, record) => {
-  //     let amount = record[date];
-  //     if (amount) {
-  //       sum += amount;
-  //     }
-  //     return sum;
-  //   }, 0)
-  // }
 
   // updateSleep(date, hours, quality) {
   //   this.sleepHoursRecord.unshift({

@@ -2,10 +2,6 @@ import './css/base.scss';
 import './css/styles.scss';
 
 import fetchData from './fetchData';
-import userData from './data/users';
-import activityData from './data/activity';
-import sleepData from './data/sleep';
-import hydrationData from './data/hydration';
 import HydrationRepository from './HydrationRepository';
 import SleepRepository from "./SleepRepository";
 import UserRepository from './UserRepository';
@@ -193,18 +189,6 @@ const hydrationCalendarDisplay = () => {
   weekList.insertAdjacentHTML("beforeend", cardHtml);
 }
 
-// const saveInput = (input, category) => {
-//   if (category) {
-//     let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, ounces: input});
-//     currentUser.updateHydration(todayDate, hydrationObj.ounces);
-//     hydrationCardDisplay();
-//   }
-  // if (category === 'sleepCategory');
-  // if (category === 'stepsCategory');
-// }
-// ^^ trying to get one saveInput method where we pass in the input and category its called on, so it can be dynamic
-// and we can use for all handlers
-
 const hydrationCardHandler = () => {
   let hydrationMainCard = document.querySelector('#hydration-main-card');
   let hydrationInfoCard = document.querySelector('#hydration-info-card');
@@ -241,40 +225,22 @@ hydrationSection.addEventListener('click', hydrationCardHandler);
 
 const sleepCardDisplay = () => {
   let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
-  let foundTodaySleepAmount = sleepData.find(sleep => sleep.userID === currentUser.id && sleep.date === todayDate);
+  let foundTodaySleepAmount = sleepRepository.find(sleep => sleep.userID === currentUser.id && sleep.date === todayDate);
   foundTodaySleepAmount ? sleepUserHoursToday.innerText = `${foundTodaySleepAmount.hoursSlept}` : sleepUserHoursToday.innerText = "0";
-  let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
-  let foundTodaySleepQuality = sleepData.find(sleep => sleep.userID === currentUser.id && sleep.date === todayDate);
-  foundTodaySleepQuality ? sleepInfoQualityToday.innerText = `${foundTodaySleepQuality.sleepQuality}` : sleepInfoQualityToday.innerText = "0";
-  // let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
-  // let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
-  // sleepCalendarHoursAverageWeekly.innerText = currentUser.calculateAverageHoursThisWeek(todayDate);
-  // sleepCalendarQualityAverageWeekly.innerText = currentUser.calculateAverageQualityThisWeek(todayDate);
+  document.querySelector('#sleep-calendar-hours-average-weekly').innerText = currentUser.calculateAverageHoursThisWeek(todayDate);
+  document.querySelector('#sleep-calendar-quality-average-weekly').innerText = currentUser.calculateAverageQualityThisWeek(todayDate);
+  sleepInfoCardDisplay();
 }
 
-
-
-// let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
-// let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleeper');
-// let sleepInfoHoursAverageAllTime = document.querySelector('#sleep-info-hours-average-alltime');
-// let sleepInfoQualityAverageAllTime = document.querySelector('#sleep-info-quality-average-alltime');
-
-// SLEEPER FUNCTIONS
-
-
-// sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
-//   return currentUser.id === userRepository.getLongestSleepers(todayDate)
-// }).getFirstName();
-
-// sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
-//   return currentUser.id === userRepository.getWorstSleepers(todayDate)
-// }).getFirstName();
-
-// sleepInfoHoursAverageAllTime.innerText = currentUser.hoursSleptAverage;
-
-// sleepInfoQualityAverageAllTime.innerText = currentUser.sleepQualityAverage;
-
-
+const sleepInfoCardDisplay = () => {
+  let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
+  let foundTodaySleepQuality = sleepRepository.find(sleep => sleep.userID === currentUser.id && sleep.date === todayDate);
+  foundTodaySleepQuality ? sleepInfoQualityToday.innerText = `${foundTodaySleepQuality.sleepQuality}` : sleepInfoQualityToday.innerText = "0";
+  document.querySelector('#sleep-info-hours-average-alltime').innerText = currentUser.hoursSleptAverage;
+  document.querySelector('#sleep-info-quality-average-alltime').innerText = currentUser.sleepQualityAverage;
+  document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todayDate, sleepRepository)).getFirstName();
+  document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todayDate, sleepRepository)).getFirstName();
+}
 
 function sleepCardHandler() {
   let sleepMainCard = document.querySelector('#sleep-main-card');
