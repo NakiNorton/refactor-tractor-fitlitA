@@ -26,7 +26,7 @@ const createDataSets = () => {
   userRepository = new UserRepository(userData);
   hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
   // activityRepo = new ActivityRepository(activityData);
-  // sleepRepo = new SleepRepository(sleepData);
+  sleepRepository = new SleepRepository(sleepData).sleepData;
   currentUser = new User(userRepository.users[0]); 
   todayDate = moment().format("L");
 }
