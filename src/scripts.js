@@ -14,17 +14,21 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 import moment from 'moment';
 
+let userRepository;
+let currentUser;
+let todayDate;
+let hydrationRepository;
+
 const hydrationSection = document.querySelector("#hydration-card-container");
 const sleepSection = document.querySelector("#sleep-card-container");
 
 const createDataSets = () => {
-  userRepository = new UserRepository(userData).users;
+  userRepository = new UserRepository(userData);
   hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
   // activityRepo = new ActivityRepository(activityData);
   // sleepRepo = new SleepRepository(sleepData);
   currentUser = new User(userRepository.users[0]); 
   todayDate = moment().format("L");
-
 }
 
 const flipCard = (cardToHide, cardToShow) => {
@@ -164,8 +168,6 @@ const showDropdown = () => {
 // /// END of CLIMB ///
 
 // // ~~~~~~~~~~~~~~~~~~~~WATER STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-      
 // document.querySelector("#hydration-friend-ounces-today").innerText = userRepository.calculateAverageDailyWater(todayDate);
 // ^^iteration 5, broken anyhow.
 
@@ -235,8 +237,13 @@ hydrationSection.addEventListener('click', hydrationCardHandler);
 
 // // ~~~~~~~~~~~~~~~~~SLEEP STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
-let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
+const sleepCardDisplay = () => {
+  let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
+  let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
+
+
+}
+
 // let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
 // let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleeper');
 // let sleepInfoHoursAverageAllTime = document.querySelector('#sleep-info-hours-average-alltime');
@@ -245,9 +252,9 @@ let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-
 // let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
 
 // SLEEPER FUNCTIONS
-sleepCalendarHoursAverageWeekly.innerText = currentUser.calculateAverageHoursThisWeek(todayDate);
+// sleepCalendarHoursAverageWeekly.innerText = currentUser.calculateAverageHoursThisWeek(todayDate);
 
-sleepCalendarQualityAverageWeekly.innerText = currentUser.calculateAverageQualityThisWeek(todayDate);
+// sleepCalendarQualityAverageWeekly.innerText = currentUser.calculateAverageQualityThisWeek(todayDate);
 
 // sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
 //   return currentUser.id === userRepository.getLongestSleepers(todayDate)
@@ -302,6 +309,7 @@ const loadHandler = () => {
   createDataSets();
   document.querySelector("#header-name").innerText = `${currentUser.getFirstName()}'S `;
   hydrationCardDisplay();
+  sleepCardDisplay();
 }
 
 window.addEventListener("load", loadHandler);
