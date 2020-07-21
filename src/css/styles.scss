@@ -178,53 +178,26 @@ main {
 }
 
 /* BUTTONS */
-.info-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  display: inline;
-  height: 3.4vw;
-  margin-left: 1vw;
-  width: 3.4vw;
-}
-
-.friends-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  display: inline;
-  height: 3.4vw;
-  margin-right: 1vw;
-  width: 3.4vw;
-}
-
-.calendar-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  display: inline;
-  float: right;
-  height: 3.4vw;
-  margin-right: 1vw;
-  width: 3.4vw;
-}
-
-.trending-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  height: 3.4vw;
-  margin-left: 1vw;
-  width: 3.4vw;
-}
-
+.info-button,
+.friends-button,
+.calendar-button,
+.trending-button,
 .go-back-button {
   background-position: center;
   background-size: 3.4vw;
   border: none;
+  display: inline;
   height: 3.4vw;
   margin-left: 1vw;
   width: 3.4vw;
+}
+
+.submit-button {
+
+}
+
+.calendar-button {
+  float: right;
 }
 
 .steps-go-back-button {

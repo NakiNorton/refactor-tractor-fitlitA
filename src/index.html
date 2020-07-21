@@ -97,8 +97,12 @@
         <section class='info-card hide' id='hydration-info-card'>
           <button type='button' name='button' class='go-back-button hydration-go-back-button'></button>
           <div class='card-data-line'>
-            <p>GLASSES OF WATER CONSUMED TODAY:</p>
-            <h4 id='hydration-info-glasses-today'></h4>
+            <p>How many ounces of water have you drank today?</p>
+            <div class="input-ounces-box">
+              <input type="text" class="inputs" id="input-ounces" placeholder="oz" maxlength="5"
+                minlength="0">
+              <button class="submit-button user-ounces-submit">Clear</button>
+            </div>
           </div>
         </section>
         <section class='friends-card hide' id='hydration-friends-card'>
