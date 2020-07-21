@@ -243,19 +243,21 @@ const sleepCardDisplay = () => {
   let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
   let foundTodaySleepAmount = sleepData.find(sleep => sleep.userID === currentUser.id && sleep.date === todayDate);
   foundTodaySleepAmount ? sleepUserHoursToday.innerText = `${foundTodaySleepAmount.hoursSlept}` : sleepUserHoursToday.innerText = "0";
+  let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
+  let foundTodaySleepQuality = sleepData.find(sleep => sleep.userID === currentUser.id && sleep.date === todayDate);
+  foundTodaySleepQuality ? sleepInfoQualityToday.innerText = `${foundTodaySleepQuality.sleepQuality}` : sleepInfoQualityToday.innerText = "0";
   // let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
   // let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
   // sleepCalendarHoursAverageWeekly.innerText = currentUser.calculateAverageHoursThisWeek(todayDate);
   // sleepCalendarQualityAverageWeekly.innerText = currentUser.calculateAverageQualityThisWeek(todayDate);
-
-
 }
+
+
 
 // let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
 // let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleeper');
 // let sleepInfoHoursAverageAllTime = document.querySelector('#sleep-info-hours-average-alltime');
 // let sleepInfoQualityAverageAllTime = document.querySelector('#sleep-info-quality-average-alltime');
-// let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
 
 // SLEEPER FUNCTIONS
 
@@ -272,9 +274,6 @@ const sleepCardDisplay = () => {
 
 // sleepInfoQualityAverageAllTime.innerText = currentUser.sleepQualityAverage;
 
-// sleepInfoQualityToday.innerText = sleepData.find(sleep => {
-//   return sleep.userID === currentUser.id && sleep.date === todayDate;
-// }).sleepQuality;
 
 
 function sleepCardHandler() {
