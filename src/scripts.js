@@ -14,10 +14,9 @@ import Sleep from './Sleep';
 import moment from 'moment';
 
 const userRepository = new UserRepository(userData);
-const hydrationRepository = new HydrationRepository(hydrationData, userRepository);
-console.log(hydrationRepository);
+const hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
 const currentUser = new User(userRepository.users[0]); 
-const todayDate = moment().format("MMMM Do YYYY");
+const todayDate = moment().format("L");
 const hydrationSection = document.querySelector("#hydration-card-container");
 
 
@@ -32,6 +31,30 @@ const hydrationSection = document.querySelector("#hydration-card-container");
 // sleepData.forEach(sleep => {
 //   sleep = new Sleep(sleep, userRepository);
 // });
+
+// Promise.all([
+//   fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData")
+//     .then((response) => response.json()),
+//   fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData")
+//     .then((response) => response.json()),
+// ])
+//   .then(data => createDataSets(data[0].userData, data[1].hydrationData));
+//   .catch(err => console.error(err));
+
+// const createDataSets = (rawUserData, rawHydroData) => {
+//   createUserRepo(rawUserData);
+//   createHydroRepo(rawHydroData);
+// }
+
+// const createUserRepo = (rawUserData) => {
+//   const userRepository = new UserRepository(rawUserData);
+//   // may need more code to randomize user
+// }
+
+// const createHydroRepo = (rawHydroData) => {
+//   const hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
+//   return hydrationRepository;
+// }
 
 const flipCard = (cardToHide, cardToShow) => {
   cardToHide.classList.add('hide');
@@ -194,23 +217,28 @@ const showDropdown = () => {
 // ^^iteration 5, broken anyhow.
 
 const hydrationCardDisplay = () => {
-  let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
-  hydrationUserOuncesToday.innerText = hydrationRepository.hydrationData.find(hydration => hydration.userID === currentUser.id && hydration.date === todayDate).numOunces;
-  // listDailyOz();
+  let hydrationUserOuncesToday = document.getElementById('hydration-user-ounces-today');
+  console.log(currentUser.ouncesRecord);
+  let foundTodayAmount = currentUser.ouncesRecord.find(ounce => ounce.date === todayDate);
+  if (foundTodayAmount) {
+    hydrationUserOuncesToday.innerText = `${foundTodayAmount.ounces}`; 
+  } else {
+    hydrationUserOuncesToday.innerText = "0";
+  }
 }
 
-const saveInput = (input, category) => {
-  if (category === 'hydroCategory') {
-    let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, ounces: input});
-    currentUser.updateHydration(todayDate, hydrationObj.ounces);
-    document.querySelector("#hydration-user-ounces-today").innerText = input;
-  }
+  // listDailyOz();
+
+
+// const saveInput = (input, category) => {
+//   if (category) {
+//     let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, ounces: input});
+//     currentUser.updateHydration(todayDate, hydrationObj.ounces);
+//     hydrationCardDisplay();
+//   }
   // if (category === 'sleepCategory');
   // if (category === 'stepsCategory');
-
-  
-
-}
+// }
 
 function hydrationCardHandler() {
   let hydrationMainCard = document.querySelector('#hydration-main-card');
@@ -230,10 +258,13 @@ function hydrationCardHandler() {
     flipCard(event.target.parentNode, hydrationMainCard);
   }
   if (event.target.classList.contains('user-ounces-submit')) {
-    let hydrationInput = document.querySelector('#input-ounces').value;
-    let hydroCategory = event.target.classList.contains('user-ounces-submit');
-    saveInput(hydrationInput, hydroCategory);
-    flipCard(event.target.parentNode, hydrationMainCard);
+    event.preventDefault();
+    let input = document.querySelector('#input-ounces');
+    let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, numOunces: input.value});
+    currentUser.updateHydration(todayDate, Number(hydrationObj.ounces));
+    hydrationCardDisplay();
+    input.value = "";
+    flipCard(hydrationInfoCard, hydrationMainCard);
   }
 }
 

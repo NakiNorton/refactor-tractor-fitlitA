@@ -39,8 +39,8 @@ class User {
     return names[0].toUpperCase();
   }
 
-  updateHydration(date, amount) {
-    this.ouncesRecord.unshift({[date]: amount});
+  updateHydration(today, amount) {
+    this.ouncesRecord.unshift({date: today, ounces: amount});
     if (this.ouncesRecord.length) {
       this.ouncesAverage = Math.round((amount + (this.ouncesAverage * (this.ouncesRecord.length - 1))) / this.ouncesRecord.length);
     } else {
