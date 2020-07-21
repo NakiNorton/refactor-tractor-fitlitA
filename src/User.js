@@ -48,8 +48,8 @@ class User {
     }
   }
 
-  getWeekAverage(ouncesRecord) {
-    let week = ouncesRecord.splice(0, 7);
+  getWeekAvgOunces() {
+    let week = this.ouncesRecord.splice(0, 7);
     let weekTotal = week.reduce((sum, entry) => {
       sum += entry.ounces;
       return sum;
@@ -57,15 +57,27 @@ class User {
     return weekTotal / 7;
   }
 
-  addDailyOunces(date) {
-    return this.ouncesRecord.reduce((sum, record) => {
-      let amount = record[date];
-      if (amount) {
-        sum += amount;
-      }
-      return sum;
-    }, 0)
+  getWeekOuncesByDay() {
+    let week = this.ouncesRecord.splice(0, 7);
+    if (week.length !== 0) {
+      return week.reduce((weekList, day) => {
+        weekList.push({[day.date]: day.ounces});
+        return weekList;
+      }, []);
+    } else {
+      return 'Drink more water!';
+    }
   }
+
+  // addDailyOunces(date) {
+  //   return this.ouncesRecord.reduce((sum, record) => {
+  //     let amount = record[date];
+  //     if (amount) {
+  //       sum += amount;
+  //     }
+  //     return sum;
+  //   }, 0)
+  // }
 
   // updateSleep(date, hours, quality) {
   //   this.sleepHoursRecord.unshift({

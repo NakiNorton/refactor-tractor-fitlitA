@@ -200,11 +200,24 @@ const showDropdown = () => {
 // ^^iteration 5, broken anyhow.
 
 const hydrationCardDisplay = () => {
+  hydrationAddInputDisplay();
+  hydrationCalendarDisplay();
+}
+
+const hydrationAddInputDisplay = () => {
   let hydrationUserOuncesToday = document.getElementById('hydration-user-ounces-today');
   let foundTodayAmount = currentUser.ouncesRecord.find(ounce => ounce.date === todayDate);
   foundTodayAmount ? hydrationUserOuncesToday.innerText = `${foundTodayAmount.ounces}` : hydrationUserOuncesToday.innerText = "0";
 }
 
+const hydrationCalendarDisplay = () => {
+  let weeklyAvg = document.querySelector(".hydration-weekly-avg");
+  let weekList = document.querySelector(".hydration-week-data-list");
+  let cardHtml = `<article class="hydration-amount-daily">${currentUser.getWeekOuncesByDay()}</br></article>`;
+  weeklyAvg.innerText = `You averaged ${currentUser.getWeekAvgOunces()} ounces this week!`;
+  weekList.innerText = "";
+  weekList.insertAdjacentHTML("beforeend", cardHtml);
+}
 
 // const saveInput = (input, category) => {
 //   if (category) {
@@ -218,7 +231,7 @@ const hydrationCardDisplay = () => {
 // ^^ trying to get one saveInput method where we pass in the input and category its called on, so it can be dynamic
 // and we can use for all handlers
 
-function hydrationCardHandler() {
+const hydrationCardHandler = () => {
   let hydrationMainCard = document.querySelector('#hydration-main-card');
   let hydrationInfoCard = document.querySelector('#hydration-info-card');
   let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
