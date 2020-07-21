@@ -156,6 +156,28 @@ main {
   margin-bottom: 2vw;
 }
 
+.input-box {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-left: 7px;
+}
+
+.inputs {
+  background-color: transparent;
+  color: #FFFFFF;
+  font-size: 24px;
+  font-weight: 600;
+  padding: 2px;
+  width: 75px;
+  height: 50px;
+}
+
+::placeholder {
+  color: white;
+  text-align: right;
+}
+
 .hydration-weekly-label {
   font-size: 1vw;
   padding-top: 1vw;
@@ -182,7 +204,8 @@ main {
 .friends-button,
 .calendar-button,
 .trending-button,
-.go-back-button {
+.go-back-button,
+.submit-button {
   background-position: center;
   background-size: 3.4vw;
   border: none;
@@ -192,12 +215,13 @@ main {
   width: 3.4vw;
 }
 
-.submit-button {
-
-}
-
 .calendar-button {
   float: right;
+}
+
+.submit-button {
+  background-image: url(../images/download.svg);
+  background-color: #54C6BE;
 }
 
 .steps-go-back-button {
