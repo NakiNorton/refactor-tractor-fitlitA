@@ -12,6 +12,7 @@ import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
 import moment from 'moment';
+import { on } from 'chai-spies';
 
 const userRepository = new UserRepository(userData);
 const hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
@@ -194,40 +195,15 @@ const showDropdown = () => {
 
 // // ~~~~~~~~~~~~~~~~~~~~WATER STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// WATER FUNCTIONS // 
-
-// const listDailyOz = () => {
-// let dailyOz = document.querySelectorAll('.daily-oz');
-// let sortedHydrationDataByDate = currentUser.ouncesRecord.sort((a, b) => Object.keys(a) - Object.keys(b));
-// ^^ attempt to refactor the beast below. need to look at hydration class more
-//   if (Object.keys(a)[0] > Object.keys(b)[0]) {
-//     return -1;
-//   }
-//   if (Object.keys(a)[0] < Object.keys(b)[0]) {
-//     return 1;
-//   }
-//   return 0;
-// });
-      
-// dailyOz.forEach(day => (ounce.innerText = currentUser.addDailyOunces(Object.keys(sortedHydrationDataByDate[indexOf day])[0])));
-// }
-// ^^ dive into daily oz in html, hydration class
       
 // document.querySelector("#hydration-friend-ounces-today").innerText = userRepository.calculateAverageDailyWater(todayDate);
 // ^^iteration 5, broken anyhow.
 
 const hydrationCardDisplay = () => {
   let hydrationUserOuncesToday = document.getElementById('hydration-user-ounces-today');
-  console.log(currentUser.ouncesRecord);
   let foundTodayAmount = currentUser.ouncesRecord.find(ounce => ounce.date === todayDate);
-  if (foundTodayAmount) {
-    hydrationUserOuncesToday.innerText = `${foundTodayAmount.ounces}`; 
-  } else {
-    hydrationUserOuncesToday.innerText = "0";
-  }
+  foundTodayAmount ? hydrationUserOuncesToday.innerText = `${foundTodayAmount.ounces}` : hydrationUserOuncesToday.innerText = "0";
 }
-
-  // listDailyOz();
 
 
 // const saveInput = (input, category) => {
@@ -239,6 +215,8 @@ const hydrationCardDisplay = () => {
   // if (category === 'sleepCategory');
   // if (category === 'stepsCategory');
 // }
+// ^^ trying to get one saveInput method where we pass in the input and category its called on, so it can be dynamic
+// and we can use for all handlers
 
 function hydrationCardHandler() {
   let hydrationMainCard = document.querySelector('#hydration-main-card');

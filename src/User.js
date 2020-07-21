@@ -48,6 +48,14 @@ class User {
     }
   }
 
+  getWeekAverage(ouncesRecord) {
+    let week = ouncesRecord.splice(0, 7);
+    let weekTotal = week.reduce((sum, entry) => {
+      sum += entry.ounces;
+      return sum;
+    }, 0);
+    return weekTotal / 7;
+  }
 
   addDailyOunces(date) {
     return this.ouncesRecord.reduce((sum, record) => {
