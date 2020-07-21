@@ -1,10 +1,13 @@
 import sleepData from './data/sleep';
-import userData from './data/users';
 import User from './User';
 
 class UserRepository {
   constructor(rawUserData) {
-    this.users = rawUserData;
+    this.users = this.instantiateRawData(rawUserData);
+  }
+
+  instantiateRawData(rawUserData) {
+   return rawUserData.map(data => new User(data));
   }
 
   getUser(id) {

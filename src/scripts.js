@@ -14,10 +14,11 @@ import Sleep from './Sleep';
 import moment from 'moment';
 
 const userRepository = new UserRepository(userData);
+const hydrationRepository = new HydrationRepository(hydrationData, userRepository);
+console.log(hydrationRepository);
 const currentUser = new User(userRepository.users[0]); 
 const todayDate = moment().format("MMMM Do YYYY");
 const hydrationSection = document.querySelector("#hydration-card-container");
-const hydrationRepository = new HydrationRepository(hydrationData, userRepository);
 
 
 // activityData.forEach(activity => {
@@ -194,15 +195,20 @@ const showDropdown = () => {
 
 const hydrationCardDisplay = () => {
   let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
-  hydrationUserOuncesToday.innerText = hydrationRepository.find(hydration => hydration.userID === currentUser.id && hydration.date === todayDate).numOunces;
+  hydrationUserOuncesToday.innerText = hydrationRepository.hydrationData.find(hydration => hydration.userID === currentUser.id && hydration.date === todayDate).numOunces;
   // listDailyOz();
 }
 
 const saveInput = (input, category) => {
-  if (category === hydroCategory) {
-    // add input to records arr
-    // add and reassign 
+  if (category === 'hydroCategory') {
+    let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, ounces: input});
+    currentUser.updateHydration(todayDate, hydrationObj.ounces);
+    document.querySelector("#hydration-user-ounces-today").innerText = input;
   }
+  // if (category === 'sleepCategory');
+  // if (category === 'stepsCategory');
+
+  
 
 }
 
@@ -228,7 +234,6 @@ function hydrationCardHandler() {
     let hydroCategory = event.target.classList.contains('user-ounces-submit');
     saveInput(hydrationInput, hydroCategory);
     flipCard(event.target.parentNode, hydrationMainCard);
-
   }
 }
 
