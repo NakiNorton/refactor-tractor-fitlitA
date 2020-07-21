@@ -11,10 +11,11 @@ import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
+import moment from 'moment';
 
 const userRepository = new UserRepository(userData);
 const currentUser = new User(userRepository.users[0]); 
-const todayDate = "2019/09/22";
+const todayDate = moment().format("MMMM Do YYYY");
 const hydrationSection = document.querySelector("#hydration-card-container");
 const hydrationRepository = new HydrationRepository(hydrationData, userRepository);
 
