@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, should } from 'chai';
 import User from '../src/User';
 import UserRepository from '../src/UserRepository'; 
 
@@ -122,6 +122,24 @@ describe('User', function() {
   it('should have a default ouncesRecord of []', function() {
     expect(user.ouncesRecord).to.deep.equal([]);
   });
+
+  it('should return weekly average of water consumed in oz', function() {
+    user.updateHydration("07/20/2020", 40);
+    user.updateHydration("07/19/2020", 20);
+    user.updateHydration("07/18/2020", 55);
+    user.updateHydration("07/17/2020", 30);
+
+    expect(user.getWeekAvgOunces()).to.equal(36.25);
+  });
+
+  it('should return a list of all the dates and ounces drank, respectively', function() {
+    user.updateHydration("07/20/2020", 40);
+    user.updateHydration("07/19/2020", 20);
+    user.updateHydration("07/18/2020", 55);
+    user.updateHydration("07/17/2020", 30);
+
+    expect(user.getWeekOuncesByDay()[0]).to.deep.equal({ '07/17/2020': 30 });
+  })
 
   it('should have a default hoursSleptAverage of 0', function() {
     expect(user.hoursSleptAverage).to.equal(0);
@@ -270,7 +288,7 @@ describe('User', function() {
     expect(user.trendingStairsDays).to.deep.equal(['Your most recent positive climbing streak was 2019/06/26 - 2019/06/29!', 'Your most recent positive climbing streak was 2019/06/19 - 2019/06/24!']);
   });
 
-  it.only('findFriendsNames should find the first names of friends', function() {
+  it('findFriendsNames should find the first names of friends', function() {
     let user2 = new User({
       'id': 16,
       'name': 'Ben Nist',

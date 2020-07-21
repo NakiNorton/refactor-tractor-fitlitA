@@ -1,16 +1,16 @@
-import UserRepository from './UserRepository';
-import userData from './data/users';
-let userRepository = new UserRepository(userData) // Get rid of this eventually
+// import UserRepository from './UserRepository';
+// import userData from './data/users';
+// let userRepository = new UserRepository(userData); // Get rid of this eventually
 
 class User {
-  constructor(user) {
-    this.id = this.checkUserId(user.id);
-    this.name = this.checkName(user.name);
-    this.address = user.address || 'No address added.';
-    this.email = user.email || 'No email address added.';
-    this.strideLength = user.strideLength || 'Stride length not added.';
-    this.dailyStepGoal = user.dailyStepGoal || 'Daily step goal not added.';
-    this.friends = user.friends || 'Add friends for friendly competition!';
+  constructor(userDetails) {
+    this.id = this.checkUserId(userDetails.id);
+    this.name = this.checkName(userDetails.name);
+    this.address = userDetails.address || 'No address added.';
+    this.email = userDetails.email || 'No email address added.';
+    this.strideLength = userDetails.strideLength || 'Stride length not added.';
+    this.dailyStepGoal = userDetails.dailyStepGoal || 'Daily step goal not added.';
+    this.friends = userDetails.friends || 'Add friends for friendly competition!';
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
     // this.totalStepsThisWeek = 0;
@@ -39,8 +39,8 @@ class User {
     return names[0].toUpperCase();
   }
 
-  updateHydration(date, amount) {
-    this.ouncesRecord.unshift({[date]: amount});
+  updateHydration(today, amount) {
+    this.ouncesRecord.unshift({date: today, ounces: amount});
     if (this.ouncesRecord.length) {
       this.ouncesAverage = Math.round((amount + (this.ouncesAverage * (this.ouncesRecord.length - 1))) / this.ouncesRecord.length);
     } else {
@@ -48,15 +48,36 @@ class User {
     }
   }
 
-  addDailyOunces(date) {
-    return this.ouncesRecord.reduce((sum, record) => {
-      let amount = record[date];
-      if (amount) {
-        sum += amount;
-      }
+  getWeekAvgOunces() {
+    let week = this.ouncesRecord.splice(0, 7);
+    let weekTotal = week.reduce((sum, entry) => {
+      sum += entry.ounces;
       return sum;
-    }, 0)
+    }, 0);
+    return weekTotal / 7;
   }
+
+  getWeekOuncesByDay() {
+    let week = this.ouncesRecord.splice(0, 7);
+    if (week.length !== 0) {
+      return week.reduce((weekList, day) => {
+        weekList.push({[day.date]: day.ounces});
+        return weekList;
+      }, []);
+    } else {
+      return 'Drink more water!';
+    }
+  }
+
+  // addDailyOunces(date) {
+  //   return this.ouncesRecord.reduce((sum, record) => {
+  //     let amount = record[date];
+  //     if (amount) {
+  //       sum += amount;
+  //     }
+  //     return sum;
+  //   }, 0)
+  // }
 
   // updateSleep(date, hours, quality) {
   //   this.sleepHoursRecord.unshift({
@@ -214,11 +235,11 @@ class User {
   //     .sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
   // }
 
-  compareUserGoalWithCommunityGoal() {
-    let communityStepGoal = userRepository.calculateCommunityAvgStepGoal()
-    let goalDifference = communityStepGoal - this.dailyStepGoal;
-    return goalDifference; 
-  }
+  // compareUserGoalWithCommunityGoal(userRepository) {
+  //   let communityStepGoal = userRepository.calculateCommunityAvgStepGoal()
+  //   let goalDifference = communityStepGoal - this.dailyStepGoal;
+  //   return goalDifference; 
+  // }
 }
 
 export default User;

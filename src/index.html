@@ -47,6 +47,9 @@
             <p>TOTAL MILES WALKED TODAY:</p>
             <h4 id='steps-info-miles-walked-today'></h4>
           </div>
+          <div class="input-box">
+            <input type="text" class="inputs" id="input-steps" placeholder="steps" maxlength="10" minlength="0">
+            <button class="submit-button user-steps-submit"></button>
         </section>
         <section class='friends-card hide' id='steps-friends-card'>
           <button name='button' class='go-back-button steps-go-back-button' aria-label='Return To Previous Information'></button>
@@ -102,8 +105,12 @@
           <button name='button' class='go-back-button hydration-go-back-button' aria-label='Return to Previous Information'> 
             </button>
           <div class='card-data-line'>
-            <p>GLASSES OF WATER CONSUMED TODAY:</p>
-            <h4 id='hydration-info-glasses-today'></h4>
+            <p>Add today's water consumption:</p>
+            <div class="input-box">
+              <input type="text" class="inputs" id="input-ounces" placeholder="oz" maxlength="5"
+                minlength="0">
+              <button class='submit-button user-ounces-submit'></button>
+            </div>
           </div>
         </section>
         <section class='friends-card hide' id='hydration-friends-card'>
@@ -114,31 +121,10 @@
           </div>
         </section>
         <section class='calendar-card hide' id='hydration-calendar-card'>
-          <button name='button' class='go-back-button hydration-go-back-button' aria-label='Return to Previous Information'></button>
-          <div class='hydration-data-line'>
-            <p class='hydration-weekly-label'>YESTERDAY:</p>
-            <h4 class='hydration-weekly-amount'><span class='daily-oz' id='hydration-calendar-ounces-1day'></span> oz</h4>
-          </div>
-          <div class='hydration-data-line'>
-            <p class='hydration-weekly-label'>2 DAYS AGO:</p>
-            <h4 class='hydration-weekly-amount'><span class='daily-oz' id='hydration-calendar-ounces-2day'></span> oz</h4>
-          </div>
-          <div class='hydration-data-line'>
-            <p class='hydration-weekly-label'>3 DAYS AGO:</p>
-            <h4 class='hydration-weekly-amount'><span class='daily-oz' id='hydration-calendar-ounces-3day'></span> oz</h4>
-          </div>
-          <div class='hydration-data-line'>
-            <p class='hydration-weekly-label'>4 DAYS AGO:</p>
-            <h4 class='hydration-weekly-amount'><span class='daily-oz' id='hydration-calendar-ounces-4day'></span> oz</h4>
-          </div>
-          <div class='hydration-data-line'>
-            <p class='hydration-weekly-label'>5 DAYS AGO:</p>
-            <h4 class='hydration-weekly-amount'><span class='daily-oz' id='hydration-calendar-ounces-5day'></span> oz</h4>
-          </div>
-          <div class='hydration-data-line'>
-            <p class='hydration-weekly-label'>6 DAYS AGO:</p>
-            <h4 class='hydration-weekly-amount'><span class='daily-oz' id='hydration-calendar-ounces-6day'></span> oz</h4>
-          </div>
+          <button type='button' name='button' class='go-back-button hydration-go-back-button'></button>       
+          <h5 class='hydration-weekly-avg'>You averaged ounces this week!</h5>
+          <article class='hydration-week-data-list'>
+          </article>
         </section>
       </section>
       <section class='card-container' id='stairs-card-container'>
@@ -160,6 +146,9 @@
           <div class='card-data-line'>
             <p>FLIGHTS CLIMBED TODAY</p>
             <h4 id='stairs-info-flights-today'></h4>
+            <div class="input-box">
+              <input type="text" class="inputs" id="input-stairss" placeholder="stairs" maxlength="5" minlength="0">
+              <button class="submit-button user-stairs-submit"></button>
           </div>
         </section>
         <section class='friends-card hide' id='stairs-friends-card'>
@@ -202,6 +191,11 @@
           </div>
         </section>
         <section class='info-card hide' id='sleep-info-card'>
+          <p>Add hours slept last night:</p>
+          <div class="input-box">
+            <input type="text" class="inputs" id="input-sleep" placeholder="hours" maxlength="5" minlength="0">
+            <button class="submit-button user-sleep-submit"></button>
+          </div>
           <button name='button' class='go-back-button sleep-go-back-button' aria-label='Return to Previous Information'></button>
           <div class='card-data-line'>
             <p>SLEEP QUALITY LAST NIGHT</p>

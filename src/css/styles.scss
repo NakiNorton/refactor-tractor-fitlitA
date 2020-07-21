@@ -156,6 +156,28 @@ main {
   margin-bottom: 2vw;
 }
 
+.input-box {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-left: 7px;
+}
+
+.inputs {
+  background-color: transparent;
+  color: #FFFFFF;
+  font-size: 24px;
+  font-weight: 600;
+  padding: 2px;
+  width: 75px;
+  height: 50px;
+}
+
+::placeholder {
+  color: white;
+  text-align: right;
+}
+
 .hydration-weekly-label {
   font-size: 1vw;
   padding-top: 1vw;
@@ -171,6 +193,12 @@ main {
   margin-bottom: .2vw;
 }
 
+.hydration-weekly-avg,
+.hydration-week-data-list {
+  text-align: center;
+  width: 100%;
+}
+
 .trend-line {
   font-size: 2vw;
   text-align: center;
@@ -178,53 +206,28 @@ main {
 }
 
 /* BUTTONS */
-.info-button {
+.info-button,
+.friends-button,
+.calendar-button,
+.trending-button,
+.go-back-button,
+.submit-button {
   background-position: center;
   background-size: 3.4vw;
   border: none;
   display: inline;
   height: 3.4vw;
   margin-left: 1vw;
-  width: 3.4vw;
-}
-
-.friends-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  display: inline;
-  height: 3.4vw;
-  margin-right: 1vw;
   width: 3.4vw;
 }
 
 .calendar-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  display: inline;
   float: right;
-  height: 3.4vw;
-  margin-right: 1vw;
-  width: 3.4vw;
 }
 
-.trending-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  height: 3.4vw;
-  margin-left: 1vw;
-  width: 3.4vw;
-}
-
-.go-back-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  height: 3.4vw;
-  margin-left: 1vw;
-  width: 3.4vw;
+.submit-button {
+  background-image: url(../images/download.svg);
+  background-color: #54C6BE;
 }
 
 .steps-go-back-button {

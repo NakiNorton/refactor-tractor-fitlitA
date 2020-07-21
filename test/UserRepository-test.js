@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 import UserRepository from '../src/UserRepository';
-import User from '../src/User';
+// import User from '../src/User';
 import Sleep from '../src/Sleep';
 
 describe('UserRepository', function() {
@@ -11,7 +11,7 @@ describe('UserRepository', function() {
   let mockUserData;
   let userRepository;
   beforeEach(() => {
-    user1 = new User({
+    user1 = {
       'id': 1,
       'name': 'Luisa Hane',
       'address': '15195 Nakia Tunnel, Erdmanport VA 19901-1697',
@@ -23,8 +23,8 @@ describe('UserRepository', function() {
         4,
         8
       ]
-    })
-    user2 = new User({
+    }
+    user2 = {
       "id": 2,
       "name": "Jarvis Considine",
       "address": "30086 Kathryn Port, Ciceroland NE 07273",
@@ -37,8 +37,8 @@ describe('UserRepository', function() {
         24,
         19
       ]
-    })
-    user3 = new User({
+    }
+    user3 = {
       "id": 3,
       "name": "Herminia Witting",
       "address": "85823 Bosco Fork, East Oscarstad MI 85126-5660",
@@ -51,7 +51,7 @@ describe('UserRepository', function() {
         42,
         33
       ]
-    })
+    }
     mockUserData = [user1, user2, user3]
     userRepository = new UserRepository(mockUserData);
   })
@@ -64,13 +64,24 @@ describe('UserRepository', function() {
     expect(userRepository).to.be.an.instanceof(UserRepository);
   });
 
-  it('should hold an array of users', function() {
-    expect(userRepository.users).to.deep.equal([user1, user2, user3]);
+  it('should hold an array of instantiated users', function() {
+    expect(userRepository.users[0]).to.deep.equal({
+      id: 1,
+      name: "Luisa Hane",
+      address: "15195 Nakia Tunnel, Erdmanport VA 19901-1697",
+      email: "Diana.Hayes1@hotmail.com",
+      dailyStepGoal: 10000,
+      friends: [16, 4, 8],
+      strideLength: 4.3,
+      ouncesAverage: 0,
+      ouncesRecord: [],
+      strideLength: 4.3
+    });
     expect(userRepository.users.length).to.equal(3);
   });
 
   it('getUser should return user object when given a user id', function() {
-    expect(userRepository.getUser(2)).to.equal(user2);
+    expect(userRepository.getUser(1)).to.equal(userRepository.users[0]);
   })
 
   it('calculateAverageStepGoal should return average step goal for all users', function () {
