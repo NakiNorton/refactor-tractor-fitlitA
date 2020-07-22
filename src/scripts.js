@@ -9,7 +9,8 @@ import SleepRepository from "./SleepRepository";
 import userData from './data/users';
 import sleepData from "./data/sleep";
 import hydrationData from "./data/hydration";
-import activityData from './data/activity'
+import activityData from './data/activity';
+import domUpdates from './DomUpdates';
 
 import User from './User';
 import Hydration from './Hydration';
@@ -37,6 +38,8 @@ const createDataSets = () => {
   sleepRepository = new SleepRepository(sleepData).sleepData;
   currentUser = new User(userRepository.users[0]); 
   todayDate = moment().format("L");
+  domUpdates.defineData(todayDate)
+  domUpdates.defineCurrentUser(currentUser);
 }
 
 /************** MOVED TO DOM ***********************/
@@ -261,7 +264,7 @@ const hydrationCardHandler = () => {
     let input = document.querySelector('#input-ounces');
     let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, numOunces: input.value});
     currentUser.updateHydration(todayDate, Number(hydrationObj.ounces));
-    domUpdates.hydrationCardDisplay(currentUser, todayDate); 
+    domUpdates.hydrationCardDisplay(); 
     input.value = "";
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
@@ -344,11 +347,11 @@ profileButton.addEventListener("click", populateUserProfile);
 
 const loadHandler = () => {
   createDataSets();
-  document.querySelector("#header-name").innerText = `${currentUser.getFirstName()}'S `;
-  hydrationCardDisplay();
-  sleepCardDisplay();
-  climbCardDisplay();
-  stepCardDisplay();
+  document.querySelector("#header-name").innerText = domUpdates.displayUsersName()
+  domUpdates.hydrationCardDisplay();
+  domUpdates.sleepCardDisplay();
+  domUpdates.climbCardDisplay();
+  domUpdates.stepCardDisplay();
 }
 
 window.addEventListener("load", loadHandler);
