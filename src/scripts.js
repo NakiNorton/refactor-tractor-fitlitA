@@ -87,7 +87,7 @@ const stepCardDisplay = () => {
   let foundTodayMinutesActiveObj = currentUser.activityRecord.find(activity =>  activity.date === todayDate && activity.minutesActive);
   let todayMinutesActive = document.querySelector("#steps-info-active-minutes-today");
   foundTodayMinutesActiveObj ? todayMinutesActive.innerText = `${foundTodayMinutesActiveObj.minutesActive}` : todayMinutesActive.innerText = "0";
-  // document.querySelector('#steps-info-miles-walked-today').innerText = currentUser.activityRecord.find(activity => activity.date === todayDate).calculateMiles(userRepository);
+  document.querySelector('#steps-info-miles-walked-today').innerText = currentUser.activityRecord.find(activity => activity.date === todayDate).calculateMiles(userRepository);
   document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = currentUser.calculateAverageMinutesActiveThisWeek(todayDate);
   document.querySelector('#steps-calendar-total-steps-weekly').innerText = currentUser.calculateAverageStepsThisWeek(todayDate);
   document.querySelector('#steps-friend-steps-average-today').innerText = userRepository.calculateAverageMinutesActive(todayDate);
@@ -150,12 +150,12 @@ stepSection.addEventListener('click', stepCardHandler);
 
 // // CLIMB SECTION //
 const climbCardDisplay = () => {
-  console.log(currentUser.activityRecord)
   let stairsToday = document.querySelector("#stairs-user-stairs-today");
   let foundStairsTodayObj = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.flightsOfStairs);
   let flightsToday = document.querySelector("#stairs-info-flights-today");
   let foundFlightsTodayObj = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.flightsOfStairs);
   foundStairsTodayObj ? stairsToday.innerText = `${foundStairsTodayObj.flightsOfStairs * 12}` : stairsToday.innerText = "0";
+  console.log(foundStairsTodayObj)
   foundFlightsTodayObj ? flightsToday.innerText = `${foundFlightsTodayObj.flightsOfStairs}` : flightsToday = "0";
   document.querySelector("#stairs-friend-flights-average-today").innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
   document.querySelector("#stairs-calendar-flights-average-weekly").innerText = currentUser.calculateAverageFlightsThisWeek(todayDate);
