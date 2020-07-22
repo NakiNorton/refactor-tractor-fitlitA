@@ -11,7 +11,7 @@ const domUpdates = {
     this.currentUser = user;
   },
 
-  // GENERAL DISPLAY //////////////////////////////////////////
+  ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayUsersName() {
     return `${this.currentUser.getFirstName()}'S `;
   },
@@ -31,7 +31,7 @@ const domUpdates = {
     cardToShow.classList.remove('hide');
   },
 
-  // HYDRATION DISPLAY SECTION /////////////////////////////////
+  //////////// HYDRATION DISPLAY SECTION /////////////////////////////////
   hydrationCardDisplay(input) {
     this.hydrationAddInputDisplay();
     this.hydrationCalendarDisplay();
@@ -65,7 +65,7 @@ const domUpdates = {
   // ^^ trying to get one saveInput method where we pass in the input and category its called on, so it can be dynamic
   // and we can use for all handlers
 
-  // ACTIVITY DISPLAY SECTION /////////////////////////////////
+  ///////////// ACTIVITY DISPLAY SECTION /////////////////////////////////
 
 /* STEPS */
   stepCardDisplay() {
@@ -83,23 +83,56 @@ const domUpdates = {
     document.querySelector('#steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageSteps(this.todayDate);
   },
 
-  // STAIR CARD DISPLAY
+
+// //trending card
+// const updateTrendingStepsDays = () => {
+//   let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
+//   currentUser.findTrendingStepDays();
+//   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStepDays[0]}</p>`;
+// };
+
+  /****** STAIR CARD DISPLAY ***************/
+
+  climbCardDisplay() {
+    let stairsToday = document.querySelector("#stairs-user-stairs-today");
+    let foundStairsTodayObj = this.currentUser.activityRecord.find(activity => activity.date === this.todayDate && activity.flightsOfStairs);
+    let flightsToday = document.querySelector("#stairs-info-flights-today");
+    let foundFlightsTodayObj = this.currentUser.activityRecord.find(activity => activity.date === this.todayDate && activity.flightsOfStairs);
+    foundStairsTodayObj ? stairsToday.innerText = `${foundStairsTodayObj.flightsOfStairs * 12}` : stairsToday.innerText = "0";
+    console.log(foundStairsTodayObj)
+    foundFlightsTodayObj ? flightsToday.innerText = `${foundFlightsTodayObj.flightsOfStairs}` : flightsToday = "0";
+    // ^^ broken, won't display stairs
+    document.querySelector("#stairs-friend-flights-average-today").innerText = (this.userRepository.calculateAverageStairs(this.todayDate) / 12).toFixed(1);
+    document.querySelector("#stairs-calendar-flights-average-weekly").innerText = this.currentUser.calculateAverageFlightsThisWeek(this.todayDate);
+    document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (this.currentUser.calculateAverageFlightsThisWeek(this.todayDate) * 12).toFixed(0);
+  },
+
+// const updateTrendingStairsDays = () => {
+//   currentUser.findTrendingStairsDays();
+//   let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
+//   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
+// }
 
 
+  //////// SLEEP DISPLAY SECTION //////////////////////////////////////
+  sleepCardDisplay() {
+    let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
+    let foundTodaySleepAmount = this.currentUser.sleepHoursRecord.find(sleep => sleep.date === this.todayDate);
+    foundTodaySleepAmount ? sleepUserHoursToday.innerText = `${foundTodaySleepAmount.hours}` : sleepUserHoursToday.innerText = "0";
+    document.querySelector('#sleep-calendar-hours-average-weekly').innerText = this.currentUser.calculateAverageHoursThisWeek(this.todayDate);
+    document.querySelector('#sleep-calendar-quality-average-weekly').innerText = this.currentUser.calculateAverageQualityThisWeek(this.todayDate);
+    this.sleepInfoCardDisplay();
+  },
 
-
-
-
-
-
-
-
-
-
-
-
-  // SLEEP DISPLAY SECTION /////////////////////////////////
-
+  sleepInfoCardDisplay() {
+    let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
+    let foundTodaySleepQuality = this.currentUser.sleepQualityRecord.find(sleep => sleep.date === this.todayDate);
+    foundTodaySleepQuality ? sleepInfoQualityToday.innerText = `${foundTodaySleepQuality.quality}` : sleepInfoQualityToday.innerText = "0";
+    document.querySelector('#sleep-info-hours-average-alltime').innerText = this.currentUser.hoursSleptAverage;
+    document.querySelector('#sleep-info-quality-average-alltime').innerText = this.currentUser.sleepQualityAverage;
+    // document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todayDate, sleepRepository)).getFirstName();
+    // document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todayDate, sleepRepository)).getFirstName();
+  },
 
 
 
