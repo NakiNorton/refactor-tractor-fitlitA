@@ -259,6 +259,22 @@ function sleepCardHandler() {
   if (event.target.classList.contains("sleep-go-back-button")) {
     flipCard(event.target.parentNode, sleepMainCard);
   }
+  if (event.target.classList.contains("user-sleep-submit")) {
+    event.preventDefault();
+    let inputHours = document.querySelector("#input-sleep");
+    let inputQuality = document.querySelector("#input-sleep-quality");
+    let sleepObj = new Sleep({
+      userID: currentUser.id,
+      date: todayDate,
+      hoursSlept: inputHours.value,
+      sleepQuality: inputQuality.value
+    });
+    currentUser.updateSleep(todayDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
+    sleepCardDisplay();
+    inputHours.value = "";
+    inputQuality.value = "";
+    flipCard(sleepInfoCard, sleepMainCard);
+  }
 }
 
 sleepSection.addEventListener('click', sleepCardHandler);
