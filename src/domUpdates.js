@@ -1,17 +1,16 @@
 const domUpdates = {
   currentUser: null,
   todayDate: null,
+  userRepository: null,
   
-  defineData(todayDate, userRepository) {
+  defineData(user, todayDate, userRepository) {
+    this.currentUser = user;
     this.todayDate = todayDate;
     this.userRepository = userRepository;
   },
 
-  defineCurrentUser(user) {
-    this.currentUser = user;
-  },
-
   ////////// GENERAL DISPLAY //////////////////////////////////////////
+  
   displayUsersName() {
     return `${this.currentUser.getFirstName()}'S `;
   },
@@ -29,45 +28,34 @@ const domUpdates = {
     console.log('FLIP!')
     cardToHide.classList.add('hide');
     cardToShow.classList.remove('hide');
+
+
+// leaderboard in dropdown menu, not sure what's happening here, will need to follow HTML, method is broken in User file
+// const showLeaderBoard = () => {
+//   let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
+//   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
+//   currentUser.findFriendsNames(userRepository.users); // went thru original JS, couldn't find this, don't know where it came from
+//   currentUser.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
+//   currentUser.friendsActivityRecords.forEach(friend => {
+//     dropdownFriendsStepsContainer.innerHTML += `
+//         <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>`;
+//   });
+//   friendsStepsParagraphs.forEach(paragraph => {
+//     if (friendsStepsParagraphs[0] === paragraph) {
+//       paragraph.classList.add('green-text');
+//     }
+//     if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
+//       paragraph.classList.add('red-text');
+//     }
+//     if (paragraph.innerText.includes('YOU')) {
+//       paragraph.classList.add('yellow-text');
+//     }
+//   });
+// }
   },
 
-  //////////// HYDRATION DISPLAY SECTION /////////////////////////////////
-  hydrationCardDisplay(input) {
-    this.hydrationAddInputDisplay();
-    this.hydrationCalendarDisplay();
-    input.value = "";
-  },
+  ///////////// STEPS DISPLAY SECTION /////////////////////////////////
 
-  hydrationAddInputDisplay() {
-    let hydrationUserOuncesToday = document.getElementById('hydration-user-ounces-today');
-    let foundTodayAmount = this.currentUser.ouncesRecord.find(ounce => ounce.date === this.todayDate);
-    foundTodayAmount ? hydrationUserOuncesToday.innerText = `${foundTodayAmount.ounces}` : hydrationUserOuncesToday.innerText = "0";
-  },
-
-  hydrationCalendarDisplay() {
-    let weeklyAvg = document.querySelector(".hydration-weekly-avg");
-    let weekList = document.querySelector(".hydration-week-data-list");
-    let cardHtml = `<article class="hydration-amount-daily">${this.currentUser.getWeekOuncesByDay()}</br></article>`; 
-    weeklyAvg.innerText = `You averaged ${this.currentUser.getWeekAvgOunces()} ounces this week!`; 
-    weekList.innerText = "";
-    weekList.insertAdjacentHTML("beforeend", cardHtml);
-  },
-
-  // const saveInput = (input, category) => {
-  //   if (category) {
-  //     let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, ounces: input});
-  //     currentUser.updateHydration(todayDate, hydrationObj.ounces);
-  //     hydrationCardDisplay();
-  //   }
-  // if (category === 'sleepCategory');
-  // if (category === 'stepsCategory');
-  // }
-  // ^^ trying to get one saveInput method where we pass in the input and category its called on, so it can be dynamic
-  // and we can use for all handlers
-
-  ///////////// ACTIVITY DISPLAY SECTION /////////////////////////////////
-
-/* STEPS */
   stepCardDisplay() {
     let todaySteps = document.querySelector('#steps-user-steps-today');
     let foundStepsTodayObj = this.currentUser.activityRecord.find(activity => activity.date === this.todayDate && activity.steps);
@@ -83,7 +71,6 @@ const domUpdates = {
     document.querySelector('#steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageSteps(this.todayDate);
   },
 
-
 // //trending card
 // const updateTrendingStepsDays = () => {
 //   let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
@@ -91,7 +78,7 @@ const domUpdates = {
 //   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStepDays[0]}</p>`;
 // };
 
-  /****** STAIR CARD DISPLAY ***************/
+  ///////////// STEPS DISPLAY SECTION /////////////////////////////////
 
   climbCardDisplay() {
     let stairsToday = document.querySelector("#stairs-user-stairs-today");
@@ -114,7 +101,47 @@ const domUpdates = {
 // }
 
 
+  //////////// HYDRATION DISPLAY SECTION /////////////////////////////////
+
+  hydrationCardDisplay(input) {
+    this.hydrationAddInputDisplay();
+    this.hydrationCalendarDisplay();
+    input.value = "";
+  },
+
+  hydrationAddInputDisplay() {
+    let hydrationUserOuncesToday = document.getElementById('hydration-user-ounces-today');
+    let foundTodayAmount = this.currentUser.ouncesRecord.find(ounce => ounce.date === this.todayDate);
+    foundTodayAmount ? hydrationUserOuncesToday.innerText = `${foundTodayAmount.ounces}` : hydrationUserOuncesToday.innerText = "0";
+  },
+
+  hydrationCalendarDisplay() {
+    let weeklyAvg = document.querySelector(".hydration-weekly-avg");
+    let weekList = document.querySelector(".hydration-week-data-list");
+    let cardHtml = `<article class="hydration-amount-daily">${this.currentUser.getWeekOuncesByDay()}</br></article>`;
+    weeklyAvg.innerText = `You averaged ${this.currentUser.getWeekAvgOunces()} ounces this week!`;
+    weekList.innerText = "";
+    weekList.insertAdjacentHTML("beforeend", cardHtml);
+  },
+
+  // const saveInput = (input, category) => {
+  //   if (category) {
+  //     let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, ounces: input});
+  //     currentUser.updateHydration(todayDate, hydrationObj.ounces);
+  //     hydrationCardDisplay();
+  //   }
+  // if (category === 'sleepCategory');
+  // if (category === 'stepsCategory');
+  // }
+  // ^^ trying to get one saveInput method where we pass in the input and category its called on, so it can be dynamic
+  // and we can use for all handlers
+
+
+  // document.querySelector("#hydration-friend-ounces-today").innerText = userRepository.calculateAverageDailyWater(todayDate);
+
+
   //////// SLEEP DISPLAY SECTION //////////////////////////////////////
+
   sleepCardDisplay() {
     let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
     let foundTodaySleepAmount = this.currentUser.sleepHoursRecord.find(sleep => sleep.date === this.todayDate);
@@ -133,8 +160,6 @@ const domUpdates = {
     // document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todayDate, sleepRepository)).getFirstName();
     // document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todayDate, sleepRepository)).getFirstName();
   },
-
-
 
 }
 export default domUpdates;
