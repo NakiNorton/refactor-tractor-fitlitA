@@ -1,63 +1,43 @@
 import './css/base.scss';
 import './css/styles.scss';
 
-import userData from './data/users';
-import activityData from './data/activity';
-import sleepData from './data/sleep';
-import hydrationData from './data/hydration';
-import HydrationRepository from './HydrationRepository';
+import fetchData from './fetchData';
 import UserRepository from './UserRepository';
+import HydrationRepository from './HydrationRepository';
+import ActivityRepository from './Activity-Repository'
+import SleepRepository from "./SleepRepository";
+import userData from './data/users';
+import sleepData from "./data/sleep";
+import hydrationData from "./data/hydration";
+import activityData from './data/activity'
+
 import User from './User';
-import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
+import Activity from './Activity';
 import moment from 'moment';
-import { on } from 'chai-spies';
-import DomUpdates from './domUpdates.js'
 
-const userRepository = new UserRepository(userData);
-const hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
-const currentUser = new User(userRepository.users[0]); 
-const todayDate = moment().format("L");
+let userRepository;
+let currentUser;
+let todayDate;
+let hydrationRepository;
+let sleepRepository;
+let activityRepository;
+
 const hydrationSection = document.querySelector("#hydration-card-container");
+const sleepSection = document.querySelector("#sleep-card-container");
+const stepSection = document.querySelector("#steps-card-container");
+const stairsSection = document.querySelector("#stairs-card-container");
 
-const domUpdates = new DomUpdates(currentUser, todayDate)
 
-// activityData.forEach(activity => {
-//   activity = new Activity(activity, userRepository);
-// });
-
-// hydrationData.forEach(hydration => {
-//   hydration = new Hydration(hydration, userRepository);
-// });
-
-// sleepData.forEach(sleep => {
-//   sleep = new Sleep(sleep, userRepository);
-// });
-
-// Promise.all([
-//   fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData")
-//     .then((response) => response.json()),
-//   fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData")
-//     .then((response) => response.json()),
-// ])
-//   .then(data => createDataSets(data[0].userData, data[1].hydrationData));
-//   .catch(err => console.error(err));
-
-// const createDataSets = (rawUserData, rawHydroData) => {
-//   createUserRepo(rawUserData);
-//   createHydroRepo(rawHydroData);
-// }
-
-// const createUserRepo = (rawUserData) => {
-//   const userRepository = new UserRepository(rawUserData);
-//   // may need more code to randomize user
-// }
-
-// const createHydroRepo = (rawHydroData) => {
-//   const hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
-//   return hydrationRepository;
-// }
+const createDataSets = () => {
+  userRepository = new UserRepository(userData);
+  hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
+  activityRepository = new ActivityRepository(activityData).activityData;
+  sleepRepository = new SleepRepository(sleepData).sleepData;
+  currentUser = new User(userRepository.users[0]); 
+  todayDate = moment().format("L");
+}
 
 /************** MOVED TO DOM ***********************/
 // const flipCard = (cardToHide, cardToShow) => {
@@ -102,20 +82,20 @@ const domUpdates = new DomUpdates(currentUser, todayDate)
 
 // STEP SECTION ///
 
-// const stepCardDisplay = () => {
-//   // main step info quick glance
-//   document.querySelector('#steps-user-steps-today').innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).numSteps;
-//   // today's step info
-//   document.querySelector('#steps-info-active-minutes-today').innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).minutesActive;
-//   document.querySelector('#steps-info-miles-walked-today').innerText = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.userId === currentUser.id).calculateMiles(userRepository);
-//   //friend card
-//   document.querySelector('#steps-friend-steps-average-today').innerText = userRepository.calculateAverageMinutesActive(todayDate);
-//   document.querySelector('#steps-friend-average-step-goal').innerText = `${userRepository.calculateCommunityAvgStepGoal()}`;
-//   document.querySelector('#steps-friend-active-minutes-average-today').innerText = userRepository.calculateAverageSteps(todayDate);
-//   // weekly/trend card
-//   document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = currentUser.calculateAverageMinutesActiveThisWeek(todayDate);
-//   document.querySelector('#steps-calendar-total-steps-weekly').innerText = currentUser.calculateAverageStepsThisWeek(todayDate);
-// }
+const stepCardDisplay = () => {
+  let todaySteps = document.querySelector('#steps-user-steps-today');
+  let foundStepsTodayObj = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.steps);
+  foundStepsTodayObj ? todaySteps.innerText = `${foundStepsTodayObj.steps}` : todaySteps.innerText = "0";
+  let foundTodayMinutesActiveObj = currentUser.activityRecord.find(activity =>  activity.date === todayDate && activity.minutesActive);
+  let todayMinutesActive = document.querySelector("#steps-info-active-minutes-today");
+  foundTodayMinutesActiveObj ? todayMinutesActive.innerText = `${foundTodayMinutesActiveObj.minutesActive}` : todayMinutesActive.innerText = "0";
+  document.querySelector('#steps-info-miles-walked-today').innerText = currentUser.activityRecord.find(activity => activity.date === todayDate).calculateMiles(userRepository);
+  document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = currentUser.calculateAverageMinutesActiveThisWeek(todayDate);
+  document.querySelector('#steps-calendar-total-steps-weekly').innerText = currentUser.calculateAverageStepsThisWeek(todayDate);
+  document.querySelector('#steps-friend-steps-average-today').innerText = userRepository.calculateAverageMinutesActive(todayDate);
+  document.querySelector('#steps-friend-average-step-goal').innerText = userRepository.calculateCommunityAvgStepGoal();
+  document.querySelector('#steps-friend-active-minutes-average-today').innerText = userRepository.calculateAverageSteps(todayDate);
+}
   
 // //trending card
 // const updateTrendingStepsDays = () => {
@@ -125,45 +105,65 @@ const domUpdates = new DomUpdates(currentUser, todayDate)
 // };
 // ^^ iteration 5
   
-// const stepCardHandler = () => {
-//   let stepsMainCard = document.querySelector('#steps-main-card');
-//   let stepsInfoCard = document.querySelector('#steps-info-card');
-//   let stepsFriendsCard = document.querySelector('#steps-friends-card');
-//   let stepsTrendingCard = document.querySelector('#steps-trending-card');
-//   let stepsCalendarCard = document.querySelector('#steps-calendar-card');
-//   if (event.target.classList.contains('steps-info-button')) {
-//     flipCard(stepsMainCard, stepsInfoCard);
-//   }
-//   if (event.target.classList.contains('steps-friends-button')) {
-//     flipCard(stepsMainCard, stepsFriendsCard);
-//   }
-//   if (event.target.classList.contains('steps-trending-button')) {
-//     flipCard(stepsMainCard, stepsTrendingCard);
-//     updateTrendingStepsDays();
-//   }
-//   if (event.target.classList.contains('steps-calendar-button')) {
-//     flipCard(stepsMainCard, stepsCalendarCard);
-//   }
-//   if (event.target.classList.contains("steps-go-back-button")) {
-//     flipCard(event.target.parentNode, stepsMainCard);
-//   }
-// }
+const stepCardHandler = () => {
+  let stepsMainCard = document.querySelector('#steps-main-card');
+  let stepsInfoCard = document.querySelector('#steps-info-card');
+  let stepsFriendsCard = document.querySelector('#steps-friends-card');
+  let stepsTrendingCard = document.querySelector('#steps-trending-card');
+  let stepsCalendarCard = document.querySelector('#steps-calendar-card');
+  if (event.target.classList.contains('steps-info-button')) {
+    flipCard(stepsMainCard, stepsInfoCard);
+  }
+  if (event.target.classList.contains('steps-friends-button')) {
+    flipCard(stepsMainCard, stepsFriendsCard);
+  }
+  if (event.target.classList.contains('steps-trending-button')) {
+    flipCard(stepsMainCard, stepsTrendingCard);
+    // updateTrendingStepsDays();
+  }
+  if (event.target.classList.contains('steps-calendar-button')) {
+    flipCard(stepsMainCard, stepsCalendarCard);
+  }
+  if (event.target.classList.contains("steps-go-back-button")) {
+    flipCard(event.target.parentNode, stepsMainCard);
+  } 
+  if (event.target.classList.contains('user-steps-submit')) {
+    event.preventDefault();
+    let inputSteps = document.querySelector('#input-steps');
+    let inputMinutes = document.querySelector("#input-steps-minutes");
+    let activityObj = new Activity({
+      userID: currentUser.id,
+      date: todayDate,
+      numSteps: inputSteps.value,
+      minutesActive: inputMinutes.value
+    });
+    currentUser.updateActivities(activityObj);
+    stepCardDisplay();
+    inputSteps.value = "";
+    inputMinutes.value = "";
+    flipCard(stepsInfoCard, stepsMainCard);
+  }
+}
+
+stepSection.addEventListener('click', stepCardHandler);
 
 ///END of STEPS //
 
 
 // // CLIMB SECTION //
-// const climbCardDisplay = () => {
-//   // main card
-//   document.querySelector("#stairs-user-stairs-today").innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).flightsOfStairs * 12;
-//   // today's insight
-//   document.querySelector("#stairs-info-flights-today").innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).flightsOfStairs;
-//   // friends
-//   document.querySelector("#stairs-friend-flights-average-today").innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
-//   // week
-//   document.querySelector("#stairs-calendar-flights-average-weekly").innerText = currentUser.calculateAverageFlightsThisWeek(todayDate);
-//   document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (currentUser.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
-// }
+const climbCardDisplay = () => {
+  let stairsToday = document.querySelector("#stairs-user-stairs-today");
+  let foundStairsTodayObj = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.flightsOfStairs);
+  let flightsToday = document.querySelector("#stairs-info-flights-today");
+  let foundFlightsTodayObj = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.flightsOfStairs);
+  foundStairsTodayObj ? stairsToday.innerText = `${foundStairsTodayObj.flightsOfStairs * 12}` : stairsToday.innerText = "0";
+  console.log(foundStairsTodayObj)
+  foundFlightsTodayObj ? flightsToday.innerText = `${foundFlightsTodayObj.flightsOfStairs}` : flightsToday = "0";
+  // ^^ broken, won't display stairs
+  document.querySelector("#stairs-friend-flights-average-today").innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
+  document.querySelector("#stairs-calendar-flights-average-weekly").innerText = currentUser.calculateAverageFlightsThisWeek(todayDate);
+  document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (currentUser.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+}
 
 // const updateTrendingStairsDays = () => {
 //   currentUser.findTrendingStairsDays();
@@ -171,35 +171,48 @@ const domUpdates = new DomUpdates(currentUser, todayDate)
 //   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
 // }
 
-// const climbCardHandler = () => {
-//   let stairsMainCard = document.querySelector("#stairs-main-card");
-//   let stairsInfoCard = document.querySelector("#stairs-info-card");
-//   let stairsFriendsCard = document.querySelector("#stairs-friends-card");
-//   let stairsCalendarCard = document.querySelector("#stairs-calendar-card");
-//   let stairsTrendingCard = document.querySelector("#stairs-trending-card");
-//   if (event.target.classList.contains('stairs-info-button')) {
-//     flipCard(stairsMainCard, stairsInfoCard);
-//   }
-//   if (event.target.classList.contains('stairs-friends-button')) {
-//     flipCard(stairsMainCard, stairsFriendsCard);
-//   }
-//   if (event.target.classList.contains('stairs-trending-button')) {
-//     flipCard(stairsMainCard, stairsTrendingCard);
-//     updateTrendingStairsDays();
-//   }
-//   if (event.target.classList.contains('stairs-calendar-button')) {
-//     flipCard(stairsMainCard, stairsCalendarCard);
-//   }
-//   if (event.target.classList.contains("stairs-go-back-button")) {
-//     flipCard(event.target.parentNode, stairsMainCard);
-//   }
-// }
+const stairsCardHandler = () => {
+  let stairsMainCard = document.querySelector("#stairs-main-card");
+  let stairsInfoCard = document.querySelector("#stairs-info-card");
+  let stairsFriendsCard = document.querySelector("#stairs-friends-card");
+  let stairsCalendarCard = document.querySelector("#stairs-calendar-card");
+  let stairsTrendingCard = document.querySelector("#stairs-trending-card");
+  if (event.target.classList.contains('stairs-info-button')) {
+    flipCard(stairsMainCard, stairsInfoCard);
+  }
+  if (event.target.classList.contains('stairs-friends-button')) {
+    flipCard(stairsMainCard, stairsFriendsCard);
+  }
+  if (event.target.classList.contains('stairs-trending-button')) {
+    flipCard(stairsMainCard, stairsTrendingCard);
+    // updateTrendingStairsDays();
+  }
+  if (event.target.classList.contains('stairs-calendar-button')) {
+    flipCard(stairsMainCard, stairsCalendarCard);
+  }
+  if (event.target.classList.contains("stairs-go-back-button")) {
+    flipCard(event.target.parentNode, stairsMainCard);
+  }
+  if (event.target.classList.contains("user-stairs-submit")) {
+    event.preventDefault();
+    let inputStairs = document.querySelector("#input-stairs");
+    let activityObj = new Activity({
+      userID: currentUser.id,
+      date: todayDate,
+      flightsOfStairs: inputStairs.value
+    });
+    currentUser.updateActivities(activityObj);
+    stepCardDisplay();
+    inputStairs.value = "";
+    flipCard(stairsInfoCard, stairsMainCard);
+  }
+}
+
+stairsSection.addEventListener('click', stairsCardHandler);
 
 // /// END of CLIMB ///
 
 // // ~~~~~~~~~~~~~~~~~~~~WATER STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-      
 // document.querySelector("#hydration-friend-ounces-today").innerText = userRepository.calculateAverageDailyWater(todayDate);
 // ^^iteration 5, broken anyhow.
 
@@ -225,18 +238,6 @@ const domUpdates = new DomUpdates(currentUser, todayDate)
 // }
 
 
-
-// const saveInput = (input, category) => {
-//   if (category) {
-//     let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, ounces: input});
-//     currentUser.updateHydration(todayDate, hydrationObj.ounces);
-//     hydrationCardDisplay();
-//   }
-  // if (category === 'sleepCategory');
-  // if (category === 'stepsCategory');
-// }
-// ^^ trying to get one saveInput method where we pass in the input and category its called on, so it can be dynamic
-// and we can use for all handlers
 
 const hydrationCardHandler = () => {
   let hydrationMainCard = document.querySelector('#hydration-main-card');
@@ -271,63 +272,63 @@ hydrationSection.addEventListener('click', hydrationCardHandler);
 // // END OF HYDRATION //
 
 // // ~~~~~~~~~~~~~~~~~SLEEP STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// // let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
-// // let sleepFriendsCard = document.querySelector('#sleep-friends-card');
-// // let sleepInfoCard = document.querySelector('#sleep-info-card');
-// // let sleepMainCard = document.querySelector('#sleep-main-card');
-// // ^^ added to handler
-// let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
-// let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
-// let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
-// let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleeper');
-// let sleepInfoHoursAverageAllTime = document.querySelector('#sleep-info-hours-average-alltime');
-// let sleepInfoQualityAverageAllTime = document.querySelector('#sleep-info-quality-average-alltime');
-// let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
-// let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
 
-// // SLEEPER FUNCTIONS
-// sleepCalendarHoursAverageWeekly.innerText = currentUser.calculateAverageHoursThisWeek(todayDate);
+const sleepCardDisplay = () => {
+  let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
+  let foundTodaySleepAmount = currentUser.sleepHoursRecord.find(sleep => sleep.date === todayDate);
+  foundTodaySleepAmount ? sleepUserHoursToday.innerText = `${foundTodaySleepAmount.hours}` : sleepUserHoursToday.innerText = "0";
+  document.querySelector('#sleep-calendar-hours-average-weekly').innerText = currentUser.calculateAverageHoursThisWeek(todayDate);
+  document.querySelector('#sleep-calendar-quality-average-weekly').innerText = currentUser.calculateAverageQualityThisWeek(todayDate);
+  sleepInfoCardDisplay();
+}
 
-// sleepCalendarQualityAverageWeekly.innerText = currentUser.calculateAverageQualityThisWeek(todayDate);
+const sleepInfoCardDisplay = () => {
+  let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
+  let foundTodaySleepQuality = currentUser.sleepQualityRecord.find(sleep => sleep.date === todayDate);
+  foundTodaySleepQuality ? sleepInfoQualityToday.innerText = `${foundTodaySleepQuality.quality}` : sleepInfoQualityToday.innerText = "0";
+  document.querySelector('#sleep-info-hours-average-alltime').innerText = currentUser.hoursSleptAverage;
+  document.querySelector('#sleep-info-quality-average-alltime').innerText = currentUser.sleepQualityAverage;
+  // document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todayDate, sleepRepository)).getFirstName();
+  // document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todayDate, sleepRepository)).getFirstName();
+}
 
-// sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
-//   return currentUser.id === userRepository.getLongestSleepers(todayDate)
-// }).getFirstName();
+function sleepCardHandler() {
+  let sleepMainCard = document.querySelector('#sleep-main-card');
+  let sleepInfoCard = document.querySelector('#sleep-info-card');
+  let sleepFriendsCard = document.querySelector('#sleep-friends-card');
+  let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
+  if (event.target.classList.contains('sleep-info-button')) {
+    flipCard(sleepMainCard, sleepInfoCard);
+  }
+  if (event.target.classList.contains('sleep-friends-button')) {
+    flipCard(sleepMainCard, sleepFriendsCard);
+  }
+  if (event.target.classList.contains('sleep-calendar-button')) {
+    flipCard(sleepMainCard, sleepCalendarCard);
+  }
+  if (event.target.classList.contains("sleep-go-back-button")) {
+    flipCard(event.target.parentNode, sleepMainCard);
+  }
+  if (event.target.classList.contains("user-sleep-submit")) {
+    event.preventDefault();
+    let inputHours = document.querySelector("#input-sleep");
+    let inputQuality = document.querySelector("#input-sleep-quality");
+    let sleepObj = new Sleep({
+      userID: currentUser.id,
+      date: todayDate,
+      hoursSlept: inputHours.value,
+      sleepQuality: inputQuality.value
+    });
+    currentUser.updateSleep(todayDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
+    sleepCardDisplay();
+    inputHours.value = "";
+    inputQuality.value = "";
+    flipCard(sleepInfoCard, sleepMainCard);
+  }
+}
 
-// sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
-//   return currentUser.id === userRepository.getWorstSleepers(todayDate)
-// }).getFirstName();
+sleepSection.addEventListener('click', sleepCardHandler);
 
-// sleepInfoHoursAverageAllTime.innerText = currentUser.hoursSleptAverage;
-
-// sleepInfoQualityAverageAllTime.innerText = currentUser.sleepQualityAverage;
-
-// sleepInfoQualityToday.innerText = sleepData.find(sleep => {
-//   return sleep.userID === currentUser.id && sleep.date === todayDate;
-// }).sleepQuality;
-
-// sleepUserHoursToday.innerText = sleepData.find(sleep => {
-//   return sleep.userID === currentUser.id && sleep.date === todayDate;
-// }).hoursSlept;
-
-// function sleepCardHandler() {
-//   let sleepMainCard = document.querySelector('#sleep-main-card');
-//   let sleepInfoCard = document.querySelector('#sleep-info-card');
-//   let sleepFriendsCard = document.querySelector('#sleep-friends-card');
-//   let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
-//   if (event.target.classList.contains('sleep-info-button')) {
-//     flipCard(sleepMainCard, sleepInfoCard);
-//   }
-//   if (event.target.classList.contains('sleep-friends-button')) {
-//     flipCard(sleepMainCard, sleepFriendsCard);
-//   }
-//   if (event.target.classList.contains('sleep-calendar-button')) {
-//     flipCard(sleepMainCard, sleepCalendarCard);
-//   }
-//   if (event.target.classList.contains("sleep-go-back-button")) {
-//     flipCard(event.target.parentNode, sleepMainCard);
-//   }
-// }
 
 // //// END OF SLEEP //
 
@@ -342,7 +343,12 @@ let profileButton = document.querySelector('#profile-button');
 profileButton.addEventListener("click", populateUserProfile);
 
 const loadHandler = () => {
+  createDataSets();
   document.querySelector("#header-name").innerText = `${currentUser.getFirstName()}'S `;
+  hydrationCardDisplay();
+  sleepCardDisplay();
+  climbCardDisplay();
+  stepCardDisplay();
 }
 
 window.addEventListener("load", loadHandler);
