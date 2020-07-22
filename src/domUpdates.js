@@ -2,16 +2,16 @@ const domUpdates = {
   currentUser: null,
   todayDate: null,
   
-
-  defineData(todayDate) {
+  defineData(todayDate, userRepository) {
     this.todayDate = todayDate;
+    this.userRepository = userRepository;
   },
 
   defineCurrentUser(user) {
     this.currentUser = user;
   },
 
-  // GENERAL DISPLAY
+  // GENERAL DISPLAY //////////////////////////////////////////
   displayUsersName() {
     return `${this.currentUser.getFirstName()}'S `;
   },
@@ -31,11 +31,11 @@ const domUpdates = {
     cardToShow.classList.remove('hide');
   },
 
-  // HYDRATION DISPLAY SECTION
-
-  hydrationCardDisplay() {
+  // HYDRATION DISPLAY SECTION /////////////////////////////////
+  hydrationCardDisplay(input) {
     this.hydrationAddInputDisplay();
     this.hydrationCalendarDisplay();
+    input.value = "";
   },
 
   hydrationAddInputDisplay() {
@@ -65,14 +65,40 @@ const domUpdates = {
   // ^^ trying to get one saveInput method where we pass in the input and category its called on, so it can be dynamic
   // and we can use for all handlers
 
-  // ACTIVITY DISPLAY SECTION
+  // ACTIVITY DISPLAY SECTION /////////////////////////////////
+
+/* STEPS */
+  stepCardDisplay() {
+    let todaySteps = document.querySelector('#steps-user-steps-today');
+    let foundStepsTodayObj = this.currentUser.activityRecord.find(activity => activity.date === this.todayDate && activity.steps);
+    foundStepsTodayObj ? todaySteps.innerText = `${foundStepsTodayObj.steps}` : todaySteps.innerText = "0";
+    let foundTodayMinutesActiveObj = this.currentUser.activityRecord.find(activity => activity.date === this.todayDate && activity.minutesActive);
+    let todayMinutesActive = document.querySelector("#steps-info-active-minutes-today");
+    foundTodayMinutesActiveObj ? todayMinutesActive.innerText = `${foundTodayMinutesActiveObj.minutesActive}` : todayMinutesActive.innerText = "0";
+    document.querySelector('#steps-info-miles-walked-today').innerText = this.currentUser.activityRecord.find(activity => activity.date === this.todayDate).calculateMiles(this.userRepository);
+    document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = this.currentUser.calculateAverageMinutesActiveThisWeek(this.todayDate);
+    document.querySelector('#steps-calendar-total-steps-weekly').innerText = this.currentUser.calculateAverageStepsThisWeek(this.todayDate);
+    document.querySelector('#steps-friend-steps-average-today').innerText = this.userRepository.calculateAverageMinutesActive(this.todayDate);
+    document.querySelector('#steps-friend-average-step-goal').innerText = this.userRepository.calculateCommunityAvgStepGoal();
+    document.querySelector('#steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageSteps(this.todayDate);
+  },
+
+  // STAIR CARD DISPLAY
 
 
 
 
 
 
-  // SLEEP DISPLAY SECTION 
+
+
+
+
+
+
+
+
+  // SLEEP DISPLAY SECTION /////////////////////////////////
 
 
 
