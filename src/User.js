@@ -72,7 +72,7 @@ class User {
         sum += sleepAct.hours;
       }
       return sum;
-    }, 0) / 7).toFixed(1);
+    }, 0) / this.sleepHoursRecord.length).toFixed(1);
   }
 
   calculateAverageQualityThisWeek(todayDate) {
@@ -82,7 +82,7 @@ class User {
         sum += sleepAct.quality;
       }
       return sum;
-    }, 0) / 7).toFixed(1);
+    }, 0) / this.sleepQualityRecord.length).toFixed(1);
   }
 
   updateSleep(date, hours, quality) {

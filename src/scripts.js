@@ -4,10 +4,12 @@ import './css/styles.scss';
 import fetchData from './fetchData';
 import UserRepository from './UserRepository';
 import HydrationRepository from './HydrationRepository';
+import ActivityRepository from './Activity-Repository'
 import SleepRepository from "./SleepRepository";
 import userData from './data/users';
 import sleepData from "./data/sleep";
 import hydrationData from "./data/hydration";
+import activityData from './data/activity'
 
 import User from './User';
 import Hydration from './Hydration';
@@ -20,6 +22,7 @@ let currentUser;
 let todayDate;
 let hydrationRepository;
 let sleepRepository;
+let activityRepository;
 
 const hydrationSection = document.querySelector("#hydration-card-container");
 const sleepSection = document.querySelector("#sleep-card-container");
@@ -30,7 +33,7 @@ const stairsSection = document.querySelector("#stairs-card-container");
 const createDataSets = () => {
   userRepository = new UserRepository(userData);
   hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
-  // activityRepo = new ActivityRepository(activityData);
+  activityRepository = new ActivityRepository(activityData).activityData;
   sleepRepository = new SleepRepository(sleepData).sleepData;
   currentUser = new User(userRepository.users[0]); 
   todayDate = moment().format("L");
@@ -78,13 +81,17 @@ const showDropdown = () => {
 // STEP SECTION ///
 
 const stepCardDisplay = () => {
-  document.querySelector('#steps-user-steps-today').innerText = currentUser.activityRecord.find(activity => activity.userID === currentUser.id && activity.date === todayDate).numSteps;
-  document.querySelector('#steps-info-active-minutes-today').innerText = currentUser.activityRecord.find(activity => activity.userID === currentUser.id && activity.date === todayDate).minutesActive;
-  document.querySelector('#steps-info-miles-walked-today').innerText = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.userId === currentUser.id).calculateMiles(userRepository);
+  let todaySteps = document.querySelector('#steps-user-steps-today');
+  let foundStepsTodayObj = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.steps);
+  foundStepsTodayObj ? todaySteps.innerText = `${foundStepsTodayObj.steps}` : todaySteps.innerText = "0";
+  let foundTodayMinutesActiveObj = currentUser.activityRecord.find(activity =>  activity.date === todayDate && activity.minutesActive);
+  let todayMinutesActive = document.querySelector("#steps-info-active-minutes-today");
+  foundTodayMinutesActiveObj ? todayMinutesActive.innerText = `${foundTodayMinutesActiveObj.minutesActive}` : todayMinutesActive.innerText = "0";
+  // document.querySelector('#steps-info-miles-walked-today').innerText = currentUser.activityRecord.find(activity => activity.date === todayDate).calculateMiles(userRepository);
   document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = currentUser.calculateAverageMinutesActiveThisWeek(todayDate);
   document.querySelector('#steps-calendar-total-steps-weekly').innerText = currentUser.calculateAverageStepsThisWeek(todayDate);
   document.querySelector('#steps-friend-steps-average-today').innerText = userRepository.calculateAverageMinutesActive(todayDate);
-  document.querySelector('#steps-friend-average-step-goal').innerText = `${userRepository.calculateCommunityAvgStepGoal()}`;
+  document.querySelector('#steps-friend-average-step-goal').innerText = userRepository.calculateCommunityAvgStepGoal();
   document.querySelector('#steps-friend-active-minutes-average-today').innerText = userRepository.calculateAverageSteps(todayDate);
 }
   
@@ -126,9 +133,9 @@ const stepCardHandler = () => {
       userID: currentUser.id,
       date: todayDate,
       numSteps: inputSteps.value,
-      minutesWalked: inputMinutes.value
+      minutesActive: inputMinutes.value
     });
-    currentUser.updateActivity(activityObj);
+    currentUser.updateActivities(activityObj);
     stepCardDisplay();
     inputSteps.value = "";
     inputMinutes.value = "";
@@ -143,12 +150,13 @@ stepSection.addEventListener('click', stepCardHandler);
 
 // // CLIMB SECTION //
 const climbCardDisplay = () => {
+  console.log(currentUser.activityRecord)
   let stairsToday = document.querySelector("#stairs-user-stairs-today");
-  let foundStairsToday = currentUser.activityRecord.find(activity => activity.userID === currentUser.id && activity.date === todayDate);
-  foundStairsToday ? stairsToday.innerText = `${foundStairsToday.flightsOfStairs * 12}` : stairsToday.innerText = "0";
-  let foundFlightsToday = currentUser.activityRecord.find(activity => activity.userID === currentUser.id && activity.date === todayDate);
+  let foundStairsTodayObj = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.flightsOfStairs);
   let flightsToday = document.querySelector("#stairs-info-flights-today");
-  foundFlightsToday ? flightsToday.innerText = `${foundFlightsToday.flightsOfStairs}` : flightsToday = "0";
+  let foundFlightsTodayObj = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.flightsOfStairs);
+  foundStairsTodayObj ? stairsToday.innerText = `${foundStairsTodayObj.flightsOfStairs * 12}` : stairsToday.innerText = "0";
+  foundFlightsTodayObj ? flightsToday.innerText = `${foundFlightsTodayObj.flightsOfStairs}` : flightsToday = "0";
   document.querySelector("#stairs-friend-flights-average-today").innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
   document.querySelector("#stairs-calendar-flights-average-weekly").innerText = currentUser.calculateAverageFlightsThisWeek(todayDate);
   document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (currentUser.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
@@ -188,7 +196,7 @@ const stairsCardHandler = () => {
     let activityObj = new Activity({
       userID: currentUser.id,
       date: todayDate,
-      flightsOfStairs: Activity.calculateFlightsOfStairs(inputStairs.value),
+      flightsOfStairs: inputStairs.value
     });
     currentUser.updateActivities(activityObj);
     stepCardDisplay();
@@ -261,8 +269,8 @@ hydrationSection.addEventListener('click', hydrationCardHandler);
 
 const sleepCardDisplay = () => {
   let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
-  let foundTodaySleepAmount = sleepRepository.find(sleep => sleep.userID === currentUser.id && sleep.date === todayDate);
-  foundTodaySleepAmount ? sleepUserHoursToday.innerText = `${foundTodaySleepAmount.hoursSlept}` : sleepUserHoursToday.innerText = "0";
+  let foundTodaySleepAmount = currentUser.sleepHoursRecord.find(sleep => sleep.date === todayDate);
+  foundTodaySleepAmount ? sleepUserHoursToday.innerText = `${foundTodaySleepAmount.hours}` : sleepUserHoursToday.innerText = "0";
   document.querySelector('#sleep-calendar-hours-average-weekly').innerText = currentUser.calculateAverageHoursThisWeek(todayDate);
   document.querySelector('#sleep-calendar-quality-average-weekly').innerText = currentUser.calculateAverageQualityThisWeek(todayDate);
   sleepInfoCardDisplay();
@@ -270,8 +278,8 @@ const sleepCardDisplay = () => {
 
 const sleepInfoCardDisplay = () => {
   let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
-  let foundTodaySleepQuality = sleepRepository.find(sleep => sleep.userID === currentUser.id && sleep.date === todayDate);
-  foundTodaySleepQuality ? sleepInfoQualityToday.innerText = `${foundTodaySleepQuality.sleepQuality}` : sleepInfoQualityToday.innerText = "0";
+  let foundTodaySleepQuality = currentUser.sleepQualityRecord.find(sleep => sleep.date === todayDate);
+  foundTodaySleepQuality ? sleepInfoQualityToday.innerText = `${foundTodaySleepQuality.quality}` : sleepInfoQualityToday.innerText = "0";
   document.querySelector('#sleep-info-hours-average-alltime').innerText = currentUser.hoursSleptAverage;
   document.querySelector('#sleep-info-quality-average-alltime').innerText = currentUser.sleepQualityAverage;
   // document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todayDate, sleepRepository)).getFirstName();
