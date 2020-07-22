@@ -1,4 +1,4 @@
-const fetchData = () => {
+function fetchData() {
   let userData =  fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData")
     .then(response => response.json())
     .then(data => {

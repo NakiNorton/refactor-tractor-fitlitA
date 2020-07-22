@@ -5,6 +5,10 @@ import fetchData from './fetchData';
 import UserRepository from './UserRepository';
 import HydrationRepository from './HydrationRepository';
 import SleepRepository from "./SleepRepository";
+import userData from './data/users';
+import sleepData from "./data/sleep";
+import hydrationData from "./data/hydration";
+
 import User from './User';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
@@ -19,12 +23,15 @@ let sleepRepository;
 
 const hydrationSection = document.querySelector("#hydration-card-container");
 const sleepSection = document.querySelector("#sleep-card-container");
+const stepSection = document.querySelector("#steps-card-container");
+const stairsSection = document.querySelector("#stairs-card-container");
+
 
 const createDataSets = () => {
-  userRepository = new UserRepository(allData.userData);
-  hydrationRepository = new HydrationRepository(allData.hydrationData).hydrationData;
-  // activityRepo = new ActivityRepository(allData.activityData);
-  sleepRepository = new SleepRepository(allData.sleepData).sleepData;
+  userRepository = new UserRepository(userData);
+  hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
+  // activityRepo = new ActivityRepository(activityData);
+  sleepRepository = new SleepRepository(sleepData).sleepData;
   currentUser = new User(userRepository.users[0]); 
   todayDate = moment().format("L");
 }
@@ -70,20 +77,16 @@ const showDropdown = () => {
 
 // STEP SECTION ///
 
-// const stepCardDisplay = () => {
-//   // main step info quick glance
-//   document.querySelector('#steps-user-steps-today').innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).numSteps;
-//   // today's step info
-//   document.querySelector('#steps-info-active-minutes-today').innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).minutesActive;
-//   document.querySelector('#steps-info-miles-walked-today').innerText = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.userId === currentUser.id).calculateMiles(userRepository);
-//   //friend card
-//   document.querySelector('#steps-friend-steps-average-today').innerText = userRepository.calculateAverageMinutesActive(todayDate);
-//   document.querySelector('#steps-friend-average-step-goal').innerText = `${userRepository.calculateCommunityAvgStepGoal()}`;
-//   document.querySelector('#steps-friend-active-minutes-average-today').innerText = userRepository.calculateAverageSteps(todayDate);
-//   // weekly/trend card
-//   document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = currentUser.calculateAverageMinutesActiveThisWeek(todayDate);
-//   document.querySelector('#steps-calendar-total-steps-weekly').innerText = currentUser.calculateAverageStepsThisWeek(todayDate);
-// }
+const stepCardDisplay = () => {
+  document.querySelector('#steps-user-steps-today').innerText = currentUser.activityRecord.find(activity => activity.userID === currentUser.id && activity.date === todayDate).numSteps;
+  document.querySelector('#steps-info-active-minutes-today').innerText = currentUser.activityRecord.find(activity => activity.userID === currentUser.id && activity.date === todayDate).minutesActive;
+  document.querySelector('#steps-info-miles-walked-today').innerText = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.userId === currentUser.id).calculateMiles(userRepository);
+  document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = currentUser.calculateAverageMinutesActiveThisWeek(todayDate);
+  document.querySelector('#steps-calendar-total-steps-weekly').innerText = currentUser.calculateAverageStepsThisWeek(todayDate);
+  document.querySelector('#steps-friend-steps-average-today').innerText = userRepository.calculateAverageMinutesActive(todayDate);
+  document.querySelector('#steps-friend-average-step-goal').innerText = `${userRepository.calculateCommunityAvgStepGoal()}`;
+  document.querySelector('#steps-friend-active-minutes-average-today').innerText = userRepository.calculateAverageSteps(todayDate);
+}
   
 // //trending card
 // const updateTrendingStepsDays = () => {
@@ -114,36 +117,42 @@ const stepCardHandler = () => {
   }
   if (event.target.classList.contains("steps-go-back-button")) {
     flipCard(event.target.parentNode, stepsMainCard);
-  } if (event.target.classList.contains('user-steps-submit')) {
+  } 
+  if (event.target.classList.contains('user-steps-submit')) {
     event.preventDefault();
-    let input = document.querySelector('#input-steps');
+    let inputSteps = document.querySelector('#input-steps');
+    let inputMinutes = document.querySelector("#input-steps-minutes");
     let activityObj = new Activity({
       userID: currentUser.id,
       date: todayDate,
-      numSteps: input.value
+      numSteps: inputSteps.value,
+      minutesWalked: inputMinutes.value
     });
-    currentUser.updateActivity(todayDate, Number(activityObj.numSteps));
-    activityCardDisplay();
-    input.value = "";
-    flipCard(activityInfoCard, activityMainCard);
+    currentUser.updateActivity(activityObj);
+    stepCardDisplay();
+    inputSteps.value = "";
+    inputMinutes.value = "";
+    flipCard(stepsInfoCard, stepsMainCard);
   }
 }
+
+stepSection.addEventListener('click', stepCardHandler);
 
 ///END of STEPS //
 
 
 // // CLIMB SECTION //
-// const climbCardDisplay = () => {
-//   // main card
-//   document.querySelector("#stairs-user-stairs-today").innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).flightsOfStairs * 12;
-//   // today's insight
-//   document.querySelector("#stairs-info-flights-today").innerText = activityData.find(activity => activity.userID === currentUser.id && activity.date === todayDate).flightsOfStairs;
-//   // friends
-//   document.querySelector("#stairs-friend-flights-average-today").innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
-//   // week
-//   document.querySelector("#stairs-calendar-flights-average-weekly").innerText = currentUser.calculateAverageFlightsThisWeek(todayDate);
-//   document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (currentUser.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
-// }
+const climbCardDisplay = () => {
+  let stairsToday = document.querySelector("#stairs-user-stairs-today");
+  let foundStairsToday = currentUser.activityRecord.find(activity => activity.userID === currentUser.id && activity.date === todayDate);
+  foundStairsToday ? stairsToday.innerText = `${foundStairsToday.flightsOfStairs * 12}` : stairsToday.innerText = "0";
+  let foundFlightsToday = currentUser.activityRecord.find(activity => activity.userID === currentUser.id && activity.date === todayDate);
+  let flightsToday = document.querySelector("#stairs-info-flights-today");
+  foundFlightsToday ? flightsToday.innerText = `${foundFlightsToday.flightsOfStairs}` : flightsToday = "0";
+  document.querySelector("#stairs-friend-flights-average-today").innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
+  document.querySelector("#stairs-calendar-flights-average-weekly").innerText = currentUser.calculateAverageFlightsThisWeek(todayDate);
+  document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (currentUser.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+}
 
 // const updateTrendingStairsDays = () => {
 //   currentUser.findTrendingStairsDays();
@@ -151,29 +160,44 @@ const stepCardHandler = () => {
 //   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
 // }
 
-// const climbCardHandler = () => {
-//   let stairsMainCard = document.querySelector("#stairs-main-card");
-//   let stairsInfoCard = document.querySelector("#stairs-info-card");
-//   let stairsFriendsCard = document.querySelector("#stairs-friends-card");
-//   let stairsCalendarCard = document.querySelector("#stairs-calendar-card");
-//   let stairsTrendingCard = document.querySelector("#stairs-trending-card");
-//   if (event.target.classList.contains('stairs-info-button')) {
-//     flipCard(stairsMainCard, stairsInfoCard);
-//   }
-//   if (event.target.classList.contains('stairs-friends-button')) {
-//     flipCard(stairsMainCard, stairsFriendsCard);
-//   }
-//   if (event.target.classList.contains('stairs-trending-button')) {
-//     flipCard(stairsMainCard, stairsTrendingCard);
-//     updateTrendingStairsDays();
-//   }
-//   if (event.target.classList.contains('stairs-calendar-button')) {
-//     flipCard(stairsMainCard, stairsCalendarCard);
-//   }
-//   if (event.target.classList.contains("stairs-go-back-button")) {
-//     flipCard(event.target.parentNode, stairsMainCard);
-//   }
-// }
+const stairsCardHandler = () => {
+  let stairsMainCard = document.querySelector("#stairs-main-card");
+  let stairsInfoCard = document.querySelector("#stairs-info-card");
+  let stairsFriendsCard = document.querySelector("#stairs-friends-card");
+  let stairsCalendarCard = document.querySelector("#stairs-calendar-card");
+  let stairsTrendingCard = document.querySelector("#stairs-trending-card");
+  if (event.target.classList.contains('stairs-info-button')) {
+    flipCard(stairsMainCard, stairsInfoCard);
+  }
+  if (event.target.classList.contains('stairs-friends-button')) {
+    flipCard(stairsMainCard, stairsFriendsCard);
+  }
+  if (event.target.classList.contains('stairs-trending-button')) {
+    flipCard(stairsMainCard, stairsTrendingCard);
+    // updateTrendingStairsDays();
+  }
+  if (event.target.classList.contains('stairs-calendar-button')) {
+    flipCard(stairsMainCard, stairsCalendarCard);
+  }
+  if (event.target.classList.contains("stairs-go-back-button")) {
+    flipCard(event.target.parentNode, stairsMainCard);
+  }
+  if (event.target.classList.contains("user-stairs-submit")) {
+    event.preventDefault();
+    let inputStairs = document.querySelector("#input-stairs");
+    let activityObj = new Activity({
+      userID: currentUser.id,
+      date: todayDate,
+      flightsOfStairs: Activity.calculateFlightsOfStairs(inputStairs.value),
+    });
+    currentUser.updateActivities(activityObj);
+    stepCardDisplay();
+    inputStairs.value = "";
+    flipCard(stairsInfoCard, stairsMainCard);
+  }
+}
+
+stairsSection.addEventListener('click', stairsCardHandler);
 
 // /// END of CLIMB ///
 
@@ -250,8 +274,8 @@ const sleepInfoCardDisplay = () => {
   foundTodaySleepQuality ? sleepInfoQualityToday.innerText = `${foundTodaySleepQuality.sleepQuality}` : sleepInfoQualityToday.innerText = "0";
   document.querySelector('#sleep-info-hours-average-alltime').innerText = currentUser.hoursSleptAverage;
   document.querySelector('#sleep-info-quality-average-alltime').innerText = currentUser.sleepQualityAverage;
-  document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todayDate, sleepRepository)).getFirstName();
-  document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todayDate, sleepRepository)).getFirstName();
+  // document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todayDate, sleepRepository)).getFirstName();
+  // document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todayDate, sleepRepository)).getFirstName();
 }
 
 function sleepCardHandler() {
@@ -304,6 +328,8 @@ const loadHandler = () => {
   document.querySelector("#header-name").innerText = `${currentUser.getFirstName()}'S `;
   hydrationCardDisplay();
   sleepCardDisplay();
+  climbCardDisplay();
+  stepCardDisplay();
 }
 
 window.addEventListener("load", loadHandler);

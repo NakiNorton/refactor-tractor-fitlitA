@@ -16,6 +16,10 @@ class Activity {
       .toFixed(1);
   }
 
+  calculateFlightOfStairs(input) {
+    this.flightsOfStairs += (12 * input);
+  }
+
   compareStepGoal(userRepository) {
     let userStepGoal = userRepository.users
       .find(user => user.id === this.userId).dailyStepGoal;
