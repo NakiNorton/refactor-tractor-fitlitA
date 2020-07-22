@@ -6,10 +6,6 @@ import UserRepository from './UserRepository';
 import HydrationRepository from './HydrationRepository';
 import ActivityRepository from './Activity-Repository'
 import SleepRepository from "./SleepRepository";
-import userData from './data/users';
-import sleepData from "./data/sleep";
-import hydrationData from "./data/hydration";
-import activityData from './data/activity'
 
 import User from './User';
 import Hydration from './Hydration';
@@ -17,27 +13,47 @@ import Sleep from './Sleep';
 import Activity from './Activity';
 import moment from 'moment';
 
+const data = {
+  userData: null,
+  sleepData: null,
+  activityData: null,
+  hydrationData: null,
+};
+
 let userRepository;
-let currentUser;
-let todayDate;
 let hydrationRepository;
 let sleepRepository;
 let activityRepository;
+let currentUser;
+let todayDate;
 
 const hydrationSection = document.querySelector("#hydration-card-container");
 const sleepSection = document.querySelector("#sleep-card-container");
 const stepSection = document.querySelector("#steps-card-container");
 const stairsSection = document.querySelector("#stairs-card-container");
 
+function getData() {
+  fetchData()
+    .then((allData) => {
+      data.userData = allData.userData;
+      data.sleepData = allData.sleepData;
+      data.activityData = allData.activityData;
+      data.hydrationData = allData.hydrationData;
+    })
+    .then(() => {
+      createDataSets();
+    })
+    .catch((err) => console.log(err.message));
+}
 
 const createDataSets = () => {
-  userRepository = new UserRepository(userData);
-  hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
-  activityRepository = new ActivityRepository(activityData).activityData;
-  sleepRepository = new SleepRepository(sleepData).sleepData;
-  currentUser = new User(userRepository.users[0]); 
+  userRepository = new UserRepository(data.userData).users;
+  hydrationRepository = new HydrationRepository(data.hydrationData).hydrationData;
+  sleepRepository = new SleepRepository(data.sleepData).sleepData;
+  activityRepository = new ActivityRepository(data.activityData).activityData;
+  currentUser = new User(userRepository[0]);
   todayDate = moment().format("L");
-}
+};
 
 const flipCard = (cardToHide, cardToShow) => {
   cardToHide.classList.add('hide');
@@ -155,7 +171,6 @@ const climbCardDisplay = () => {
   let flightsToday = document.querySelector("#stairs-info-flights-today");
   let foundFlightsTodayObj = currentUser.activityRecord.find(activity => activity.date === todayDate && activity.flightsOfStairs);
   foundStairsTodayObj ? stairsToday.innerText = `${foundStairsTodayObj.flightsOfStairs * 12}` : stairsToday.innerText = "0";
-  console.log(foundStairsTodayObj)
   foundFlightsTodayObj ? flightsToday.innerText = `${foundFlightsTodayObj.flightsOfStairs}` : flightsToday = "0";
   // ^^ broken, won't display stairs
   document.querySelector("#stairs-friend-flights-average-today").innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
@@ -333,7 +348,7 @@ let profileButton = document.querySelector('#profile-button');
 profileButton.addEventListener("click", showDropdown);
 
 const loadHandler = () => {
-  createDataSets();
+  getData();
   document.querySelector("#header-name").innerText = `${currentUser.getFirstName()}'S `;
   hydrationCardDisplay();
   sleepCardDisplay();
