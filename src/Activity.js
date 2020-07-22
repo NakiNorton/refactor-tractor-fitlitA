@@ -7,13 +7,6 @@ class Activity {
     this.flightsOfStairs = data.flightsOfStairs;
     this.milesWalked = 0;
     this.reachedStepGoal = null;
-    this.doActivity(userRepository);
-  }
-
-  doActivity(userRepo) {
-    var activity = this;
-    userRepo.users.find(user => user.id === activity.userId)
-      .updateActivities(this);
   }
 
   calculateMiles(userRepository) {

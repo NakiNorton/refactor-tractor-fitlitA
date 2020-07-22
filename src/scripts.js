@@ -2,13 +2,13 @@ import './css/base.scss';
 import './css/styles.scss';
 
 import fetchData from './fetchData';
+import UserRepository from './UserRepository';
 import HydrationRepository from './HydrationRepository';
 import SleepRepository from "./SleepRepository";
-import UserRepository from './UserRepository';
 import User from './User';
-import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
+import Activity from './Activity';
 import moment from 'moment';
 
 let userRepository;
@@ -21,10 +21,10 @@ const hydrationSection = document.querySelector("#hydration-card-container");
 const sleepSection = document.querySelector("#sleep-card-container");
 
 const createDataSets = () => {
-  userRepository = new UserRepository(userData);
-  hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
-  // activityRepo = new ActivityRepository(activityData);
-  sleepRepository = new SleepRepository(sleepData).sleepData;
+  userRepository = new UserRepository(allData.userData);
+  hydrationRepository = new HydrationRepository(allData.hydrationData).hydrationData;
+  // activityRepo = new ActivityRepository(allData.activityData);
+  sleepRepository = new SleepRepository(allData.sleepData).sleepData;
   currentUser = new User(userRepository.users[0]); 
   todayDate = moment().format("L");
 }
@@ -93,29 +93,41 @@ const showDropdown = () => {
 // };
 // ^^ iteration 5
   
-// const stepCardHandler = () => {
-//   let stepsMainCard = document.querySelector('#steps-main-card');
-//   let stepsInfoCard = document.querySelector('#steps-info-card');
-//   let stepsFriendsCard = document.querySelector('#steps-friends-card');
-//   let stepsTrendingCard = document.querySelector('#steps-trending-card');
-//   let stepsCalendarCard = document.querySelector('#steps-calendar-card');
-//   if (event.target.classList.contains('steps-info-button')) {
-//     flipCard(stepsMainCard, stepsInfoCard);
-//   }
-//   if (event.target.classList.contains('steps-friends-button')) {
-//     flipCard(stepsMainCard, stepsFriendsCard);
-//   }
-//   if (event.target.classList.contains('steps-trending-button')) {
-//     flipCard(stepsMainCard, stepsTrendingCard);
-//     updateTrendingStepsDays();
-//   }
-//   if (event.target.classList.contains('steps-calendar-button')) {
-//     flipCard(stepsMainCard, stepsCalendarCard);
-//   }
-//   if (event.target.classList.contains("steps-go-back-button")) {
-//     flipCard(event.target.parentNode, stepsMainCard);
-//   }
-// }
+const stepCardHandler = () => {
+  let stepsMainCard = document.querySelector('#steps-main-card');
+  let stepsInfoCard = document.querySelector('#steps-info-card');
+  let stepsFriendsCard = document.querySelector('#steps-friends-card');
+  let stepsTrendingCard = document.querySelector('#steps-trending-card');
+  let stepsCalendarCard = document.querySelector('#steps-calendar-card');
+  if (event.target.classList.contains('steps-info-button')) {
+    flipCard(stepsMainCard, stepsInfoCard);
+  }
+  if (event.target.classList.contains('steps-friends-button')) {
+    flipCard(stepsMainCard, stepsFriendsCard);
+  }
+  if (event.target.classList.contains('steps-trending-button')) {
+    flipCard(stepsMainCard, stepsTrendingCard);
+    // updateTrendingStepsDays();
+  }
+  if (event.target.classList.contains('steps-calendar-button')) {
+    flipCard(stepsMainCard, stepsCalendarCard);
+  }
+  if (event.target.classList.contains("steps-go-back-button")) {
+    flipCard(event.target.parentNode, stepsMainCard);
+  } if (event.target.classList.contains('user-steps-submit')) {
+    event.preventDefault();
+    let input = document.querySelector('#input-steps');
+    let activityObj = new Activity({
+      userID: currentUser.id,
+      date: todayDate,
+      numSteps: input.value
+    });
+    currentUser.updateActivity(todayDate, Number(activityObj.numSteps));
+    activityCardDisplay();
+    input.value = "";
+    flipCard(activityInfoCard, activityMainCard);
+  }
+}
 
 ///END of STEPS //
 
