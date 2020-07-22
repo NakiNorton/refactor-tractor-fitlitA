@@ -1,8 +1,6 @@
 import './css/base.scss';
 import './css/styles.scss';
 
-import domUpdates from './domUpdates.js'
-
 import userData from './data/users';
 import activityData from './data/activity';
 import sleepData from './data/sleep';
@@ -15,6 +13,7 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 import moment from 'moment';
 import { on } from 'chai-spies';
+import DomUpdates from './domUpdates.js'
 
 const userRepository = new UserRepository(userData);
 const hydrationRepository = new HydrationRepository(hydrationData).hydrationData;
@@ -22,6 +21,7 @@ const currentUser = new User(userRepository.users[0]);
 const todayDate = moment().format("L");
 const hydrationSection = document.querySelector("#hydration-card-container");
 
+const domUpdates = new DomUpdates(currentUser, todayDate)
 
 // activityData.forEach(activity => {
 //   activity = new Activity(activity, userRepository);
@@ -59,19 +59,21 @@ const hydrationSection = document.querySelector("#hydration-card-container");
 //   return hydrationRepository;
 // }
 
-const flipCard = (cardToHide, cardToShow) => {
-  cardToHide.classList.add('hide');
-  cardToShow.classList.remove('hide');
-}
+/************** MOVED TO DOM ***********************/
+// const flipCard = (cardToHide, cardToShow) => {
+//   cardToHide.classList.add('hide');
+//   cardToShow.classList.remove('hide');
+// }
 
 // HEADER //
-const showDropdown = () => {
-  document.querySelector('#user-info-dropdown').classList.toggle("hide");
-  document.querySelector("#dropdown-name").innerText = currentUser.name.toUpperCase();
-  document.querySelector("#dropdown-goal").innerText = `DAILY STEP GOAL | ${currentUser.dailyStepGoal}`;
-  document.querySelector("#dropdown-email").innerText = `EMAIL | ${currentUser.email}`;
-  // showLeaderBoard(); // currently broken
-}
+// const showDropdown = () => {
+//   document.querySelector('#user-info-dropdown').classList.toggle("hide");
+//   document.querySelector("#dropdown-name").innerText = currentUser.name.toUpperCase();
+//   document.querySelector("#dropdown-goal").innerText = `DAILY STEP GOAL | ${currentUser.dailyStepGoal}`;
+//   document.querySelector("#dropdown-email").innerText = `EMAIL | ${currentUser.email}`;
+//   // showLeaderBoard(); // currently broken
+// }
+// ******************* 
   
 // leaderboard in dropdown menu, not sure what's happening here, will need to follow HTML, method is broken in User file
 // const showLeaderBoard = () => {
@@ -201,25 +203,28 @@ const showDropdown = () => {
 // document.querySelector("#hydration-friend-ounces-today").innerText = userRepository.calculateAverageDailyWater(todayDate);
 // ^^iteration 5, broken anyhow.
 
-const hydrationCardDisplay = () => {
-  hydrationAddInputDisplay();
-  hydrationCalendarDisplay();
-}
+// ************ MOVED TO DOM UPDATES ***********
+// const hydrationCardDisplay = () => {
+//   hydrationAddInputDisplay();
+//   hydrationCalendarDisplay();
+// }
 
-const hydrationAddInputDisplay = () => {
-  let hydrationUserOuncesToday = document.getElementById('hydration-user-ounces-today');
-  let foundTodayAmount = currentUser.ouncesRecord.find(ounce => ounce.date === todayDate);
-  foundTodayAmount ? hydrationUserOuncesToday.innerText = `${foundTodayAmount.ounces}` : hydrationUserOuncesToday.innerText = "0";
-}
+// const hydrationAddInputDisplay = () => {
+//   let hydrationUserOuncesToday = document.getElementById('hydration-user-ounces-today');
+//   let foundTodayAmount = currentUser.ouncesRecord.find(ounce => ounce.date === todayDate);
+//   foundTodayAmount ? hydrationUserOuncesToday.innerText = `${foundTodayAmount.ounces}` : hydrationUserOuncesToday.innerText = "0";
+// }
 
-const hydrationCalendarDisplay = () => {
-  let weeklyAvg = document.querySelector(".hydration-weekly-avg");
-  let weekList = document.querySelector(".hydration-week-data-list");
-  let cardHtml = `<article class="hydration-amount-daily">${currentUser.getWeekOuncesByDay()}</br></article>`;
-  weeklyAvg.innerText = `You averaged ${currentUser.getWeekAvgOunces()} ounces this week!`;
-  weekList.innerText = "";
-  weekList.insertAdjacentHTML("beforeend", cardHtml);
-}
+// const hydrationCalendarDisplay = () => {
+//   let weeklyAvg = document.querySelector(".hydration-weekly-avg");
+//   let weekList = document.querySelector(".hydration-week-data-list");
+//   let cardHtml = `<article class="hydration-amount-daily">${currentUser.getWeekOuncesByDay()}</br></article>`;
+//   weeklyAvg.innerText = `You averaged ${currentUser.getWeekAvgOunces()} ounces this week!`;
+//   weekList.innerText = "";
+//   weekList.insertAdjacentHTML("beforeend", cardHtml);
+// }
+
+
 
 // const saveInput = (input, category) => {
 //   if (category) {
@@ -239,25 +244,25 @@ const hydrationCardHandler = () => {
   let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
   let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
   if (event.target.classList.contains('hydration-info-button')) {
-    flipCard(hydrationMainCard, hydrationInfoCard);
+    domUpdates.flipCard(hydrationMainCard, hydrationInfoCard);
   }
   if (event.target.classList.contains('hydration-friends-button')) {
-    flipCard(hydrationMainCard, hydrationFriendsCard);
+    domUpdates.flipCard(hydrationMainCard, hydrationFriendsCard);
   }
   if (event.target.classList.contains('hydration-calendar-button')) {
-    flipCard(hydrationMainCard, hydrationCalendarCard);
+    domUpdates.flipCard(hydrationMainCard, hydrationCalendarCard);
   }
   if (event.target.classList.contains("hydration-go-back-button")) {
-    flipCard(event.target.parentNode, hydrationMainCard);
+    domUpdates.flipCard(event.target.parentNode, hydrationMainCard);
   }
   if (event.target.classList.contains('user-ounces-submit')) {
     event.preventDefault();
     let input = document.querySelector('#input-ounces');
     let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, numOunces: input.value});
     currentUser.updateHydration(todayDate, Number(hydrationObj.ounces));
-    hydrationCardDisplay();
+    domUpdates.hydrationCardDisplay(currentUser, todayDate); 
     input.value = "";
-    flipCard(hydrationInfoCard, hydrationMainCard);
+    domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
 }
 
@@ -326,14 +331,18 @@ hydrationSection.addEventListener('click', hydrationCardHandler);
 
 // //// END OF SLEEP //
 
+// Had to make a new function needed to handle the user profile.
+const populateUserProfile = () => { 
+  domUpdates.showDropdown(currentUser)
+}
+
 // EVENT LISTENERS //
 
 let profileButton = document.querySelector('#profile-button');
-profileButton.addEventListener("click", showDropdown);
+profileButton.addEventListener("click", populateUserProfile);
 
 const loadHandler = () => {
   document.querySelector("#header-name").innerText = `${currentUser.getFirstName()}'S `;
-  hydrationCardDisplay();
 }
 
 window.addEventListener("load", loadHandler);
