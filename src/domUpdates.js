@@ -1,47 +1,57 @@
-class DomUpdates {
-  constructor() {
-    // this.currentUser = currentUser;
-    // this.todayDate = todayDate;
-  }
+const domUpdates = {
+  currentUser: null,
+  todayDate: null,
+  
+
+  defineData(todayDate) {
+    this.todayDate = todayDate;
+  },
+
+  defineCurrentUser(user) {
+    this.currentUser = user;
+  },
 
   // GENERAL DISPLAY
+  displayUsersName() {
+    return `${this.currentUser.getFirstName()}'S `;
+  },
 
-  showDropdown(currentUser) {
-    console.log('current user', currentUser)
+  showDropdown() {
+    console.log('current user', this.currentUser)
     document.querySelector('#user-info-dropdown').classList.toggle('hide');
-    document.querySelector('#dropdown-name').innerText = currentUser.name.toUpperCase();
-    document.querySelector('#dropdown-goal').innerText = `DAILY STEP GOAL | ${currentUser.dailyStepGoal}`;
-    document.querySelector('#dropdown-email').innerText = `EMAIL | ${currentUser.email}`;
+    document.querySelector('#dropdown-name').innerText = this.currentUser.name.toUpperCase();
+    document.querySelector('#dropdown-goal').innerText = `DAILY STEP GOAL | ${this.currentUser.dailyStepGoal}`;
+    document.querySelector('#dropdown-email').innerText = `EMAIL | ${this.currentUser.email}`;
     // showLeaderBoard(); // currently broken
-  }
+  },
 
   flipCard(cardToHide, cardToShow) {
     console.log('FLIP!')
     cardToHide.classList.add('hide');
     cardToShow.classList.remove('hide');
-  }
+  },
 
   // HYDRATION DISPLAY SECTION
 
-  hydrationCardDisplay(currentUser, todayDate) {
-    this.hydrationAddInputDisplay(currentUser, todayDate);
-    this.hydrationCalendarDisplay(currentUser);
-  }
+  hydrationCardDisplay() {
+    this.hydrationAddInputDisplay();
+    this.hydrationCalendarDisplay();
+  },
 
-  hydrationAddInputDisplay(currentUser, todayDate) {
+  hydrationAddInputDisplay() {
     let hydrationUserOuncesToday = document.getElementById('hydration-user-ounces-today');
-    let foundTodayAmount = currentUser.ouncesRecord.find(ounce => ounce.date === todayDate);
+    let foundTodayAmount = this.currentUser.ouncesRecord.find(ounce => ounce.date === this.todayDate);
     foundTodayAmount ? hydrationUserOuncesToday.innerText = `${foundTodayAmount.ounces}` : hydrationUserOuncesToday.innerText = "0";
-  }
+  },
 
-  hydrationCalendarDisplay(currentUser) {
+  hydrationCalendarDisplay() {
     let weeklyAvg = document.querySelector(".hydration-weekly-avg");
     let weekList = document.querySelector(".hydration-week-data-list");
-    let cardHtml = `<article class="hydration-amount-daily">${currentUser.getWeekOuncesByDay()}</br></article>`;
-    weeklyAvg.innerText = `You averaged ${currentUser.getWeekAvgOunces()} ounces this week!`;
+    let cardHtml = `<article class="hydration-amount-daily">${this.currentUser.getWeekOuncesByDay()}</br></article>`; 
+    weeklyAvg.innerText = `You averaged ${this.currentUser.getWeekAvgOunces()} ounces this week!`; 
     weekList.innerText = "";
     weekList.insertAdjacentHTML("beforeend", cardHtml);
-  }
+  },
 
   // const saveInput = (input, category) => {
   //   if (category) {
@@ -68,4 +78,4 @@ class DomUpdates {
 
 
 }
-export default DomUpdates;
+export default domUpdates;
