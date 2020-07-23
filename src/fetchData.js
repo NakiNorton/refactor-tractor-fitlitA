@@ -1,3 +1,6 @@
+// this can be refactored and made dynamic
+// if src includes userData, then fetch the data, assign it to var and put it in array
+
 function fetchData() {
   let userData =  fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData")
     .then(response => response.json())

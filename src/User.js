@@ -1,4 +1,6 @@
 import HydrationRepository from "./HydrationRepository";
+import ActivityRepository from "./Activity-Repository";
+import SleepRepository from "./SleepRepository";
 
 class User {
   constructor(userDetails) {
@@ -9,20 +11,9 @@ class User {
     this.strideLength = userDetails.strideLength || 'Stride length not added.';
     this.dailyStepGoal = userDetails.dailyStepGoal || 'Daily step goal not added.';
     this.friends = userDetails.friends || 'Add friends for friendly competition!';
-    // this.ouncesAverage = 0;
-    // this.ouncesRecord = [];
-    // this.sleepQualityAverage = 0;
-    // this.sleepHoursRecord = [];
-    // this.sleepQualityRecord = [];
-    // this.hoursSleptAverage = 0;
-    // this.totalStepsThisWeek = 0;
-    // this.activityRecord = [];
-    // this.accomplishedDays = [];
-    this.hydration = new HydrationRepository(userDetails.hydrationData)
-    // this.trendingStepDays = [];
-    // this.trendingStairsDays = [];
-    // this.friendsNames = [];
-    // this.friendsActivityRecords = []
+    this.hydration = new HydrationRepository(userDetails.hydrationData);
+    this.activity = new ActivityRepository(userDetails.activityData);
+    this.sleep = new SleepRepository(userDetails.sleepData);
   }
 
   checkUserId(user) {

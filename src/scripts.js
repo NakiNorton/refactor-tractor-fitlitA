@@ -22,10 +22,8 @@ const stairsSection = document.querySelector("#stairs-card-container");
 function getData() {
   return fetchData()
     .then((data) => {
-      let userRepository = new UserRepository(data.userData).users;
-      // hydrationRepository = new HydrationRepository(data.hydrationData).hydrationData;
-      // sleepRepository = new SleepRepository(data.sleepData).sleepData;
-      // activityRepository = new ActivityRepository(data.activityData).activityData;
+      let userRepository = new dataConfig(data);
+      // need to get the User at random eventually
       let currentUser = new User(userRepository[0]);
       let todayDate = moment().format("L");
       domUpdates.defineData(currentUser, todayDate, userRepository);
@@ -37,16 +35,6 @@ function getData() {
 const populateUserProfile = () => {
   domUpdates.showDropdown(currentUser);
 }
-
-// const loadHandler = () => {
-//  getData().then(() => {
-//   domUpdates.displayPage();
-//  });
-// };
-
-// function sendData(obj, ) {
-
-// }
 
 /////// STEP SECTION /////////
 
