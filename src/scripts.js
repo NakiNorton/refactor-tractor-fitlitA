@@ -1,6 +1,5 @@
+import './css/base.scss';
 import './css/styles.scss';
-
-
 
 import fetchData from './fetchData';
 import domUpdates from './domUpdates';
@@ -15,13 +14,6 @@ import Sleep from './Sleep';
 import Activity from './Activity';
 import moment from 'moment';
 
-// let userRepository;
-let hydrationRepository;
-let sleepRepository;
-let activityRepository;
-let currentUser;
-let todayDate;
-
 const hydrationSection = document.querySelector("#hydration-card-container");
 const sleepSection = document.querySelector("#sleep-card-container");
 const stepSection = document.querySelector("#steps-card-container");
@@ -30,13 +22,12 @@ const stairsSection = document.querySelector("#stairs-card-container");
 function getData() {
   return fetchData()
     .then((data) => {
-      let cleanedData = cleanData()
-      let userRepository = new UserRepository(data).users;
-      hydrationRepository = new HydrationRepository(data.hydrationData).hydrationData;
-      sleepRepository = new SleepRepository(data.sleepData).sleepData;
-      activityRepository = new ActivityRepository(data.activityData).activityData;
-      currentUser = new User(userRepository[0]);
-      todayDate = moment().format("L");
+      let userRepository = new UserRepository(data.userData).users;
+      // hydrationRepository = new HydrationRepository(data.hydrationData).hydrationData;
+      // sleepRepository = new SleepRepository(data.sleepData).sleepData;
+      // activityRepository = new ActivityRepository(data.activityData).activityData;
+      let currentUser = new User(userRepository[0]);
+      let todayDate = moment().format("L");
       domUpdates.defineData(currentUser, todayDate, userRepository);
     }).then(() => {
       domUpdates.displayPage()})
@@ -162,6 +153,7 @@ const hydrationCardHandler = () => {
     let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, numOunces: input.value});
     currentUser.updateHydration(todayDate, Number(hydrationObj.ounces));
     domUpdates.hydrationCardDisplay(input); 
+    console.log(currentUser);
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
 }
@@ -202,6 +194,14 @@ function sleepCardHandler() {
   }
 }
 
+//////// ONLOAD /////////////////
+
+// const loadHandler = () => {
+//   getData()
+//     .then(() => {
+//       domUpdates.displayPage();
+//     })
+// }
 
 /////// EVENT LISTENERS ////////
 
