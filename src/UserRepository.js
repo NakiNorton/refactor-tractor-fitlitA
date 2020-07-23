@@ -6,6 +6,8 @@ class UserRepository {
     this.users = this.instantiateRawData(rawUserData);
   }
 
+  cleanData()
+
   instantiateRawData(rawUserData) {
     return rawUserData.map((data) => new User(data));
   }

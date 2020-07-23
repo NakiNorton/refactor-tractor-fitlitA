@@ -18,6 +18,11 @@ const domUpdates = {
     this.sleepCardDisplay();
   },
   
+  flipCard(cardToHide, cardToShow) {
+    cardToHide.classList.add('hide');
+    cardToShow.classList.remove('hide');
+  },
+  
   showDropdown() {
     document.querySelector('#user-info-dropdown').classList.toggle('hide');
     document.querySelector('#dropdown-name').innerText = this.currentUser.name.toUpperCase();
@@ -25,11 +30,6 @@ const domUpdates = {
     document.querySelector('#dropdown-email').innerText = `EMAIL | ${this.currentUser.email}`;
     // showLeaderBoard(); // currently broken
   },
-
-  flipCard(cardToHide, cardToShow) {
-    cardToHide.classList.add('hide');
-    cardToShow.classList.remove('hide');
-
 
 // leaderboard in dropdown menu, not sure what's happening here, will need to follow HTML, method is broken in User file
 // const showLeaderBoard = () => {
@@ -53,7 +53,6 @@ const domUpdates = {
 //     }
 //   });
 // }
-  },
 
 
   ///////////// STEPS DISPLAY SECTION /////////////////////////////////
@@ -76,7 +75,12 @@ const domUpdates = {
     let foundTodayMinutesActiveObj = this.currentUser.activityRecord.find(activity => activity.date === this.todayDate && activity.minutesActive);
     let todayMinutesActive = document.querySelector("#steps-info-active-minutes-today");
     foundTodayMinutesActiveObj ? todayMinutesActive.innerText = `${foundTodayMinutesActiveObj.minutesActive}` : todayMinutesActive.innerText = "0";
-    // document.querySelector('#steps-info-miles-walked-today').innerText = this.currentUser.activityRecord.find(activity => activity.date === this.todayDate).calculateMiles(this.userRepository);    
+    let milesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
+    let milesWalkedObj = this.currentUser.activityRecord.find(activity => activity.date === this.todayDate);
+    if (milesWalkedObj) {
+      milesWalkedObj = milesWalkedObj.calculateMiles(this.userRepository);
+    }
+    milesWalkedObj ? milesWalkedToday.innerText = `${milesWalkedObj}` : milesWalkedToday.innerText = "0";
   },
   
   stepCalendarCardDisplay() {

@@ -1,3 +1,5 @@
+import HydrationRepository from "./HydrationRepository";
+
 class User {
   constructor(userDetails) {
     this.id = this.checkUserId(userDetails.id);
@@ -16,6 +18,7 @@ class User {
     this.totalStepsThisWeek = 0;
     this.activityRecord = [];
     this.accomplishedDays = [];
+    this.hydration = new HydrationRepository(userDetails.hydrationData)
     // this.trendingStepDays = [];
     // this.trendingStairsDays = [];
     // this.friendsNames = [];

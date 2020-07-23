@@ -14,14 +14,7 @@ import Sleep from './Sleep';
 import Activity from './Activity';
 import moment from 'moment';
 
-const data = {
-  userData: null,
-  sleepData: null,
-  activityData: null,
-  hydrationData: null,
-};
-
-let userRepository;
+// let userRepository;
 let hydrationRepository;
 let sleepRepository;
 let activityRepository;
@@ -35,31 +28,33 @@ const stairsSection = document.querySelector("#stairs-card-container");
 
 function getData() {
   return fetchData()
-    .then((allData) => {
-      data.userData = allData.userData;
-      data.sleepData = allData.sleepData;
-      data.activityData = allData.activityData;
-      data.hydrationData = allData.hydrationData;
-    })
-    .then(() => {
-      createDataSets();
-    })
+    .then((data) => {
+      let cleanedData = cleanData()
+      let userRepository = new UserRepository(data).users;
+      hydrationRepository = new HydrationRepository(data.hydrationData).hydrationData;
+      sleepRepository = new SleepRepository(data.sleepData).sleepData;
+      activityRepository = new ActivityRepository(data.activityData).activityData;
+      currentUser = new User(userRepository[0]);
+      todayDate = moment().format("L");
+      domUpdates.defineData(currentUser, todayDate, userRepository);
+    }).then(() => {
+      domUpdates.displayPage()})
     .catch((err) => console.log(err.message));
 }
 
-const createDataSets = () => {
-  userRepository = new UserRepository(data.userData).users;
-  hydrationRepository = new HydrationRepository(data.hydrationData).hydrationData;
-  sleepRepository = new SleepRepository(data.sleepData).sleepData;
-  activityRepository = new ActivityRepository(data.activityData).activityData;
-  currentUser = new User(userRepository[0]);
-  todayDate = moment().format("L");
-  domUpdates.defineData(currentUser, todayDate, userRepository)
+const populateUserProfile = () => {
+  domUpdates.showDropdown(currentUser);
 }
 
-const populateUserProfile = () => {
-  domUpdates.showDropdown(currentUser)
-}
+// const loadHandler = () => {
+//  getData().then(() => {
+//   domUpdates.displayPage();
+//  });
+// };
+
+// function sendData(obj, ) {
+
+// }
 
 /////// STEP SECTION /////////
 
@@ -199,24 +194,17 @@ function sleepCardHandler() {
       hoursSlept: inputHours.value,
       sleepQuality: inputQuality.value
     });
+
     currentUser.updateSleep(todayDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
     domUpdates.sleepCardDisplay(inputHours, inputQuality);
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
   }
 }
 
-//////// ONLOAD /////////////////
-
-const loadHandler = () => {
-  getData()
-    .then(() => {
-      domUpdates.displayPage();
-    })
-}
 
 /////// EVENT LISTENERS ////////
 
-window.addEventListener("load", loadHandler);
+window.addEventListener("load", getData);
 let profileButton = document.querySelector('#profile-button');
 profileButton.addEventListener("click", populateUserProfile);
 sleepSection.addEventListener('click', sleepCardHandler);

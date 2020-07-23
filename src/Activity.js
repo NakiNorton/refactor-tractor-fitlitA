@@ -10,14 +10,13 @@ class Activity {
   }
 
   calculateMiles(userRepository) {
-    let walkingUser = userRepository.users
-      .find(user => user.id === this.userId)
+    let walkingUser = userRepository.users.find(user => user.id === this.userId);
     return Math.round(this.steps * walkingUser.strideLength / 5280)
       .toFixed(1);
   }
 
   calculateFlightOfStairs(input) {
-    this.flightsOfStairs += (12 * input);
+    return this.flightsOfStairs += (12 * input);
   }
 
   compareStepGoal(userRepository) {
