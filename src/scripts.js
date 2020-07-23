@@ -2,6 +2,7 @@ import './css/base.scss';
 import './css/styles.scss';
 
 import fetchData from './fetchData';
+import domUpdates from './domUpdates';
 import UserRepository from './UserRepository';
 import HydrationRepository from './HydrationRepository';
 import ActivityRepository from './Activity-Repository'
@@ -33,7 +34,7 @@ const stepSection = document.querySelector("#steps-card-container");
 const stairsSection = document.querySelector("#stairs-card-container");
 
 function getData() {
-  fetchData()
+  return fetchData()
     .then((allData) => {
       data.userData = allData.userData;
       data.sleepData = allData.sleepData;
@@ -76,7 +77,6 @@ const stepCardHandler = () => {
   }
   if (event.target.classList.contains('steps-trending-button')) {
     domUpdates.flipCard(stepsMainCard, stepsTrendingCard);
-    // updateTrendingStepsDays();
   }
   if (event.target.classList.contains('steps-calendar-button')) {
     domUpdates.flipCard(stepsMainCard, stepsCalendarCard);
@@ -200,9 +200,7 @@ function sleepCardHandler() {
       sleepQuality: inputQuality.value
     });
     currentUser.updateSleep(todayDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
-    domUpdates.sleepCardDisplay();
-    inputHours.value = "";
-    inputQuality.value = "";
+    domUpdates.sleepCardDisplay(inputHours, inputQuality);
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
   }
 }
@@ -211,11 +209,9 @@ function sleepCardHandler() {
 
 const loadHandler = () => {
   getData()
-  document.querySelector('#header-name').innerText = domUpdates.displayUsersName()
-  domUpdates.hydrationCardDisplay();
-  domUpdates.sleepCardDisplay();
-  domUpdates.climbCardDisplay();
-  domUpdates.stepCardDisplay();
+    .then(() => {
+      domUpdates.displayPage();
+    })
 }
 
 /////// EVENT LISTENERS ////////
