@@ -1,5 +1,6 @@
-import './css/base.scss';
 import './css/styles.scss';
+
+
 
 import fetchData from './fetchData';
 import UserRepository from './UserRepository';
