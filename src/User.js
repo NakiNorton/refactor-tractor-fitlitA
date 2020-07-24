@@ -18,7 +18,7 @@ class User {
     this.totalStepsThisWeek = 0;
     this.activityRecord = [];
     this.accomplishedDays = [];
-    this.hydration = new HydrationRepository(userDetails.hydrationData)
+    // this.hydration = new HydrationRepository(userDetails.hydrationData)
     // this.trendingStepDays = [];
     // this.trendingStairsDays = [];
     // this.friendsNames = [];
