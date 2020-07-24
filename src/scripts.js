@@ -2,10 +2,10 @@ import './css/styles.scss';
 
 
 
-import fetchData from './fetchData';
+// import fetchData from './fetchData';
 import domUpdates from './domUpdates';
 import UserRepository from './UserRepository';
-import HydrationRepository from './HydrationRepository';
+// import HydrationRepository from './HydrationRepository';
 import ActivityRepository from './Activity-Repository'
 import SleepRepository from "./SleepRepository";
 
@@ -19,10 +19,10 @@ let userRepository;
 // let hydrationRepository;
 // let sleepRepository;
 // let activityRepository;
-let activity;
+let activityData;
 let userData;
-let sleep;
-let hydration;
+let sleepData;
+let hydrationData;
 let currentUser;
 let todayDate;
 
@@ -63,7 +63,7 @@ sleepData = fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepD
     })
     .catch(err => console.log(err.message))
 
-     Promise.all([userData, sleepData, activityData, hydrationData])
+  Promise.all([userData, sleepData, activityData, hydrationData])
     .then(data => {
       userData = data[0];
       sleepData = data[1];
@@ -71,24 +71,24 @@ sleepData = fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepD
       hydrationData = data[3];
     })
     .then(() => {
-      console.log('fetched data', data)
+      // console.log('fetched data', data)
       userRepository = new UserRepository(userData, sleepData, activityData, hydrationData)
       console.log('UserRepo', userRepository)
       instantiateAllUsers()
-      instantiateAllUsersHydration()
-      instantiateAllUsersActivity()
-      instantiateAllUsersSleep()
+      // instantiateAllUsersHydration()
+      // instantiateAllUsersActivity()
+      // instantiateAllUsersSleep()
       // hydrationRepository = new HydrationRepository(data.hydrationData).hydrationData;
       // sleepRepository = new SleepRepository(data.sleepData).sleepData;
       // activityRepository = new ActivityRepository(data.activityData).activityData;
     })
-      .then(() => {
+    .then(() => {
       currentUser = new User(userRepository[0]);
       todayDate = moment().format("L");
       domUpdates.defineData(currentUser, todayDate, userRepository);
       domUpdates.displayPage()
-      })
-     .catch((err) => console.log(err.message));
+    })
+    .catch((err) => console.log(err.message));
 }
 
 
@@ -104,7 +104,7 @@ const instantiateAllUsers = () => {
 }
 
 const getData = () => {
-fetchData()
+  fetchData()
 }
 
 // function sendData(obj, ) {
