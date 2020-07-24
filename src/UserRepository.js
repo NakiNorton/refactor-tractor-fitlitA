@@ -2,15 +2,17 @@ import sleepRepository from './SleepRepository';
 import User from './User';
 
 class UserRepository {
-  constructor(rawData) {
-    this.users = this.instantiateRawData(rawData.userData);
+  constructor(userData, sleepData, activityData, hydrationData) {
+    this.users = [];
+    this.userData = userData;
+    this.sleepData = sleepData;
+    this.activityData = activityData;
+    this.hydrationData = hydrationData;
   }
 
-  // match all hydro and sleep and activ w approp users 
-
-  instantiateRawData(rawUserData) {
-    return rawUserData.map((data) => new User(data));
-  }
+  // instantiateRawData(rawUserData) {
+  //   return rawUserData.map((data) => new User(data));
+  // }
 
   getUser(id) {
     return this.users.find((user) => user.id === id);

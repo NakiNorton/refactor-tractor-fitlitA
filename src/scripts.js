@@ -4,7 +4,7 @@ import './css/styles.scss';
 import fetchData from './fetchData';
 import domUpdates from './domUpdates';
 import UserRepository from './UserRepository';
-import HydrationRepository from './HydrationRepository';
+// import HydrationRepository from './HydrationRepository';
 import ActivityRepository from './Activity-Repository'
 import SleepRepository from "./SleepRepository";
 
@@ -13,6 +13,17 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 import Activity from './Activity';
 import moment from 'moment';
+
+let userRepository;
+// let hydrationRepository;
+// let sleepRepository;
+// let activityRepository;
+let activityData;
+let userData;
+let sleepData;
+let hydrationData;
+let currentUser;
+let todaysDate;
 
 const hydrationSection = document.querySelector("#hydration-card-container");
 const sleepSection = document.querySelector("#sleep-card-container");
@@ -34,15 +45,39 @@ function getData() {
     .catch((err) => console.log(err.message));
 }
 
+const instantiateAllUsers = () => {
+  userData.forEach(user => {
+    user = new User(user)
+    userRepository.users.push(user)
+  })
+}
+
+const instantiateAllUsersActivity = () => {
+  activityData.forEach(activity => {
+    activity = new Activity(activity, userRepository)
+  })
+}
+
+const instantiateAllUsersSleep = () => {
+  sleepData.forEach(sleep => {
+    sleep = new Activity(sleep, userRepository)
+  })
+}
+
+const instantiateAllUsersHydration = () => {
+  hydrationData.forEach(hydration => {
+    hydration = new Hydration(hydration, userRepository)
+  })
+}
+
 const populateUserProfile = () => {
   domUpdates.showDropdown(currentUser);
 }
 
-// const loadHandler = () => {
-//  getData().then(() => {
-//   domUpdates.displayPage();
-//  });
-// };
+
+const getData = () => {
+  fetchData()
+}
 
 // function sendData(obj, ) {
 
@@ -77,7 +112,7 @@ const stepCardHandler = () => {
     let inputMinutes = document.querySelector("#input-steps-minutes");
     let activityObj = new Activity({
       userID: currentUser.id,
-      date: todayDate,
+      date: todaysDate,
       numSteps: inputSteps.value,
       minutesActive: inputMinutes.value
     });
@@ -118,7 +153,7 @@ const stairsCardHandler = () => {
     let inputStairs = document.querySelector("#input-stairs");
     let activityObj = new Activity({
       userID: currentUser.id,
-      date: todayDate,
+      date: todaysDate,
       flightsOfStairs: inputStairs.value
     });
     currentUser.updateActivities(activityObj);
@@ -150,8 +185,8 @@ const hydrationCardHandler = () => {
   if (event.target.classList.contains('user-ounces-submit')) {
     event.preventDefault();
     let input = document.querySelector('#input-ounces');
-    let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, numOunces: input.value});
-    currentUser.updateHydration(todayDate, Number(hydrationObj.ounces));
+    let hydrationObj = new Hydration({userID: currentUser.id, date: todaysDate, numOunces: input.value});
+    currentUser.updateHydration(todaysDate, Number(hydrationObj.ounces));
     domUpdates.hydrationCardDisplay(input); 
     console.log(currentUser);
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
@@ -183,12 +218,12 @@ function sleepCardHandler() {
     let inputQuality = document.querySelector("#input-sleep-quality");
     let sleepObj = new Sleep({
       userID: currentUser.id,
-      date: todayDate,
+      date: todaysDate,
       hoursSlept: inputHours.value,
       sleepQuality: inputQuality.value
     });
 
-    currentUser.updateSleep(todayDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
+    currentUser.updateSleep(todaysDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
     domUpdates.sleepCardDisplay(inputHours, inputQuality);
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
   }
