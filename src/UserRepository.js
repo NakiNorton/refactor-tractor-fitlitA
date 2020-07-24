@@ -10,9 +10,9 @@ class UserRepository {
     this.hydrationData = hydrationData;
   }
 
-  instantiateRawData(rawUserData) {
-    return rawUserData.map((data) => new User(data));
-  }
+  // instantiateRawData(rawUserData) {
+  //   return rawUserData.map((data) => new User(data));
+  // }
 
   getUser(id) {
     return this.users.find((user) => user.id === id);
