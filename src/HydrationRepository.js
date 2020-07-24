@@ -5,10 +5,10 @@ class HydrationRepository {
     this.hydrationData = this.instantiateHydroData(rawHydrationData);
   }
 
-  instantiateHydroData(rawHydrationData) {
-    return rawHydrationData.map((data) => new Hydration(data));
-  }
+  // instantiateHydroData(rawHydrationData) {
+  //   return rawHydrationData.map((data) => new Hydration(data));
+  // }
 }
 
 
-export default HydrationRepository;
+// export default HydrationRepository;

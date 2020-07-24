@@ -2,10 +2,10 @@ import './css/styles.scss';
 
 
 
-import fetchData from './fetchData';
+// import fetchData from './fetchData';
 import domUpdates from './domUpdates';
 import UserRepository from './UserRepository';
-import HydrationRepository from './HydrationRepository';
+// import HydrationRepository from './HydrationRepository';
 import ActivityRepository from './Activity-Repository'
 import SleepRepository from "./SleepRepository";
 
@@ -15,43 +15,116 @@ import Sleep from './Sleep';
 import Activity from './Activity';
 import moment from 'moment';
 
-// let userRepository;
-let hydrationRepository;
-let sleepRepository;
-let activityRepository;
+let userRepository;
+// let hydrationRepository;
+// let sleepRepository;
+// let activityRepository;
+let activityData;
+let userData;
+let sleepData;
+let hydrationData;
 let currentUser;
-let todayDate;
+let todaysDate;
 
 const hydrationSection = document.querySelector("#hydration-card-container");
 const sleepSection = document.querySelector("#sleep-card-container");
 const stepSection = document.querySelector("#steps-card-container");
 const stairsSection = document.querySelector("#stairs-card-container");
 
-function getData() {
-  return fetchData()
-    .then((data) => {
-      let cleanedData = cleanData()
-      let userRepository = new UserRepository(data).users;
-      hydrationRepository = new HydrationRepository(data.hydrationData).hydrationData;
-      sleepRepository = new SleepRepository(data.sleepData).sleepData;
-      activityRepository = new ActivityRepository(data.activityData).activityData;
-      currentUser = new User(userRepository[0]);
-      todayDate = moment().format("L");
-      domUpdates.defineData(currentUser, todayDate, userRepository);
-    }).then(() => {
-      domUpdates.displayPage()})
+
+
+
+function fetchData() {
+ userData = fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData")
+    .then(response => response.json())
+    .then(data => {
+      return data.userData;
+    })
+    .catch(err => console.log(err.message))
+
+sleepData = fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData")
+    .then(response => response.json())
+    .then(data => {
+      return data.sleepData;
+    })
+    .catch(err => console.log(err.message))
+
+ activityData = fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData")
+    .then(response => response.json())
+    .then(data => {
+      return data.activityData;
+    })
+    .catch(err => console.log(err.message))
+
+  hydrationData = fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData")
+    .then(response => response.json())
+    .then(data => {
+      return data.hydrationData;
+    })
+    .catch(err => console.log(err.message))
+
+  Promise.all([userData, sleepData, activityData, hydrationData])
+    .then(data => {
+      userData = data[0];
+      sleepData = data[1];
+      activityData = data[2];
+      hydrationData = data[3];
+    })
+    .then(() => {
+      // console.log('fetched data', data)
+      userRepository = new UserRepository(userData, sleepData, activityData, hydrationData)
+      console.log('UserRepo', userRepository)
+      instantiateAllUsers()
+      instantiateAllUsersHydration()
+      instantiateAllUsersActivity()
+      instantiateAllUsersSleep()
+      // hydrationRepository = new HydrationRepository(data.hydrationData).hydrationData;
+      // sleepRepository = new SleepRepository(data.sleepData).sleepData;
+      // activityRepository = new ActivityRepository(data.activityData).activityData;
+    })
+    .then(() => {
+      currentUser = new User(userRepository.users[0]);
+      todaysDate = moment().format("L");
+      domUpdates.defineData(currentUser, todaysDate, userRepository);
+      domUpdates.displayPage()
+      console.log(todaysDate)
+    })
     .catch((err) => console.log(err.message));
+}
+
+const instantiateAllUsers = () => {
+  userData.forEach(user => {
+    user = new User(user)
+    userRepository.users.push(user)
+  })
+}
+
+const instantiateAllUsersActivity = () => {
+  activityData.forEach(activity => {
+    activity = new Activity(activity, userRepository)
+  })
+}
+
+const instantiateAllUsersSleep = () => {
+  sleepData.forEach(sleep => {
+    sleep = new Activity(sleep, userRepository)
+  })
+}
+
+const instantiateAllUsersHydration = () => {
+  hydrationData.forEach(hydration => {
+    hydration = new Hydration(hydration, userRepository)
+  })
 }
 
 const populateUserProfile = () => {
   domUpdates.showDropdown(currentUser);
 }
 
-// const loadHandler = () => {
-//  getData().then(() => {
-//   domUpdates.displayPage();
-//  });
-// };
+
+const getData = () => {
+  fetchData()
+}
 
 // function sendData(obj, ) {
 
@@ -86,7 +159,7 @@ const stepCardHandler = () => {
     let inputMinutes = document.querySelector("#input-steps-minutes");
     let activityObj = new Activity({
       userID: currentUser.id,
-      date: todayDate,
+      date: todaysDate,
       numSteps: inputSteps.value,
       minutesActive: inputMinutes.value
     });
@@ -127,7 +200,7 @@ const stairsCardHandler = () => {
     let inputStairs = document.querySelector("#input-stairs");
     let activityObj = new Activity({
       userID: currentUser.id,
-      date: todayDate,
+      date: todaysDate,
       flightsOfStairs: inputStairs.value
     });
     currentUser.updateActivities(activityObj);
@@ -159,8 +232,8 @@ const hydrationCardHandler = () => {
   if (event.target.classList.contains('user-ounces-submit')) {
     event.preventDefault();
     let input = document.querySelector('#input-ounces');
-    let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, numOunces: input.value});
-    currentUser.updateHydration(todayDate, Number(hydrationObj.ounces));
+    let hydrationObj = new Hydration({userID: currentUser.id, date: todaysDate, numOunces: input.value});
+    currentUser.updateHydration(todaysDate, Number(hydrationObj.ounces));
     domUpdates.hydrationCardDisplay(input); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
@@ -191,12 +264,12 @@ function sleepCardHandler() {
     let inputQuality = document.querySelector("#input-sleep-quality");
     let sleepObj = new Sleep({
       userID: currentUser.id,
-      date: todayDate,
+      date: todaysDate,
       hoursSlept: inputHours.value,
       sleepQuality: inputQuality.value
     });
 
-    currentUser.updateSleep(todayDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
+    currentUser.updateSleep(todaysDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
     domUpdates.sleepCardDisplay(inputHours, inputQuality);
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
   }
