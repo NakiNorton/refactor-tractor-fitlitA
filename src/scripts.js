@@ -76,8 +76,8 @@ sleepData = fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepD
       console.log('UserRepo', userRepository)
       instantiateAllUsers()
       instantiateAllUsersHydration()
-      // instantiateAllUsersActivity()
-      // instantiateAllUsersSleep()
+      instantiateAllUsersActivity()
+      instantiateAllUsersSleep()
       // hydrationRepository = new HydrationRepository(data.hydrationData).hydrationData;
       // sleepRepository = new SleepRepository(data.sleepData).sleepData;
       // activityRepository = new ActivityRepository(data.activityData).activityData;
@@ -91,6 +91,25 @@ sleepData = fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepD
     .catch((err) => console.log(err.message));
 }
 
+const instantiateAllUsers = () => {
+  userData.forEach(user => {
+    user = new User(user)
+    userRepository.users.push(user)
+  })
+}
+
+const instantiateAllUsersActivity = () => {
+  activityData.forEach(activity => {
+    activity = new Activity(activity, userRepository)
+  })
+}
+
+const instantiateAllUsersSleep = () => {
+  sleepData.forEach(sleep => {
+    sleep = new Activity(sleep, userRepository)
+  })
+}
+
 const instantiateAllUsersHydration = () => {
   hydrationData.forEach(hydration => {
     hydration = new Hydration(hydration, userRepository)
@@ -101,12 +120,6 @@ const populateUserProfile = () => {
   domUpdates.showDropdown(currentUser);
 }
 
-const instantiateAllUsers = () => {
-  userData.forEach(user => {
-    user = new User(user)
-    userRepository.users.push(user)
-  })
-}
 
 const getData = () => {
   fetchData()
