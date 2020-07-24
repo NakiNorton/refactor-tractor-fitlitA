@@ -3,11 +3,6 @@ import './css/styles.scss';
 
 import fetchData from './fetchData';
 import domUpdates from './domUpdates';
-// import UserRepository from './UserRepository';
-// import HydrationRepository from './HydrationRepository';
-// import ActivityRepository from './Activity-Repository'
-// import SleepRepository from "./SleepRepository";
-
 import User from './User';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
@@ -15,14 +10,6 @@ import Activity from './Activity';
 import moment from 'moment';
 import UserRepository from './UserRepository';
 
-let userRepository;
-// let hydrationRepository;
-// let sleepRepository;
-// let activityRepository;
-let activityData;
-let userData;
-let sleepData;
-let hydrationData;
 let currentUser;
 let todaysDate;
 
@@ -32,15 +19,14 @@ const stepSection = document.querySelector("#steps-card-container");
 const stairsSection = document.querySelector("#stairs-card-container");
 
 function getData() {
-  return fetchData()
-  .then((data) => {
-      let todaysDate = moment().format("L");
-      let userRepository = new UserRepository(data, todaysDate);
-      // need to get the User at random eventually
-      currentUser = new User(userRepository.users[0]);
-      domUpdates.defineData(currentUser, todaysDate, userRepository);
-    }).then(() => {
-      domUpdates.displayPage()})
+  return fetchData().then((data) => {
+    let todaysDate = moment().format("L");
+    let userRepository = new UserRepository(data, todaysDate);
+    currentUser = new User(userRepository.users[0]);
+    domUpdates.defineData(currentUser, todaysDate, userRepository);
+  }).then(() => {
+    domUpdates.displayPage()
+  })
     .catch((err) => console.log(err.message));
 }
 
@@ -153,7 +139,6 @@ const hydrationCardHandler = () => {
     let hydrationObj = new Hydration({userID: currentUser.id, date: todaysDate, numOunces: input.value});
     currentUser.updateHydration(todaysDate, Number(hydrationObj.ounces));
     domUpdates.hydrationCardDisplay(input); 
-    console.log(currentUser);
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
 }
@@ -194,20 +179,10 @@ function sleepCardHandler() {
   }
 }
 
-//////// ONLOAD /////////////////
-
-// const loadHandler = () => {
-//   getData()
-//     .then(() => {
-//       domUpdates.displayPage();
-//     })
-// }
-
 /////// EVENT LISTENERS ////////
 
 window.addEventListener("load", getData);
-let profileButton = document.querySelector('#profile-button');
-profileButton.addEventListener("click", populateUserProfile);
+document.querySelector('#profile-button').addEventListener("click", populateUserProfile);
 sleepSection.addEventListener('click', sleepCardHandler);
 hydrationSection.addEventListener('click', hydrationCardHandler);
 stairsSection.addEventListener('click', stairsCardHandler);

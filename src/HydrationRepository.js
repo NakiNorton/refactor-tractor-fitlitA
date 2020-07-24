@@ -1,4 +1,3 @@
-import Hydration from "./Hydration";
 
 class HydrationRepository {
   constructor(today) {
@@ -46,4 +45,4 @@ class HydrationRepository {
 }
 
 
-// export default HydrationRepository;
+export default HydrationRepository;
