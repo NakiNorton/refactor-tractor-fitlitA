@@ -15,10 +15,14 @@ import Sleep from './Sleep';
 import Activity from './Activity';
 import moment from 'moment';
 
-// let userRepository;
-let hydrationRepository;
-let sleepRepository;
-let activityRepository;
+let userRepository;
+// let hydrationRepository;
+// let sleepRepository;
+// let activityRepository;
+let activity;
+let userData;
+let sleep;
+let hydration;
 let currentUser;
 let todayDate;
 
@@ -27,31 +31,81 @@ const sleepSection = document.querySelector("#sleep-card-container");
 const stepSection = document.querySelector("#steps-card-container");
 const stairsSection = document.querySelector("#stairs-card-container");
 
-function getData() {
-  return fetchData()
-    .then((data) => {
-      let cleanedData = cleanData()
-      let userRepository = new UserRepository(data).users;
-      hydrationRepository = new HydrationRepository(data.hydrationData).hydrationData;
-      sleepRepository = new SleepRepository(data.sleepData).sleepData;
-      activityRepository = new ActivityRepository(data.activityData).activityData;
+
+
+
+function fetchData() {
+ userData = fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData")
+    .then(response => response.json())
+    .then(data => {
+      return data.userData;
+    })
+    .catch(err => console.log(err.message))
+
+sleepData = fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData")
+    .then(response => response.json())
+    .then(data => {
+      return data.sleepData;
+    })
+    .catch(err => console.log(err.message))
+
+ activityData = fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData")
+    .then(response => response.json())
+    .then(data => {
+      return data.activityData;
+    })
+    .catch(err => console.log(err.message))
+
+  hydrationData = fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData")
+    .then(response => response.json())
+    .then(data => {
+      return data.hydrationData;
+    })
+    .catch(err => console.log(err.message))
+
+     Promise.all([userData, sleepData, activityData, hydrationData])
+    .then(data => {
+      userData = data[0];
+      sleepData = data[1];
+      activityData = data[2];
+      hydrationData = data[3];
+    })
+    .then(() => {
+      console.log('fetched data', data)
+      userRepository = new UserRepository(userData, sleepData, activityData, hydrationData)
+      console.log('UserRepo', userRepository)
+      instantiateAllUsers()
+      instantiateAllUsersHydration()
+      instantiateAllUsersActivity()
+      instantiateAllUsersSleep()
+      // hydrationRepository = new HydrationRepository(data.hydrationData).hydrationData;
+      // sleepRepository = new SleepRepository(data.sleepData).sleepData;
+      // activityRepository = new ActivityRepository(data.activityData).activityData;
+    })
+      .then(() => {
       currentUser = new User(userRepository[0]);
       todayDate = moment().format("L");
       domUpdates.defineData(currentUser, todayDate, userRepository);
-    }).then(() => {
-      domUpdates.displayPage()})
-    .catch((err) => console.log(err.message));
+      domUpdates.displayPage()
+      })
+     .catch((err) => console.log(err.message));
 }
+
 
 const populateUserProfile = () => {
   domUpdates.showDropdown(currentUser);
 }
 
-// const loadHandler = () => {
-//  getData().then(() => {
-//   domUpdates.displayPage();
-//  });
-// };
+const instantiateAllUsers = () => {
+  userData.forEach(user => {
+    user = new User(user)
+    userRepository.users.push(user)
+  })
+}
+
+const getData = () => {
+fetchData()
+}
 
 // function sendData(obj, ) {
 
