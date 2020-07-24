@@ -24,7 +24,7 @@ let userData;
 let sleepData;
 let hydrationData;
 let currentUser;
-let todayDate;
+let todaysDate;
 
 const hydrationSection = document.querySelector("#hydration-card-container");
 const sleepSection = document.querySelector("#sleep-card-container");
@@ -83,12 +83,11 @@ sleepData = fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepD
       // activityRepository = new ActivityRepository(data.activityData).activityData;
     })
     .then(() => {
-      console.log('userRepo stuff', userRepository.users[0])
       currentUser = new User(userRepository.users[0]);
-      console.log(currentUser)
-      todayDate = moment().format("L");
-      domUpdates.defineData(currentUser, todayDate, userRepository);
+      todaysDate = moment().format("L");
+      domUpdates.defineData(currentUser, todaysDate, userRepository);
       domUpdates.displayPage()
+      console.log(todaysDate)
     })
     .catch((err) => console.log(err.message));
 }
@@ -160,7 +159,7 @@ const stepCardHandler = () => {
     let inputMinutes = document.querySelector("#input-steps-minutes");
     let activityObj = new Activity({
       userID: currentUser.id,
-      date: todayDate,
+      date: todaysDate,
       numSteps: inputSteps.value,
       minutesActive: inputMinutes.value
     });
@@ -201,7 +200,7 @@ const stairsCardHandler = () => {
     let inputStairs = document.querySelector("#input-stairs");
     let activityObj = new Activity({
       userID: currentUser.id,
-      date: todayDate,
+      date: todaysDate,
       flightsOfStairs: inputStairs.value
     });
     currentUser.updateActivities(activityObj);
@@ -233,8 +232,8 @@ const hydrationCardHandler = () => {
   if (event.target.classList.contains('user-ounces-submit')) {
     event.preventDefault();
     let input = document.querySelector('#input-ounces');
-    let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, numOunces: input.value});
-    currentUser.updateHydration(todayDate, Number(hydrationObj.ounces));
+    let hydrationObj = new Hydration({userID: currentUser.id, date: todaysDate, numOunces: input.value});
+    currentUser.updateHydration(todaysDate, Number(hydrationObj.ounces));
     domUpdates.hydrationCardDisplay(input); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
@@ -265,12 +264,12 @@ function sleepCardHandler() {
     let inputQuality = document.querySelector("#input-sleep-quality");
     let sleepObj = new Sleep({
       userID: currentUser.id,
-      date: todayDate,
+      date: todaysDate,
       hoursSlept: inputHours.value,
       sleepQuality: inputQuality.value
     });
 
-    currentUser.updateSleep(todayDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
+    currentUser.updateSleep(todaysDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
     domUpdates.sleepCardDisplay(inputHours, inputQuality);
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
   }
