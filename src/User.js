@@ -3,7 +3,7 @@ import ActivityRepository from "./Activity-Repository";
 import SleepRepository from "./SleepRepository";
 
 class User {
-  constructor(userDetails) {
+  constructor(userDetails, todayDate) {
     this.id = this.checkUserId(userDetails.id);
     this.name = this.checkName(userDetails.name);
     this.address = userDetails.address || 'No address added.';
@@ -11,9 +11,9 @@ class User {
     this.strideLength = userDetails.strideLength || 'Stride length not added.';
     this.dailyStepGoal = userDetails.dailyStepGoal || 'Daily step goal not added.';
     this.friends = userDetails.friends || 'Add friends for friendly competition!';
-    this.hydration = new HydrationRepository(userDetails.hydrationData);
-    this.activity = new ActivityRepository(userDetails.activityData);
-    this.sleep = new SleepRepository(userDetails.sleepData);
+    this.hydrationInfo = new HydrationRepository(todayDate);
+    this.sleepInfo = new SleepRepository(todayDate);
+    this.activityInfo = new ActivityRepository(todayDate)
   }
 
   checkUserId(user) {
@@ -30,53 +30,12 @@ class User {
   }
 
   updateHydration(today, amount) {
-    this.ouncesRecord.unshift({date: today, ounces: amount});
-    if (this.ouncesRecord.length) {
-      this.ouncesAverage = Math.round((amount + (this.ouncesAverage * (this.ouncesRecord.length - 1))) / this.ouncesRecord.length);
+    this.hydration.ouncesRecord.unshift({date: today, ounces: amount});
+    if (this.hydration.ouncesRecord.length) {
+      this.hydration.ouncesAverage = Math.round((amount + (this.ouncesAverage * (this.ouncesRecord.length - 1))) / this.ouncesRecord.length);
     } else {
-      this.ouncesAverage = amount;
+      this.hydration.ouncesAverage = amount;
     }
-  }
-
-  getWeekAvgOunces() {
-    let week = this.ouncesRecord.splice(0, 7);
-    let weekTotal = week.reduce((sum, entry) => {
-      sum += entry.ounces;
-      return sum;
-    }, 0);
-    return weekTotal / 7;
-  }
-
-  getWeekOuncesByDay() {
-    let week = this.ouncesRecord.splice(0, 7);
-    if (week.length !== 0) {
-      return week.reduce((weekList, day) => {
-        weekList.push({[day.date]: day.ounces});
-        return weekList;
-      }, []);
-    } else {
-      return 'Drink more water!';
-    }
-  }
-
-  calculateAverageHoursThisWeek(todayDate) {
-    return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
-      let index = this.sleepHoursRecord.indexOf(this.sleepHoursRecord.find(sleep => sleep.date === todayDate));
-      if (index <= this.sleepHoursRecord.indexOf(sleepAct) && this.sleepHoursRecord.indexOf(sleepAct) <= (index + 6)) {
-        sum += sleepAct.hours;
-      }
-      return sum;
-    }, 0) / this.sleepHoursRecord.length).toFixed(1);
-  }
-
-  calculateAverageQualityThisWeek(todayDate) {
-    return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
-      let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todayDate));
-      if (index <= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
-        sum += sleepAct.quality;
-      }
-      return sum;
-    }, 0) / this.sleepQualityRecord.length).toFixed(1);
   }
 
   updateSleep(date, hours, quality) {

@@ -3,13 +3,15 @@ import HydrationRepository from '../src/HydrationRepository';
 import Hydration from "../src/Hydration";
 
 describe('HydrationRepository', function() {
-  let hydrate1, hydrate2, hydrate3, mockRawData, mockHydroRepo;
+  let hydrate1, hydrate2, hydrate3, hydrate4, mockRawData, todayDate, mockHydroRepo;
   beforeEach(() => {
     hydrate1 = {userID: 1, date: "07/20/2020", numOunces: 40}
-    hydrate2 = { userID: 2, date: "07/19/2020", numOunces: 30 }
-    hydrate3 = { userID: 3, date: "07/18/2020", numOunces: 20 }
-    mockRawData = [hydrate1, hydrate2, hydrate3]
-    mockHydroRepo = new HydrationRepository(mockRawData)
+    hydrate2 = { userID: 1, date: "07/20/2020", numOunces: 30 }
+    hydrate3 = { userID: 1, date: "07/18/2020", numOunces: 20 }
+    hydrate4 = { userID: 1, date: "07/18/2020", numOunces: 20 }
+    mockRawData = [hydrate1, hydrate2, hydrate3, hydrate4]
+    todayDate = "07/20/2020"
+    mockHydroRepo = new HydrationRepository(todayDate)
   })
   
   it("should be a function", function () {
@@ -20,14 +22,18 @@ describe('HydrationRepository', function() {
     expect(mockHydroRepo).to.be.an.instanceof(HydrationRepository);
   });
 
-  it("should hold an array of instantiated users", function () {
-    expect(mockHydroRepo.hydrationData[0]).to.deep.equal({
-      userId: 1,
-      date: "07/20/2020",
-      ounces: 40,
-    });
-    expect(mockHydroRepo.hydrationData.length).to.deep.equal(3);
+  it('should hold all individual entries in an array', function() {
+    mockHydroRepo.individualEntryRecord.push(...mockRawData);
+    expect(mockHydroRepo.individualEntryRecord.length).to.deep.equal(4);
   });
+
+  it.only('should return a sum of all ounces of water drank today', function() {
+    mockHydroRepo.individualEntryRecord.push(...mockRawData);
+    expect(mockHydroRepo.findTodaysTotalWater(todayDate)).to.equal(70);
+
+  })
+
+
 
 
 });

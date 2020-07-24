@@ -3,16 +3,17 @@ import './css/styles.scss';
 
 import fetchData from './fetchData';
 import domUpdates from './domUpdates';
-import UserRepository from './UserRepository';
-import HydrationRepository from './HydrationRepository';
-import ActivityRepository from './Activity-Repository'
-import SleepRepository from "./SleepRepository";
+// import UserRepository from './UserRepository';
+// import HydrationRepository from './HydrationRepository';
+// import ActivityRepository from './Activity-Repository'
+// import SleepRepository from "./SleepRepository";
 
 import User from './User';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
 import Activity from './Activity';
 import moment from 'moment';
+import UserRepository from './UserRepository';
 
 const hydrationSection = document.querySelector("#hydration-card-container");
 const sleepSection = document.querySelector("#sleep-card-container");
@@ -21,11 +22,11 @@ const stairsSection = document.querySelector("#stairs-card-container");
 
 function getData() {
   return fetchData()
-    .then((data) => {
-      let userRepository = new dataConfig(data);
+  .then((data) => {
+      let todayDate = moment().format("L");
+      let userRepository = new UserRepository(data, todayDate);
       // need to get the User at random eventually
       let currentUser = new User(userRepository[0]);
-      let todayDate = moment().format("L");
       domUpdates.defineData(currentUser, todayDate, userRepository);
     }).then(() => {
       domUpdates.displayPage()})
