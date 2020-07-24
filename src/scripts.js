@@ -83,7 +83,9 @@ sleepData = fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepD
       // activityRepository = new ActivityRepository(data.activityData).activityData;
     })
     .then(() => {
-      currentUser = new User(userRepository[0]);
+      console.log('userRepo stuff', userRepository.users[0])
+      currentUser = new User(userRepository.users[0]);
+      console.log(currentUser)
       todayDate = moment().format("L");
       domUpdates.defineData(currentUser, todayDate, userRepository);
       domUpdates.displayPage()
