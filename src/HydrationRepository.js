@@ -2,22 +2,38 @@ import Hydration from "./Hydration";
 
 class HydrationRepository {
   constructor(today) {
-    this.individualEntryRecord = [];
-    this.allDailyEntryRecord = [];
-    this.ouncesAverage = 0;
+    this.individualEntryRecords = [];
+    this.allDailyEntryRecords = this.recordEntriesByDay();
+    this.ouncesAverageWeek = 0;
   }
   
+  // this.allDailyEntryRecord.push({date: today, numOunces: sumOuncesToday });
   
   findTodaysTotalWater(today) {
-    let allTodayWaterEntries = this.individualEntryRecord.filter(record => {
+    let allTodayWaterEntries = this.individualEntryRecords.filter(record => {
       return record.date === today;
     })
-    let sumOuncesToday = allTodayWaterEntries.reduce((sum, entry) => {
+    return allTodayWaterEntries.reduce((sum, entry) => {
       sum += entry.numOunces;
       return sum;
     }, 0);
-    this.allDailyEntryRecord.push(sumOuncesToday);
-    return sumOuncesToday;
+  }
+
+  recordEntriesByDay() {
+    return this.individualEntryRecords.reduce((dailyEntryRecords, entry) => {
+      let dailyEntry = {}
+      if (!dailyEntry[entry.date]) {
+        dailyEntry[entry.date] = 0;
+      }
+      dailyEntry[entry.date] = entry.numOunces;
+      console.log(dailyEntry);
+      dailyEntryRecords.push(dailyEntry);
+      return dailyEntryRecords;
+    }, []); 
+
+    // we want to make objects of each day of entries 
+    // sum up their numOunces on that day
+    // push that obj to the dailyEntryRecord
   }
 
     
@@ -30,27 +46,6 @@ class HydrationRepository {
   //   return weekTotal / 7;
   // }
 
-  // getWeekOuncesByDay() {
-  //   let week = this.ouncesRecord.splice(0, 7);
-  //   if (week.length !== 0) {
-  //     return week.reduce((weekList, day) => {
-  //       weekList.push({ [day.date]: day.ounces });
-  //       return weekList;
-  //     }, []);
-  //   } else {
-  //     return "Drink more water!";
-  //   }
-  // }
-
-  //  findWeeks;
-
-  // findToday's amount of water
-  // filter ouncesRecord if data matches todaysDate
-  // reduce over the new record and return sum
-  // how would we get todaysDate?
-
-  // findWeek's amount of water
-  //
 }
 
 

@@ -171,7 +171,7 @@ describe('UserRepository', function() {
     expect(userRepository.users[1].sleepInfo.individualEntryRecord.length).to.deep.equal(1);
   })
 
-  it.only('should match each activity data point with appropriate user', function() {
+  it('should match each activity data point with appropriate user', function() {
     userRepository.matchDataWithUsers(rawData, todayDate);
 
     expect(userRepository.users[0].activityInfo.individualEntryRecord.length).to.deep.equal(2);

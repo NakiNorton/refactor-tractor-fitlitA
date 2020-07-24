@@ -23,13 +23,18 @@ describe('HydrationRepository', function() {
   });
 
   it('should hold all individual entries in an array', function() {
-    mockHydroRepo.individualEntryRecord.push(...mockRawData);
-    expect(mockHydroRepo.individualEntryRecord.length).to.deep.equal(4);
+    mockHydroRepo.individualEntryRecords.push(...mockRawData);
+    expect(mockHydroRepo.individualEntryRecords.length).to.deep.equal(4);
   });
 
-  it.only('should return a sum of all ounces of water drank today', function() {
-    mockHydroRepo.individualEntryRecord.push(...mockRawData);
+  it('should return a sum of all ounces of water drank today', function() {
+    mockHydroRepo.individualEntryRecords.push(...mockRawData);
     expect(mockHydroRepo.findTodaysTotalWater(todayDate)).to.equal(70);
+  });
+
+  it.only('should hold an array of each days ounces', function() {
+    mockHydroRepo.individualEntryRecords.push(...mockRawData);
+    expect(mockHydroRepo.allDailyEntryRecords.length).to.deep.equal(2);
 
   })
 
