@@ -16,42 +16,37 @@ class UserRepository {
 
   matchHydrationWithUser(users, rawHydrationData) {
     users.forEach(user => {
-      rawHydrationData.forEach(hydrationDataPoint => {
-        if (hydrationDataPoint.userID === user.id) {
-          user.hydrationInfo.individualEntryRecord.push(hydrationDataPoint);
-        }
+      user.hydrationInfo.individualEntryRecords = rawHydrationData.filter(hydrationDataPoint => {
+        return hydrationDataPoint.userID === user.id;
       })
     })
   }
 
   matchSleepWithUser(users, rawSleepData) {
     users.forEach(user => {
-      rawSleepData.forEach(sleepDataPoint => {
-        if (sleepDataPoint.userID === user.id) {
-          user.sleepInfo.individualEntryRecord.push(sleepDataPoint);
-        } 
+      user.sleepInfo.individualEntryRecord = rawSleepData.filter(sleepDataPoint => {
+        return sleepDataPoint.userID === user.id;
       })
     })
   }
 
   matchActivityWithUser(users, rawActivityData) {
     users.forEach(user => {
-      rawActivityData.forEach(activityDataPoint => {
-        if (activityDataPoint.userID === user.id) {
-          user.activityInfo.individualEntryRecord.push(activityDataPoint);
-        }
+      user.activityInfo.individualEntryRecord = rawActivityData.filter(activityDataPoint => {
+        return activityDataPoint.userID === user.id;
       })
     })
   }
 
-  // calculateCommunityAvgStepGoal() {
-  //   let communityStepGoals = this.users.map((user) => user.dailyStepGoal);
-  //   let communityTotal = communityStepGoals.reduce((sum, goal) => {
-  //     sum += goal;
-  //     return sum;
-  //   }, 0);
-  //   return communityTotal / this.users.length;
-  // }
+
+  calculateCommunityAvgStepGoal() {
+    let communityStepGoals = this.users.map((user) => user.dailyStepGoal);
+    let communityTotal = communityStepGoals.reduce((sum, goal) => {
+      sum += goal;
+      return sum;
+    }, 0);
+    return communityTotal / this.users.length;
+  }
   
   // calculateAverageSleepQuality() {
   //   let totalSleepQuality = this.users.reduce((sum, user) => {
@@ -67,7 +62,6 @@ class UserRepository {
   // }
   
   // getLongestSleepers(today, sleepRepository) {
-
   //   let allSleepsOnDate = UserRepository.users.filter((sleep) => sleep.date === today);
   //   return allSleepsOnDate ? allSleepsOnDate.sort((a, b) => b.hoursSlept - a.hoursSlept).shift().userID;
   // }
@@ -77,9 +71,6 @@ class UserRepository {
   //   return allSleepsOnDate ? allSleepsOnDate.sort((a, b) =>  a.hoursSlept - b.hoursSlept).shift().userID : "Data not found";
   // }
 }
-
-
-
 
 // calculateAverageSteps(date) {
 //   let allUsersStepsCount = this.users.map(user => {

@@ -19,15 +19,16 @@ const hydrationSection = document.querySelector("#hydration-card-container");
 const sleepSection = document.querySelector("#sleep-card-container");
 const stepSection = document.querySelector("#steps-card-container");
 const stairsSection = document.querySelector("#stairs-card-container");
+let currentUser;
 
 function getData() {
   return fetchData()
   .then((data) => {
-      let todayDate = moment().format("L");
-      let userRepository = new UserRepository(data, todayDate);
+      let todaysDate = moment().format("L");
+      let userRepository = new UserRepository(data, todaysDate);
       // need to get the User at random eventually
-      let currentUser = new User(userRepository[0]);
-      domUpdates.defineData(currentUser, todayDate, userRepository);
+      currentUser = new User(userRepository.users[0]);
+      domUpdates.defineData(currentUser, todaysDate, userRepository);
     }).then(() => {
       domUpdates.displayPage()})
     .catch((err) => console.log(err.message));
@@ -66,7 +67,7 @@ const stepCardHandler = () => {
     let inputMinutes = document.querySelector("#input-steps-minutes");
     let activityObj = new Activity({
       userID: currentUser.id,
-      date: todayDate,
+      date: todaysDate,
       numSteps: inputSteps.value,
       minutesActive: inputMinutes.value
     });

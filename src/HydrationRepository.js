@@ -6,9 +6,7 @@ class HydrationRepository {
     this.allDailyEntryRecords = this.recordEntriesByDay();
     this.ouncesAverageWeek = 0;
   }
-  
-  // this.allDailyEntryRecord.push({date: today, numOunces: sumOuncesToday });
-  
+    
   findTodaysTotalWater(today) {
     let allTodayWaterEntries = this.individualEntryRecords.filter(record => {
       return record.date === today;
@@ -20,13 +18,12 @@ class HydrationRepository {
   }
 
   recordEntriesByDay() {
+    let dailyEntry = {}
     return this.individualEntryRecords.reduce((dailyEntryRecords, entry) => {
-      let dailyEntry = {}
       if (!dailyEntry[entry.date]) {
-        dailyEntry[entry.date] = 0;
+        dailyEntry[entry.date];
       }
       dailyEntry[entry.date] = entry.numOunces;
-      console.log(dailyEntry);
       dailyEntryRecords.push(dailyEntry);
       return dailyEntryRecords;
     }, []); 
@@ -34,17 +31,17 @@ class HydrationRepository {
     // we want to make objects of each day of entries 
     // sum up their numOunces on that day
     // push that obj to the dailyEntryRecord
+    // broken
   }
-
     
-  // getWeekAvgOunces() {
-  //   let week = this.ouncesRecord.splice(0, 7);
-  //   let weekTotal = week.reduce((sum, entry) => {
-  //     sum += entry.ounces;
-  //     return sum;
-  //   }, 0);
-  //   return weekTotal / 7;
-  // }
+  getWeekAvgOunces() {
+    let week = this.allDailyEntryRecords.splice(0, 7);
+    let weekTotal = week.reduce((sum, entry) => {
+      sum += entry.ounces;
+      return sum;
+    }, 0);
+    return weekTotal / week.length;
+  }
 
 }
 
