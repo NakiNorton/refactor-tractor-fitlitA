@@ -15,11 +15,21 @@ import Activity from './Activity';
 import moment from 'moment';
 import UserRepository from './UserRepository';
 
+let userRepository;
+// let hydrationRepository;
+// let sleepRepository;
+// let activityRepository;
+let activityData;
+let userData;
+let sleepData;
+let hydrationData;
+let currentUser;
+let todaysDate;
+
 const hydrationSection = document.querySelector("#hydration-card-container");
 const sleepSection = document.querySelector("#sleep-card-container");
 const stepSection = document.querySelector("#steps-card-container");
 const stairsSection = document.querySelector("#stairs-card-container");
-let currentUser;
 
 function getData() {
   return fetchData()
@@ -108,7 +118,7 @@ const stairsCardHandler = () => {
     let inputStairs = document.querySelector("#input-stairs");
     let activityObj = new Activity({
       userID: currentUser.id,
-      date: todayDate,
+      date: todaysDate,
       flightsOfStairs: inputStairs.value
     });
     currentUser.updateActivities(activityObj);
@@ -140,8 +150,8 @@ const hydrationCardHandler = () => {
   if (event.target.classList.contains('user-ounces-submit')) {
     event.preventDefault();
     let input = document.querySelector('#input-ounces');
-    let hydrationObj = new Hydration({userID: currentUser.id, date: todayDate, numOunces: input.value});
-    currentUser.updateHydration(todayDate, Number(hydrationObj.ounces));
+    let hydrationObj = new Hydration({userID: currentUser.id, date: todaysDate, numOunces: input.value});
+    currentUser.updateHydration(todaysDate, Number(hydrationObj.ounces));
     domUpdates.hydrationCardDisplay(input); 
     console.log(currentUser);
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
@@ -173,12 +183,12 @@ function sleepCardHandler() {
     let inputQuality = document.querySelector("#input-sleep-quality");
     let sleepObj = new Sleep({
       userID: currentUser.id,
-      date: todayDate,
+      date: todaysDate,
       hoursSlept: inputHours.value,
       sleepQuality: inputQuality.value
     });
 
-    currentUser.updateSleep(todayDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
+    currentUser.updateSleep(todaysDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
     domUpdates.sleepCardDisplay(inputHours, inputQuality);
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
   }
