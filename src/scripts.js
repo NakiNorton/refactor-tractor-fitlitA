@@ -3,25 +3,13 @@ import './css/styles.scss';
 
 import fetchData from './fetchData';
 import domUpdates from './domUpdates';
-import UserRepository from './UserRepository';
-// import HydrationRepository from './HydrationRepository';
-import ActivityRepository from './Activity-Repository'
-import SleepRepository from "./SleepRepository";
-
 import User from './User';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
 import Activity from './Activity';
 import moment from 'moment';
+import UserRepository from './UserRepository';
 
-let userRepository;
-// let hydrationRepository;
-// let sleepRepository;
-// let activityRepository;
-let activityData;
-let userData;
-let sleepData;
-let hydrationData;
 let currentUser;
 let todaysDate;
 
@@ -31,57 +19,20 @@ const stepSection = document.querySelector("#steps-card-container");
 const stairsSection = document.querySelector("#stairs-card-container");
 
 function getData() {
-  return fetchData()
-    .then((data) => {
-      let userRepository = new UserRepository(data.userData).users;
-      // hydrationRepository = new HydrationRepository(data.hydrationData).hydrationData;
-      // sleepRepository = new SleepRepository(data.sleepData).sleepData;
-      // activityRepository = new ActivityRepository(data.activityData).activityData;
-      let currentUser = new User(userRepository[0]);
-      let todayDate = moment().format("L");
-      domUpdates.defineData(currentUser, todayDate, userRepository);
-    }).then(() => {
-      domUpdates.displayPage()})
+  return fetchData().then((data) => {
+    let todaysDate = moment().format("L");
+    let userRepository = new UserRepository(data, todaysDate);
+    currentUser = new User(userRepository.users[0]);
+    domUpdates.defineData(currentUser, todaysDate, userRepository);
+  }).then(() => {
+    domUpdates.displayPage()
+  })
     .catch((err) => console.log(err.message));
-}
-
-const instantiateAllUsers = () => {
-  userData.forEach(user => {
-    user = new User(user)
-    userRepository.users.push(user)
-  })
-}
-
-const instantiateAllUsersActivity = () => {
-  activityData.forEach(activity => {
-    activity = new Activity(activity, userRepository)
-  })
-}
-
-const instantiateAllUsersSleep = () => {
-  sleepData.forEach(sleep => {
-    sleep = new Activity(sleep, userRepository)
-  })
-}
-
-const instantiateAllUsersHydration = () => {
-  hydrationData.forEach(hydration => {
-    hydration = new Hydration(hydration, userRepository)
-  })
 }
 
 const populateUserProfile = () => {
   domUpdates.showDropdown(currentUser);
 }
-
-
-const getData = () => {
-  fetchData()
-}
-
-// function sendData(obj, ) {
-
-// }
 
 /////// STEP SECTION /////////
 
@@ -188,7 +139,6 @@ const hydrationCardHandler = () => {
     let hydrationObj = new Hydration({userID: currentUser.id, date: todaysDate, numOunces: input.value});
     currentUser.updateHydration(todaysDate, Number(hydrationObj.ounces));
     domUpdates.hydrationCardDisplay(input); 
-    console.log(currentUser);
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
 }
@@ -229,20 +179,10 @@ function sleepCardHandler() {
   }
 }
 
-//////// ONLOAD /////////////////
-
-// const loadHandler = () => {
-//   getData()
-//     .then(() => {
-//       domUpdates.displayPage();
-//     })
-// }
-
 /////// EVENT LISTENERS ////////
 
 window.addEventListener("load", getData);
-let profileButton = document.querySelector('#profile-button');
-profileButton.addEventListener("click", populateUserProfile);
+document.querySelector('#profile-button').addEventListener("click", populateUserProfile);
 sleepSection.addEventListener('click', sleepCardHandler);
 hydrationSection.addEventListener('click', hydrationCardHandler);
 stairsSection.addEventListener('click', stairsCardHandler);

@@ -12,10 +12,10 @@ const domUpdates = {
   ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayPage() {
     document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
-    this.stepCardDisplay();
-    this.stairsCardDisplay();
+    // this.stepCardDisplay();
+    // this.stairsCardDisplay();
     this.hydrationCardDisplay();
-    this.sleepCardDisplay();
+    // this.sleepCardDisplay();
   },
   
   flipCard(cardToHide, cardToShow) {
@@ -131,23 +131,21 @@ const domUpdates = {
 
   //////////// HYDRATION DISPLAY SECTION /////////////////////////////////
 
-  hydrationCardDisplay(input) {
-    this.hydrationAddInputDisplay();
+  hydrationCardDisplay(todayDate) {
+    this.hydrationAddInputDisplay(todayDate);
     this.hydrationCalendarDisplay();
     // input.value = "";
   },
 
   hydrationAddInputDisplay() {
-    let hydrationUserOuncesToday = document.getElementById('hydration-user-ounces-today');
-    let foundTodayAmount = this.currentUser.ouncesRecord.find(ounce => ounce.date === this.todaysDate);
-    foundTodayAmount ? hydrationUserOuncesToday.innerText = `${foundTodayAmount.ounces}` : hydrationUserOuncesToday.innerText = "0";
+    document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.findTodaysTotalWater(this.todayDate)}`;
   },
 
   hydrationCalendarDisplay() {
     let weeklyAvg = document.querySelector(".hydration-weekly-avg");
     let weekList = document.querySelector(".hydration-week-data-list");
-    let cardHtml = `<article class="hydration-amount-daily">${this.currentUser.getWeekOuncesByDay()}</br></article>`;
-    weeklyAvg.innerText = `You averaged ${this.currentUser.getWeekAvgOunces()} ounces this week!`;
+    // let cardHtml = `<article class="hydration-amount-daily">${this.currentUser.hydrationInfo.getWeekOuncesByDay()}</br></article>`;
+    weeklyAvg.innerText = `You averaged ${this.currentUser.hydrationInfo.getWeekAvgOunces()} ounces this week!`;
     weekList.innerText = "";
     weekList.insertAdjacentHTML("beforeend", cardHtml);
   },

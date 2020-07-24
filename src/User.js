@@ -1,7 +1,9 @@
 import HydrationRepository from "./HydrationRepository";
+import ActivityRepository from "./Activity-Repository";
+import SleepRepository from "./SleepRepository";
 
 class User {
-  constructor(userDetails) {
+  constructor(userDetails, todayDate) {
     this.id = this.checkUserId(userDetails.id);
     this.name = this.checkName(userDetails.name);
     this.address = userDetails.address || 'No address added.';
@@ -9,20 +11,9 @@ class User {
     this.strideLength = userDetails.strideLength || 'Stride length not added.';
     this.dailyStepGoal = userDetails.dailyStepGoal || 'Daily step goal not added.';
     this.friends = userDetails.friends || 'Add friends for friendly competition!';
-    // this.ouncesAverage = 0;
-    // this.ouncesRecord = [];
-    // this.sleepQualityAverage = 0;
-    // this.sleepHoursRecord = [];
-    // this.sleepQualityRecord = [];
-    // this.hoursSleptAverage = 0;
-    // this.totalStepsThisWeek = 0;
-    // this.activityRecord = [];
-    // this.accomplishedDays = [];
-    this.hydration = new HydrationRepository(userDetails.hydrationData)
-    // this.trendingStepDays = [];
-    // this.trendingStairsDays = [];
-    // this.friendsNames = [];
-    // this.friendsActivityRecords = []
+    this.hydrationInfo = new HydrationRepository(todayDate);
+    this.sleepInfo = new SleepRepository(todayDate);
+    this.activityInfo = new ActivityRepository(todayDate);
   }
 
   checkUserId(user) {
@@ -39,32 +30,11 @@ class User {
   }
 
   updateHydration(today, amount) {
-    this.ouncesRecord.unshift({date: today, ounces: amount});
-    if (this.ouncesRecord.length) {
-      this.ouncesAverage = Math.round((amount + (this.ouncesAverage * (this.ouncesRecord.length - 1))) / this.ouncesRecord.length);
+    this.hydration.ouncesRecord.unshift({date: today, ounces: amount});
+    if (this.hydration.ouncesRecord.length) {
+      this.hydration.ouncesAverage = Math.round((amount + (this.ouncesAverage * (this.ouncesRecord.length - 1))) / this.ouncesRecord.length);
     } else {
-      this.ouncesAverage = amount;
-    }
-  }
-
-  getWeekAvgOunces() {
-    let week = this.ouncesRecord.splice(0, 7);
-    let weekTotal = week.reduce((sum, entry) => {
-      sum += entry.ounces;
-      return sum;
-    }, 0);
-    return weekTotal / 7;
-  }
-
-  getWeekOuncesByDay() {
-    let week = this.ouncesRecord.splice(0, 7);
-    if (week.length !== 0) {
-      return week.reduce((weekList, day) => {
-        weekList.push({[day.date]: day.ounces});
-        return weekList;
-      }, []);
-    } else {
-      return 'Drink more water!';
+      this.hydration.ouncesAverage = amount;
     }
   }
 

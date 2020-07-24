@@ -1,60 +1,133 @@
 import { expect } from 'chai';
 
 import UserRepository from '../src/UserRepository';
-// import User from '../src/User';
+import User from '../src/User';
 import Sleep from '../src/Sleep';
+import HydrationRepository from '../src/HydrationRepository';
+import SleepRepository from '../src/SleepRepository';
+import ActivityRepository from '../src/Activity-Repository';
+
 
 describe('UserRepository', function() {
-  let user1;
-  let user2;
-  let user3;
-  let mockUserData;
+  let userData;
+  let hydrationData;
+  let sleepData;
+  let activityData;
+  let rawData;
+  let todayDate;
   let userRepository;
   beforeEach(() => {
-    user1 = {
-      'id': 1,
-      'name': 'Luisa Hane',
-      'address': '15195 Nakia Tunnel, Erdmanport VA 19901-1697',
-      'email': 'Diana.Hayes1@hotmail.com',
-      'strideLength': 4.3,
-      'dailyStepGoal': 10000,
-      'friends': [
-        16,
-        4,
-        8
-      ]
-    }
-    user2 = {
-      "id": 2,
-      "name": "Jarvis Considine",
-      "address": "30086 Kathryn Port, Ciceroland NE 07273",
-      "email": "Dimitri.Bechtelar11@gmail.com",
-      "strideLength": 4.5,
-      "dailyStepGoal": 5000,
-      "friends": [
-        9,
-        18,
-        24,
-        19
-      ]
-    }
-    user3 = {
-      "id": 3,
-      "name": "Herminia Witting",
-      "address": "85823 Bosco Fork, East Oscarstad MI 85126-5660",
-      "email": "Elwin.Tromp@yahoo.com",
-      "strideLength": 4.4,
-      "dailyStepGoal": 15000,
-      "friends": [
-        19,
-        11,
-        42,
-        33
-      ]
-    }
-    mockUserData = [user1, user2, user3]
-    userRepository = new UserRepository(mockUserData);
-  })
+    userData = [
+      {
+        'id': 1,
+        'name': 'Luisa Hane',
+        'address': '15195 Nakia Tunnel, Erdmanport VA 19901-1697',
+        'email': 'Diana.Hayes1@hotmail.com',
+        'strideLength': 4.3,
+        'dailyStepGoal': 10000,
+        'friends': [16, 4, 8]
+      },
+      {
+        "id": 2,
+        "name": "Jarvis Considine",
+        "address": "30086 Kathryn Port, Ciceroland NE 07273",
+        "email": "Dimitri.Bechtelar11@gmail.com",
+        "strideLength": 4.5,
+        "dailyStepGoal": 5000,
+        "friends": [ 9, 18, 24, 19]
+      },
+      {
+        "id": 3,
+        "name": "Herminia Witting",
+        "address": "85823 Bosco Fork, East Oscarstad MI 85126-5660",
+        "email": "Elwin.Tromp@yahoo.com",
+        "strideLength": 4.4,
+        "dailyStepGoal": 15000,
+        "friends": [19, 11, 42, 33]
+      }
+    ]
+    hydrationData = [
+      {
+        userID: 1,
+        date: "2019/06/15",
+        numOunces: 37,
+      },
+      {
+        userID: 2,
+        date: "2019/06/15",
+        numOunces: 75,
+      },
+      {
+        userID: 3,
+        date: "2019/06/15",
+        numOunces: 47,
+      },
+      {
+        userID: 1,
+        date: "2019/06/14",
+        numOunces: 52
+      }
+    ]
+    sleepData = [ 
+      {
+        "userID": 1,
+        "date": "2019/06/15",
+        "hoursSlept": 6.1,
+        "sleepQuality": 2.2
+      },
+      {
+        "userID": 2,
+        "date": "2019/06/15",
+        "hoursSlept": 7,
+        "sleepQuality": 4.7
+      },
+      {
+        "userID": 3,
+        "date": "2019/06/15",
+        "hoursSlept": 10.8,
+        "sleepQuality": 4.7
+      },
+      { 
+        "userID": 1,
+        "date": "2019/06/14",
+        "hoursSlept": 7,
+        "sleepQuality": 3.2
+      }
+    ]
+    activityData = [
+      {
+        userID: 1,
+        date: "2019/06/15",
+        numSteps: 3577,
+        minutesActive: 140,
+        flightsOfStairs: 16,
+      },
+      {
+        userID: 2,
+        date: "2019/06/15",
+        numSteps: 4294,
+        minutesActive: 138,
+        flightsOfStairs: 10,
+      },
+      {
+        userID: 3,
+        date: "2019/06/15",
+        numSteps: 7402,
+        minutesActive: 116,
+        flightsOfStairs: 33,
+      },
+      {
+        userID: 1,
+        date: "2019/06/14",
+        numSteps: 10123,
+        minutesActive: 120,
+        flightsOfStairs: 35,
+      }
+    ];
+    rawData = {userData, hydrationData, sleepData, activityData}
+    todayDate = "2019/24/07"
+    userRepository = new UserRepository(rawData, todayDate)
+  });
 
   it('should be a function', function() {
     expect(UserRepository).to.be.a('function');
@@ -73,20 +146,41 @@ describe('UserRepository', function() {
       dailyStepGoal: 10000,
       friends: [16, 4, 8],
       strideLength: 4.3,
-      ouncesAverage: 0,
-      ouncesRecord: [],
-      strideLength: 4.3
+      hydrationInfo: new HydrationRepository(todayDate),
+      sleepInfo: new SleepRepository(todayDate),
+      activityInfo: new ActivityRepository(todayDate)
     });
     expect(userRepository.users.length).to.equal(3);
   });
 
-  it('getUser should return user object when given a user id', function() {
+  it.skip('getUser should return user object when given a user id', function() {
     expect(userRepository.getUser(1)).to.equal(userRepository.users[0]);
+  });
+
+  it('should match each hydration data point with appropriate user', function() {
+    userRepository.matchDataWithUsers(rawData, todayDate);
+
+    expect(userRepository.users[0].hydrationInfo.individualEntryRecord.length).to.deep.equal(2);
+    expect(userRepository.users[1].hydrationInfo.individualEntryRecord.length).to.deep.equal(1);
+  }); 
+
+  it('should match each sleep data point with appropriate user', function() {
+    userRepository.matchDataWithUsers(rawData, todayDate);
+
+    expect(userRepository.users[0].sleepInfo.individualEntryRecord.length).to.deep.equal(2);
+    expect(userRepository.users[1].sleepInfo.individualEntryRecord.length).to.deep.equal(1);
+  })
+
+  it('should match each activity data point with appropriate user', function() {
+    userRepository.matchDataWithUsers(rawData, todayDate);
+
+    expect(userRepository.users[0].activityInfo.individualEntryRecord.length).to.deep.equal(2);
+    expect(userRepository.users[1].activityInfo.individualEntryRecord.length).to.deep.equal(1);
   })
 
   it('calculateAverageStepGoal should return average step goal for all users', function () {
     expect(userRepository.calculateCommunityAvgStepGoal()).to.equal(10000);
-  })
+  });
 
   it('calculateAverageSleepQuality should return average sleep quality for all users', function () {
     user1.sleepQualityAverage = 3.3;
