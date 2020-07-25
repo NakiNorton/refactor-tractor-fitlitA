@@ -12,9 +12,9 @@ const domUpdates = {
   ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayPage() {
     document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
+    this.hydrationCardDisplay();
     // this.stepCardDisplay();
     // this.stairsCardDisplay();
-    this.hydrationCardDisplay();
     // this.sleepCardDisplay();
   },
   
@@ -131,23 +131,20 @@ const domUpdates = {
 
   //////////// HYDRATION DISPLAY SECTION /////////////////////////////////
 
-  hydrationCardDisplay(todayDate) {
-    this.hydrationAddInputDisplay(todayDate);
-    this.hydrationCalendarDisplay();
+  hydrationCardDisplay() {
+    this.hydrationAddInputDisplay();
+    // this.hydrationCalendarDisplay();
     // input.value = "";
   },
 
   hydrationAddInputDisplay() {
-    document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.findTodaysTotalWater(this.todayDate)}`;
+    document.getElementById("hydration-user-ounces-today").innerText = '';
+    document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.findTodaysTotalWater(this.todaysDate)}`;
   },
 
   hydrationCalendarDisplay() {
     let weeklyAvg = document.querySelector(".hydration-weekly-avg");
-    let weekList = document.querySelector(".hydration-week-data-list");
-    // let cardHtml = `<article class="hydration-amount-daily">${this.currentUser.hydrationInfo.getWeekOuncesByDay()}</br></article>`;
-    weeklyAvg.innerText = `You averaged ${this.currentUser.hydrationInfo.getWeekAvgOunces()} ounces this week!`;
-    weekList.innerText = "";
-    weekList.insertAdjacentHTML("beforeend", cardHtml);
+    weeklyAvg.innerText = `You averaged ${this.currentUser.hydrationInfo.weeklyAvgOunces} ounces this week!`;
   },
 
   // document.querySelector("#hydration-friend-ounces-today").innerText = userRepository.calculateAverageDailyWater(todaysDate);
@@ -172,8 +169,8 @@ const domUpdates = {
     foundTodaySleepQuality ? sleepInfoQualityToday.innerText = `${foundTodaySleepQuality.quality}` : sleepInfoQualityToday.innerText = "0";
     document.querySelector('#sleep-info-hours-average-alltime').innerText = this.currentUser.hoursSleptAverage;
     document.querySelector('#sleep-info-quality-average-alltime').innerText = this.currentUser.sleepQualityAverage;
-    // document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todaysDate, sleepRepository)).getFirstName();
-    // document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todaysDate, sleepRepository)).getFirstName();
+    document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todaysDate, sleepRepository)).getFirstName();
+    document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todaysDate, sleepRepository)).getFirstName();
   },
 
 }

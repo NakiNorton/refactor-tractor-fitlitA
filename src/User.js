@@ -14,6 +14,11 @@ class User {
     this.hydrationInfo = new HydrationRepository(todayDate);
     this.sleepInfo = new SleepRepository(todayDate);
     this.activityInfo = new ActivityRepository(todayDate);
+
+    this.sleepHoursRecord = []
+    this.sleepQualityRecord = []
+    this.hoursSleptAverage = 0
+    this.sleepQualityAverage
   }
 
   checkUserId(user) {
@@ -27,15 +32,6 @@ class User {
   getFirstName() {
     let names = this.name.split(' ');
     return names[0].toUpperCase();
-  }
-
-  updateHydration(today, amount) {
-    this.hydration.ouncesRecord.unshift({date: today, ounces: amount});
-    if (this.hydration.ouncesRecord.length) {
-      this.hydration.ouncesAverage = Math.round((amount + (this.ouncesAverage * (this.ouncesRecord.length - 1))) / this.ouncesRecord.length);
-    } else {
-      this.hydration.ouncesAverage = amount;
-    }
   }
 
   calculateAverageHoursThisWeek(todaysDate) {
@@ -54,6 +50,7 @@ class User {
       if (index <= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
         sum += sleepAct.quality;
       }
+      console.log(sum)
       return sum;
     }, 0) / this.sleepQualityRecord.length).toFixed(1);
   }
