@@ -14,6 +14,8 @@ class User {
     this.hydrationInfo = new HydrationRepository(todayDate);
     this.sleepInfo = new SleepRepository(todayDate);
     this.activityInfo = new ActivityRepository(todayDate);
+    console.log(this) // shows user for each user incl. sleep/hydration/actitivty info
+    console.log(this.activityInfo) // shows activity info for each user
   }
 
   checkUserId(user) {
@@ -64,12 +66,12 @@ class User {
     }
   }
 
-  updateActivities(activity) {
-    this.activityRecord.unshift(activity);
-    if (activity.numSteps >= this.dailyStepGoal) {
-      this.accomplishedDays.unshift(activity.date);
-    }
-  }
+  // updateActivities(activity) {
+  //   this.activityRecord.unshift(activity);
+  //   if (activity.numSteps >= this.dailyStepGoal) {
+  //     this.accomplishedDays.unshift(activity.date);
+  //   }
+  // }
 
   findClimbingRecord() {
     return this.activityRecord.sort((a, b) => {
@@ -86,25 +88,7 @@ class User {
     return Math.round(totalMinutes * 7.6);
   }
 
-  calculateAverageMinutesActiveThisWeek(todaysDate) {
-    return (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todaysDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.minutesActive;
-      }
-      return sum;
-    }, 0) / 7).toFixed(0);
-  }
 
-  calculateAverageStepsThisWeek(todaysDate) {
-    return (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todaysDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.steps;
-      }
-      return sum;
-    }, 0) / 7).toFixed(0);
-  }
 
   calculateAverageFlightsThisWeek(todaysDate) {
     return (this.activityRecord.reduce((sum, activity) => {
