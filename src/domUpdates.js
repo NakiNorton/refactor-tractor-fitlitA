@@ -133,7 +133,7 @@ const domUpdates = {
 
   hydrationCardDisplay() {
     this.hydrationAddInputDisplay();
-    // this.hydrationCalendarDisplay();
+    this.hydrationCalendarDisplay();
     // input.value = "";
   },
 
@@ -144,6 +144,7 @@ const domUpdates = {
 
   hydrationCalendarDisplay() {
     let weeklyAvg = document.querySelector(".hydration-weekly-avg");
+    console.log(this.currentUser.hydrationInfo.weeklyAvgOunces);
     weeklyAvg.innerText = `You averaged ${this.currentUser.hydrationInfo.weeklyAvgOunces} ounces this week!`;
   },
 
