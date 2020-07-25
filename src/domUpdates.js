@@ -67,10 +67,10 @@ const domUpdates = {
   },
 
   stepMainCardDisplay() {
-    document.getElementById("steps-user-steps-today").innerText = `${this.currentUser.activityInfo.getStepsForToday("2019/10/16")}`;
+    document.getElementById("steps-user-steps-today").innerText = `${this.currentUser.activityInfo.getStepsForToday(this.todaysDate)}`;
   },
 
-  stepsInfoCard(date = "2019/10/16") { // default date if nothing is entered  
+  stepsInfoCard(date = this.todaysDate) { // default date if nothing is entered  
     this.stepInfoCardMilesDisplay(date) 
     this.stepInfoCardMinutesDisplay(date)
   },
@@ -92,9 +92,9 @@ const domUpdates = {
   },
   
   stepFriendCardDisplay() {
-    document.getElementById('steps-friend-steps-average-today').innerText = this.userRepository.calculateAllUsersAverageSteps("2019/10/16");
+    document.getElementById('steps-friend-steps-average-today').innerText = this.userRepository.calculateAllUsersAverageSteps(this.todaysDate);
 
-    document.getElementById('steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAllUsersAverageMinutesActive("2019/10/16");
+    document.getElementById('steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAllUsersAverageMinutesActive(this.todaysDate);
 
     // document.querySelector('#steps-friend-average-step-goal').innerText = this.userRepository.calculateCommunityAvgStepGoal();
     // document.querySelector('#steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageSteps(this.todaysDate);
