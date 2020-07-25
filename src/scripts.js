@@ -19,7 +19,6 @@ function getData() {
     todaysDate = moment().format("L");
     let userRepository = new UserRepository(data, todaysDate);
     currentUser = userRepository.users[0];
-    console.log('CUR:', currentUser)
     domUpdates.defineData(currentUser, todaysDate, userRepository);
   }).then(() => {
     domUpdates.displayPage()

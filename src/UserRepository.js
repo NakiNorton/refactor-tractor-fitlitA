@@ -4,7 +4,6 @@ import User from './User';
 class UserRepository {
   constructor(rawData, todayDate) {
     this.users = this.matchDataWithUsers(rawData, todayDate); // all users should have appropriate data that matches their id
-    console.log('all users:', this.users)
   }
  
   matchDataWithUsers(rawData, todayDate) {
@@ -73,7 +72,6 @@ class UserRepository {
 
 
   calculateAllUsersAverageSteps(date) {
-    console.log('all users:', this.users)
     let allUsersStepsCount = this.users.map(user => {
       return user.activityInfo.individualEntryRecords.filter(activity => {
         return activity.date === date;
