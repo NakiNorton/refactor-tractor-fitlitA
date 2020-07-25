@@ -3,7 +3,6 @@ import './css/styles.scss';
 
 import fetchData from './fetchData';
 import domUpdates from './domUpdates';
-import User from './User';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
 import Activity from './Activity';
@@ -20,9 +19,9 @@ const stairsSection = document.querySelector("#stairs-card-container");
 
 function getData() {
   return fetchData().then((data) => {
-    let todaysDate = moment().format("L");
+    todaysDate = moment().format("L");
     let userRepository = new UserRepository(data, todaysDate);
-    currentUser = new User(userRepository.users[0]);
+    currentUser = userRepository.users[0];
     domUpdates.defineData(currentUser, todaysDate, userRepository);
   }).then(() => {
     domUpdates.displayPage()
@@ -61,12 +60,12 @@ const stepCardHandler = () => {
     event.preventDefault();
     let inputSteps = document.querySelector('#input-steps');
     let inputMinutes = document.querySelector("#input-steps-minutes");
-    let activityObj = new Activity({
+    let activityObj = {
       userID: currentUser.id,
       date: todaysDate,
       numSteps: inputSteps.value,
       minutesActive: inputMinutes.value
-    });
+    };
     currentUser.updateActivities(activityObj);
     domUpdates.stepCardDisplay();
     inputSteps.value = ""; 
@@ -102,11 +101,11 @@ const stairsCardHandler = () => {
   if (event.target.classList.contains("user-stairs-submit")) {
     event.preventDefault();
     let inputStairs = document.querySelector("#input-stairs");
-    let activityObj = new Activity({
+    let activityObj = {
       userID: currentUser.id,
       date: todaysDate,
       flightsOfStairs: inputStairs.value
-    });
+    };
     currentUser.updateActivities(activityObj);
     domUpdates.stepCardDisplay();
     inputStairs.value = "";
@@ -136,9 +135,9 @@ const hydrationCardHandler = () => {
   if (event.target.classList.contains('user-ounces-submit')) {
     event.preventDefault();
     let input = document.querySelector('#input-ounces');
-    let hydrationObj = new Hydration({userID: currentUser.id, date: todaysDate, numOunces: input.value});
-    currentUser.updateHydration(todaysDate, Number(hydrationObj.ounces));
-    domUpdates.hydrationCardDisplay(input); 
+    let hydrationObj = {userID: currentUser.id, date: todaysDate, numOunces: input.value};
+    currentUser.hydrationInfo.individualEntryRecords.unshift(hydrationObj);
+    domUpdates.hydrationCardDisplay(input.value); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
 }
