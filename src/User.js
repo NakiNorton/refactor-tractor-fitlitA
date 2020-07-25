@@ -18,7 +18,7 @@ class User {
     this.sleepHoursRecord = []
     this.sleepQualityRecord = []
     this.hoursSleptAverage = 0
-    this.sleepQualityAverage
+    this.sleepQualityAverage = 0
   }
 
   checkUserId(user) {
