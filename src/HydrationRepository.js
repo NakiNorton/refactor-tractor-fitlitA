@@ -15,9 +15,7 @@ class HydrationRepository {
 
 // DOM stuff 
   findTodaysTotalWater(todaysDate) {
-    return this.individualEntryRecords.find(record => {
-      return record.date === todaysDate;
-    }).numOunces;
+    return this.individualEntryRecords.find(record => record.date === todaysDate).numOunces;
   }
     // return allTodayWaterEntries.reduce((sum, entry) => {
     //   sum += Number(entry.numOunces);

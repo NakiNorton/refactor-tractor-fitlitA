@@ -26,6 +26,19 @@ function getData() {
     .catch((err) => console.log(err.message));
 }
 
+// const postData = (dataObj, category) => {
+//    fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/${category}/${category}Data", {
+//   method: 'POST',
+//   headers: {
+//   	'Content-Type': 'application/json'
+//   },
+//   body: JSON.stringify(dataObj), // remember how HTTP can only send and receive strings, just like localStorage?
+// })
+//   .then(response => response.json())
+//   .then(json => /*do something with json*/)
+//   .catch(err => /*do something with the error*/);
+// }
+
 const populateUserProfile = () => {
   domUpdates.showDropdown(currentUser);
 }
@@ -139,6 +152,7 @@ const hydrationCardHandler = () => {
     } else {
       currentUser.hydrationInfo.individualEntryRecords.push(hydrationObj);
     }
+    // postData(hydrationObj, hydration);
     domUpdates.hydrationCardDisplay(input.value); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
