@@ -14,15 +14,16 @@ class HydrationRepository {
   }
 
 // DOM stuff 
-  findTodaysTotalWater(today) {
-    let allTodayWaterEntries = this.individualEntryRecords.filter(record => {
-      return record.date === today;
-    })
-    return allTodayWaterEntries.reduce((sum, entry) => {
-      sum += Number(entry.numOunces);
-      return sum;
-    }, 0);
+  findTodaysTotalWater(todaysDate) {
+    return this.individualEntryRecords.find(record => {
+      return record.date === todaysDate;
+    }).numOunces;
   }
+    // return allTodayWaterEntries.reduce((sum, entry) => {
+    //   sum += Number(entry.numOunces);
+    //   return sum;
+    // }, 0);
+  // }
 
   getOuncesByDay(date) {
     return this.individualEntryRecords.find(entry => entry.date === date);
@@ -34,7 +35,7 @@ class HydrationRepository {
       sum += entry.numOunces;
       return sum;
     }, 0);
-    return Number((numOuncesTotal / 6).toFixed(0));
+    return Number((numOuncesTotal / 7).toFixed(0));
   }
 
   getWeeksDailyOunces() {
