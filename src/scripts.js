@@ -5,7 +5,7 @@ import fetchData from './fetchData';
 import domUpdates from './domUpdates';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
-import Activity from './Activity';
+// import Activity from './Activity';
 import moment from 'moment';
 import UserRepository from './UserRepository';
 
@@ -56,6 +56,11 @@ const stepCardHandler = () => {
   if (event.target.classList.contains("steps-go-back-button")) {
     domUpdates.flipCard(event.target.parentNode, stepsMainCard);
   } 
+  if (event.target.classList.contains('date-input-submit')) {
+    event.preventDefault();
+    let input = document.querySelector('#input-date');
+    domUpdates.stepsInfoCard(input.value);
+  }
   if (event.target.classList.contains('user-steps-submit')) {
     event.preventDefault();
     let inputSteps = document.querySelector('#input-steps');
@@ -141,6 +146,8 @@ const hydrationCardHandler = () => {
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
 }
+
+
 
 ////// SLEEP SECTION ///////
 
