@@ -22,7 +22,8 @@ function getData() {
   return fetchData().then((data) => {
     let todaysDate = moment().format("L");
     let userRepository = new UserRepository(data, todaysDate);
-    currentUser = new User(userRepository.users[0]);
+    currentUser = userRepository.users[0]
+    console.log(currentUser)
     domUpdates.defineData(currentUser, todaysDate, userRepository);
   }).then(() => {
     domUpdates.displayPage()
@@ -166,13 +167,13 @@ function sleepCardHandler() {
     event.preventDefault();
     let inputHours = document.querySelector("#input-sleep");
     let inputQuality = document.querySelector("#input-sleep-quality");
-    let sleepObj = new Sleep({
+    let sleepObj = {
       userID: currentUser.id,
       date: todaysDate,
       hoursSlept: inputHours.value,
       sleepQuality: inputQuality.value
-    });
-
+    };
+Lik
     currentUser.updateSleep(todaysDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
     domUpdates.sleepCardDisplay(inputHours, inputQuality);
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
