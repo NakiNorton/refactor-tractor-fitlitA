@@ -7,13 +7,14 @@ const domUpdates = {
     this.currentUser = user;
     this.todaysDate = todaysDate;
     this.userRepository = userRepository;
+    console.log('current User:', this.currentUser.activityInfo)
   },
 
   ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayPage() {
     document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
     this.hydrationCardDisplay();
-    // this.stepCardDisplay();
+    this.stepCardDisplay();
     // this.stairsCardDisplay();
     // this.sleepCardDisplay();
   },
@@ -58,29 +59,46 @@ const domUpdates = {
   ///////////// STEPS DISPLAY SECTION /////////////////////////////////
 
   stepCardDisplay() {
+    // this.stepsAddInputDisplay();
     this.stepMainCardDisplay();
     this.stepInfoCardDisplay();
     this.stepCalendarCardDisplay();
     // this.stepFriendCardDisplay();
     // this.stepTrendingCardDisplay();
   },
-  
+
   stepMainCardDisplay() {
-    let todaySteps = document.querySelector('#steps-user-steps-today');
-    let foundStepsTodayObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate && activity.steps);
-    foundStepsTodayObj ? todaySteps.innerText = `${foundStepsTodayObj.steps}` : todaySteps.innerText = "0";
+    document.getElementById("steps-user-steps-today").innerText = '';
+    document.getElementById("steps-user-steps-today").innerText = `${this.currentUser.activityInfo.getStepsForToday("2019/10/16")}`;
   },
   
+  // stepMainCardDisplay() {
+  //   let todaySteps = document.querySelector('#steps-user-steps-today');
+
+  //   let foundStepsTodayObj = this.currentUser.activityRecord
+    
+  //   .find(activity => activity.date === this.todaysDate && activity.steps);
+  //   foundStepsTodayObj ? todaySteps.innerText = `${foundStepsTodayObj.steps}` : todaySteps.innerText = "100";
+  // },
+  
   stepInfoCardDisplay() {
-    let foundTodayMinutesActiveObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate && activity.minutesActive);
-    let todayMinutesActive = document.querySelector("#steps-info-active-minutes-today");
-    foundTodayMinutesActiveObj ? todayMinutesActive.innerText = `${foundTodayMinutesActiveObj.minutesActive}` : todayMinutesActive.innerText = "0";
-    let milesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
-    let milesWalkedObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate);
-    if (milesWalkedObj) {
-      milesWalkedObj = milesWalkedObj.calculateMiles(this.userRepository);
-    }
-    milesWalkedObj ? milesWalkedToday.innerText = `${milesWalkedObj}` : milesWalkedToday.innerText = "0";
+    // let foundTodayMinutesActiveObj = this.currentUser.activityInfo.find(activity => activity.date === this.todaysDate && activity.minutesActive);
+
+    // let todayMinutesActive = document.querySelector("#steps-info-active-minutes-today");
+    // foundTodayMinutesActiveObj ? todayMinutesActive.innerText = `${foundTodayMinutesActiveObj.minutesActive}` : todayMinutesActive.innerText = "0";
+
+    
+    document.getElementById('steps-info-miles-walked-today').innerText = 'HI';
+    document.getElementById('steps-info-miles-walked-today').innerText = `${this.currentUser.activityInfo.calculateMiles(this.currentUser, "2019/10/16")}`;
+    
+
+    // let milesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
+
+    // let milesWalkedObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate);
+    // if (milesWalkedObj) {
+    //   milesWalkedObj = milesWalkedObj.calculateMiles(this.userRepository);
+    // }
+    // milesWalkedObj ? milesWalkedToday.innerText = `${milesWalkedObj}` : milesWalkedToday.innerText = "0";
   },
   
   stepCalendarCardDisplay() {
@@ -172,6 +190,23 @@ const domUpdates = {
     // document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todaysDate, sleepRepository)).getFirstName();
     // document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todaysDate, sleepRepository)).getFirstName();
   },
+
+
+////////////////////// COPYING ORIGINAL METHOD ////////////////////
+  // stepInfoCardDisplay() {
+  //   let foundTodayMinutesActiveObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate && activity.minutesActive);
+
+  //   let todayMinutesActive = document.querySelector("#steps-info-active-minutes-today");
+  //   foundTodayMinutesActiveObj ? todayMinutesActive.innerText = `${foundTodayMinutesActiveObj.minutesActive}` : todayMinutesActive.innerText = "0";
+
+  //   let milesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
+
+  //   let milesWalkedObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate);
+  //   if (milesWalkedObj) {
+  //     milesWalkedObj = milesWalkedObj.calculateMiles(this.userRepository);
+  //   }
+  //   milesWalkedObj ? milesWalkedToday.innerText = `${milesWalkedObj}` : milesWalkedToday.innerText = "0";
+  // },
 
 }
 export default domUpdates;
