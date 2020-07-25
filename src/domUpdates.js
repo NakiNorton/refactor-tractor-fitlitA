@@ -13,7 +13,7 @@ const domUpdates = {
   ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayPage() {
     document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
-    this.hydrationCardDisplay();
+    // this.hydrationCardDisplay();
     this.stepCardDisplay();
     // this.stairsCardDisplay();
     // this.sleepCardDisplay();
@@ -95,7 +95,7 @@ const domUpdates = {
   stepFriendCardDisplay() {
     document.getElementById('steps-friend-steps-average-today').innerText = this.userRepository.calculateAllUsersAverageSteps("2019/10/16");
 
-    document.getElementById('steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageMinutesActive("2019/10/16");
+    document.getElementById('steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAllUsersAverageMinutesActive("2019/10/16");
 
     // document.querySelector('#steps-friend-average-step-goal').innerText = this.userRepository.calculateCommunityAvgStepGoal();
     // document.querySelector('#steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageSteps(this.todaysDate);
@@ -138,16 +138,16 @@ const domUpdates = {
 
   //////////// HYDRATION DISPLAY SECTION /////////////////////////////////
 
-  hydrationCardDisplay() {
-    document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.findTodaysTotalWater(this.todaysDate)}`;
-    document.querySelector(".hydration-weekly-avg").innerText = `You averaged ${this.currentUser.hydrationInfo.getWeekAvgOunces()} ounces this week!`;
-    let dailyOz = document.querySelectorAll('.daily-oz');
-    let allDaysOuncesOverWeek = this.currentUser.hydrationInfo.getWeeksDailyOunces().sort((a, b) => a - b);
-    dailyOz.forEach((dailyOunces, i) => {
-      dailyOunces.innerText = allDaysOuncesOverWeek[i];
-    })
-    // input.value = "";
-  },
+  // hydrationCardDisplay() {
+  //   // document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.findTodaysTotalWater(this.todaysDate)}`;
+  //   // document.querySelector(".hydration-weekly-avg").innerText = `You averaged ${this.currentUser.hydrationInfo.getWeekAvgOunces()} ounces this week!`;
+  //   let dailyOz = document.querySelectorAll('.daily-oz');
+  //   let allDaysOuncesOverWeek = this.currentUser.hydrationInfo.getWeeksDailyOunces().sort((a, b) => a - b);
+  //   dailyOz.forEach((dailyOunces, i) => {
+  //     dailyOunces.innerText = allDaysOuncesOverWeek[i];
+  //   })
+  //   // input.value = "";
+  // },
   
   
   // document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.calculateAverageDailyWater(this.todaysDate)}`;
