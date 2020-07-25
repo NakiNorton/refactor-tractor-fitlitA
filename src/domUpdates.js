@@ -133,21 +133,17 @@ const domUpdates = {
 
   hydrationCardDisplay() {
     document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.findTodaysTotalWater(this.todaysDate)}`;
-    this.hydrationCalendarDisplay();
-    // input.value = "";
-  },
-
-  hydrationCalendarDisplay() {
     document.querySelector(".hydration-weekly-avg").innerText = `You averaged ${this.currentUser.hydrationInfo.getWeekAvgOunces()} ounces this week!`;
     let dailyOz = document.querySelectorAll('.daily-oz');
-    this.currentUser.hydrationInfo.getWeeksDailyOunces().forEach(day => {
-      dailyOz.forEach(htmlPiece => {
-        htmlPiece.innerText = day;
-      })
+    let allDaysOuncesOverWeek = this.currentUser.hydrationInfo.getWeeksDailyOunces().sort((a, b) => a - b);
+    dailyOz.forEach((dailyOunces, i) => {
+      dailyOunces.innerText = allDaysOuncesOverWeek[i];
     })
+    // input.value = "";
   },
-
-  // document.querySelector("#hydration-friend-ounces-today").innerText = userRepository.calculateAverageDailyWater(todaysDate);
+  
+  
+  // document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.calculateAverageDailyWater(this.todaysDate)}`;
 
 
   //////// SLEEP DISPLAY SECTION //////////////////////////////////////

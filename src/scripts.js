@@ -3,9 +3,6 @@ import './css/styles.scss';
 
 import fetchData from './fetchData';
 import domUpdates from './domUpdates';
-import Hydration from './Hydration';
-import Sleep from './Sleep';
-import Activity from './Activity';
 import moment from 'moment';
 import UserRepository from './UserRepository';
 
@@ -135,8 +132,13 @@ const hydrationCardHandler = () => {
   if (event.target.classList.contains('user-ounces-submit')) {
     event.preventDefault();
     let input = document.querySelector('#input-ounces');
-    let hydrationObj = {userID: currentUser.id, date: todaysDate, numOunces: input.value};
-    currentUser.hydrationInfo.individualEntryRecords.push(hydrationObj);
+    let hydrationObj = {userID: currentUser.id, date: todaysDate, numOunces: Number(input.value)};
+    let matchedToday = currentUser.hydrationInfo.individualEntryRecords.find(hydroPoint => hydroPoint.date === hydrationObj.date)
+    if (matchedToday) {
+      matchedToday.numOunces = matchedToday.numOunces + hydrationObj.numOunces;
+    } else {
+      currentUser.hydrationInfo.individualEntryRecords.push(hydrationObj);
+    }
     domUpdates.hydrationCardDisplay(input.value); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
@@ -165,12 +167,12 @@ function sleepCardHandler() {
     event.preventDefault();
     let inputHours = document.querySelector("#input-sleep");
     let inputQuality = document.querySelector("#input-sleep-quality");
-    let sleepObj = new Sleep({
+    let sleepObj = {
       userID: currentUser.id,
       date: todaysDate,
       hoursSlept: inputHours.value,
       sleepQuality: inputQuality.value
-    });
+    };
 
     currentUser.updateSleep(todaysDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
     domUpdates.sleepCardDisplay(inputHours, inputQuality);
