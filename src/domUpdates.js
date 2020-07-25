@@ -7,7 +7,6 @@ const domUpdates = {
     this.currentUser = user;
     this.todaysDate = todaysDate;
     this.userRepository = userRepository;
-    console.log('current User:', this.currentUser.activityInfo)
   },
 
   ////////// GENERAL DISPLAY //////////////////////////////////////////

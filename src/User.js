@@ -14,8 +14,6 @@ class User {
     this.hydrationInfo = new HydrationRepository(todayDate);
     this.sleepInfo = new SleepRepository(todayDate);
     this.activityInfo = new ActivityRepository(todayDate);
-    console.log(this) // shows user for each user incl. sleep/hydration/actitivty info
-    console.log(this.activityInfo) // shows activity info for each user
   }
 
   checkUserId(user) {
