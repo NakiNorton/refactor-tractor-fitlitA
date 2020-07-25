@@ -88,7 +88,24 @@ class UserRepository {
       }, 0);
     return Math.round(sumOfSteps / allUsersStepsCount.length);
   }
+
+
+  calculateAllUsersAverageMinutesActive(date) {
+    let allUsersMinutesActiveCount = this.users.map(user => {
+      return user.activityInfo.individualEntryRecords.filter(activity => {
+        return activity.date === date;
+      });
+    })
+    let sumOfMinutesActive = allUsersMinutesActiveCount.reduce((minutesActiveSum, activityCollection) => {
+      activityCollection.forEach(activity => {
+        minutesActiveSum += activity.minutesActive
+      })
+      return minutesActiveSum;
+    }, 0);
+    return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
+  }
 }
+
 
 // calculateAverageStairs(date) {
 //   let allUsersStairsCount = this.users.map(user => {
@@ -105,20 +122,6 @@ class UserRepository {
 //   return Math.round(sumOfStairs / allUsersStairsCount.length);
 // }
 
-// calculateAverageMinutesActive(date) {
-//   let allUsersMinutesActiveCount = this.users.map(user => {
-//     return user.activityRecord.filter(activity => {
-//       return activity.date === date;
-//     });
-//   })
-//   let sumOfMinutesActive = allUsersMinutesActiveCount.reduce((minutesActiveSum, activityCollection) => {
-//     activityCollection.forEach(activity => {
-//       minutesActiveSum += activity.minutesActive
-//     })
-//     return minutesActiveSum;
-//   }, 0);
-//   return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
-// }
 
 // calculateAverageDailyWater(date) {
 //   let todaysDrinkers = this.users.filter(user => {
