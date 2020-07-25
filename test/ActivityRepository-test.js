@@ -1,11 +1,11 @@
 import { expect } from 'chai'
 // import Activity from '../src/Activity';
 // import UserRepository from '../src/UserRepository';
-// import User from '../src/User';
+import User from '../src/User';
 import ActivityRepository from '../src/ActivityRepository';
 
 describe('ActivityRepository', function() {
-  let activity1, activity2, activity3, activity4, mockRawData, mockActivityRepo, todaysDate;
+  let activity1, activity2, activity3, activity4, mockRawData, mockActivityRepo, todaysDate, user;
   beforeEach(() => {
     activity1 = {
       userID: 1,
@@ -21,14 +21,14 @@ describe('ActivityRepository', function() {
       minutesActive: 138,
       flightsOfStairs: 10
     },
-    activity2 =  {
+    activity3 =  {
       userID: 1,
       date: "07/22/2020",
       numSteps: 7402,
       minutesActive: 116,
       flightsOfStairs: 33
     },
-    activity3 = {
+    activity4 = {
       userID: 1,
       date: "07/23/2020",
       numSteps: 3486,
@@ -38,34 +38,36 @@ describe('ActivityRepository', function() {
     mockRawData = [activity1, activity2, activity3, activity4]
     todaysDate = '07/24/2020'
     mockActivityRepo = new ActivityRepository(todaysDate)
+    user = new User()
   });
 
-  it.only('should be a function', function() {
+  it('should be a function', function() {
     expect(ActivityRepository).to.be.a('function');
   });
 
   it('should be an instance of activity', function() {
-    expect(activity1).to.be.an.instanceof(Activity);
+    expect(mockActivityRepo).to.be.an.instanceof(ActivityRepository);
   });
 
-  it('should hold a userId', function() {
-    expect(activity2.userId).to.equal(2);
+  it('should hold all individual entries in an array', function() {
+    mockActivityRepo.individualEntryRecords.push(...mockRawData);
+    expect(mockActivityRepo.individualEntryRecords.length).to.deep.equal(4);
   });
 
   it('should hold a date', function() {
-    expect(activity1.date).to.equal("2019/06/15");
+    expect(activity1.date).to.equal("07/20/2020");
   });
 
   it('should hold number of steps', function() {
-    expect(activity1.steps).to.equal(3684);
+    expect(activity1.numSteps).to.equal(3577);
   });
 
   it('should hold minutes active', function() {
-    expect(activity2.minutesActive).to.equal(280);
+    expect(activity1.minutesActive).to.equal(140);
   });
 
   it('should hold flights of stairs', function() {
-    expect(activity2.flightsOfStairs).to.equal(22);
+    expect(activity2.flightsOfStairs).to.equal(10);
   });
 
   it('should have a default value of 0 for miles walked', function() {
@@ -80,18 +82,18 @@ describe('ActivityRepository', function() {
     expect(user1.activityRecord.length).to.equal(1);
   });
 
-  it('should have a method that calculate miles walked', function() {
-    expect(activity1.calculateMiles(mockRepository)).to.equal('3.0');
+  it.only('should have a method that calculate miles walked', function() {
+    expect(activity1.calculateMiles(mockActivityRepo)).to.equal('3.0');
   });
 
   describe('compareStepGoal', function() {
     it('should return false if goal isn\'t met', function() {
-      activity1.compareStepGoal(mockRepository);
+      activity1.compareStepGoal(mockActivityRepo);
       expect(activity1.reachedStepGoal).to.equal(false);
     });
 
     it('should return true if goal is met', function() {
-      activity2.compareStepGoal(mockRepository);
+      activity2.compareStepGoal(mockActivityRepo);
       expect(activity2.reachedStepGoal).to.equal(true);
     });
   });
