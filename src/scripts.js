@@ -3,9 +3,12 @@ import './css/styles.scss';
 
 import fetchData from './fetchData';
 import domUpdates from './domUpdates';
+<<<<<<< HEAD
 import Hydration from './Hydration';
 import Sleep from './Sleep';
 // import Activity from './Activity';
+=======
+>>>>>>> master
 import moment from 'moment';
 import UserRepository from './UserRepository';
 
@@ -29,6 +32,19 @@ function getData() {
   })
     .catch((err) => console.log(err.message));
 }
+
+// const postData = (dataObj, category) => {
+//    fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/${category}/${category}Data", {
+//   method: 'POST',
+//   headers: {
+//   	'Content-Type': 'application/json'
+//   },
+//   body: JSON.stringify(dataObj), // remember how HTTP can only send and receive strings, just like localStorage?
+// })
+//   .then(response => response.json())
+//   .then(json => /*do something with json*/)
+//   .catch(err => /*do something with the error*/);
+// }
 
 const populateUserProfile = () => {
   domUpdates.showDropdown(currentUser);
@@ -143,8 +159,14 @@ const hydrationCardHandler = () => {
   if (event.target.classList.contains('user-ounces-submit')) {
     event.preventDefault();
     let input = document.querySelector('#input-ounces');
-    let hydrationObj = {userID: currentUser.id, date: todaysDate, numOunces: input.value};
-    currentUser.hydrationInfo.individualEntryRecords.unshift(hydrationObj);
+    let hydrationObj = {userID: currentUser.id, date: todaysDate, numOunces: Number(input.value)};
+    let matchedToday = currentUser.hydrationInfo.individualEntryRecords.find(hydroPoint => hydroPoint.date === hydrationObj.date)
+    if (matchedToday) {
+      matchedToday.numOunces = matchedToday.numOunces + hydrationObj.numOunces;
+    } else {
+      currentUser.hydrationInfo.individualEntryRecords.push(hydrationObj);
+    }
+    // postData(hydrationObj, hydration);
     domUpdates.hydrationCardDisplay(input.value); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
@@ -175,12 +197,12 @@ function sleepCardHandler() {
     event.preventDefault();
     let inputHours = document.querySelector("#input-sleep");
     let inputQuality = document.querySelector("#input-sleep-quality");
-    let sleepObj = new Sleep({
+    let sleepObj = {
       userID: currentUser.id,
       date: todaysDate,
       hoursSlept: inputHours.value,
       sleepQuality: inputQuality.value
-    });
+    };
 
     currentUser.updateSleep(todaysDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
     domUpdates.sleepCardDisplay(inputHours, inputQuality);
