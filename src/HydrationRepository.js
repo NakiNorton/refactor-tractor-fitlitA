@@ -3,7 +3,6 @@ class HydrationRepository {
   constructor(today) {
     this.individualEntryRecords = [];
     this.todaysWaterData = this.findTodaysTotalWater(today);
-    this.weeklyAvgOunces = this.getWeekAvgOunces();
   }
     
   findTodaysTotalWater(today) {
@@ -17,13 +16,19 @@ class HydrationRepository {
   }
 
   getWeekAvgOunces() {
-    let week = this.individualEntryRecords.splice(0, 7);
-    let weekTotal = week.reduce((sum, entry) => {
-      sum += Number(entry.numOunces);
+    let week = this.individualEntryRecords.slice(-6);
+    let numOuncesTotal = week.reduce((sum, entry) => {
+      sum += entry.numOunces;
       return sum;
     }, 0);
-    return weekTotal / week.length;
+    return (numOuncesTotal / 7).toFixed(0);
   }
+
+  getWeeksDailyOunces() {
+    let week = this.individualEntryRecords.slice(-6);
+    return week.map(day => `${day.numOunces}`);
+  }
+
 }
     
 

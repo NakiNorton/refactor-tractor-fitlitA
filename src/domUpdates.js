@@ -31,28 +31,28 @@ const domUpdates = {
     // showLeaderBoard(); // currently broken
   },
 
-// leaderboard in dropdown menu, not sure what's happening here, will need to follow HTML, method is broken in User file
-// const showLeaderBoard = () => {
-//   let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
-//   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
-//   currentUser.findFriendsNames(userRepository.users); // went thru original JS, couldn't find this, don't know where it came from
-//   currentUser.findFriendsTotalStepsForWeek(userRepository.users, todaysDate);
-//   currentUser.friendsActivityRecords.forEach(friend => {
-//     dropdownFriendsStepsContainer.innerHTML += `
-//         <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>`;
-//   });
-//   friendsStepsParagraphs.forEach(paragraph => {
-//     if (friendsStepsParagraphs[0] === paragraph) {
-//       paragraph.classList.add('green-text');
-//     }
-//     if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
-//       paragraph.classList.add('red-text');
-//     }
-//     if (paragraph.innerText.includes('YOU')) {
-//       paragraph.classList.add('yellow-text');
-//     }
-//   });
-// }
+  // leaderboard in dropdown menu, not sure what's happening here, will need to follow HTML, method is broken in User file
+  // const showLeaderBoard = () => {
+  //   let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
+  //   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
+  //   currentUser.findFriendsNames(userRepository.users); // went thru original JS, couldn't find this, don't know where it came from
+  //   currentUser.findFriendsTotalStepsForWeek(userRepository.users, todaysDate);
+  //   currentUser.friendsActivityRecords.forEach(friend => {
+  //     dropdownFriendsStepsContainer.innerHTML += `
+  //         <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>`;
+  //   });
+  //   friendsStepsParagraphs.forEach(paragraph => {
+  //     if (friendsStepsParagraphs[0] === paragraph) {
+  //       paragraph.classList.add('green-text');
+  //     }
+  //     if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
+  //       paragraph.classList.add('red-text');
+  //     }
+  //     if (paragraph.innerText.includes('YOU')) {
+  //       paragraph.classList.add('yellow-text');
+  //     }
+  //   });
+  // }
 
 
   ///////////// STEPS DISPLAY SECTION /////////////////////////////////
@@ -132,19 +132,19 @@ const domUpdates = {
   //////////// HYDRATION DISPLAY SECTION /////////////////////////////////
 
   hydrationCardDisplay() {
-    this.hydrationAddInputDisplay();
-    // this.hydrationCalendarDisplay();
+    document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.findTodaysTotalWater(this.todaysDate)}`;
+    this.hydrationCalendarDisplay();
     // input.value = "";
   },
 
-  hydrationAddInputDisplay() {
-    document.getElementById("hydration-user-ounces-today").innerText = '';
-    document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.findTodaysTotalWater(this.todaysDate)}`;
-  },
-
   hydrationCalendarDisplay() {
-    let weeklyAvg = document.querySelector(".hydration-weekly-avg");
-    weeklyAvg.innerText = `You averaged ${this.currentUser.hydrationInfo.weeklyAvgOunces} ounces this week!`;
+    document.querySelector(".hydration-weekly-avg").innerText = `You averaged ${this.currentUser.hydrationInfo.getWeekAvgOunces()} ounces this week!`;
+    let dailyOz = document.querySelectorAll('.daily-oz');
+    this.currentUser.hydrationInfo.getWeeksDailyOunces().forEach(day => {
+      dailyOz.forEach(htmlPiece => {
+        htmlPiece.innerText = day;
+      })
+    })
   },
 
   // document.querySelector("#hydration-friend-ounces-today").innerText = userRepository.calculateAverageDailyWater(todaysDate);

@@ -3,13 +3,16 @@ import HydrationRepository from '../src/HydrationRepository';
 import Hydration from "../src/Hydration";
 
 describe('HydrationRepository', function() {
-  let hydrate1, hydrate2, hydrate3, hydrate4, mockRawData, todayDate, mockHydroRepo;
+  let hydrate1, hydrate2, hydrate3, hydrate4, hydrate5, hydrate6, hydrate7, mockRawData, todayDate, mockHydroRepo;
   beforeEach(() => {
     hydrate1 = {userID: 1, date: "07/20/2020", numOunces: 40}
     hydrate2 = { userID: 1, date: "07/20/2020", numOunces: 30 }
     hydrate3 = { userID: 1, date: "07/18/2020", numOunces: 20 }
     hydrate4 = { userID: 1, date: "07/18/2020", numOunces: 20 }
-    mockRawData = [hydrate1, hydrate2, hydrate3, hydrate4]
+    hydrate5 = { userID: 1, date: "07/20/2020", numOunces: 30 };
+    hydrate6 = { userID: 1, date: "07/18/2020", numOunces: 20 };
+    hydrate7 = { userID: 1, date: "07/18/2020", numOunces: 20 };
+    mockRawData = [hydrate1, hydrate2, hydrate3, hydrate4, hydrate5, hydrate5, hydrate7]
     todayDate = "07/20/2020"
     mockHydroRepo = new HydrationRepository(todayDate)
   })
@@ -34,7 +37,7 @@ describe('HydrationRepository', function() {
 
   it.only("should get the week's average of ounces", function() {
     mockHydroRepo.individualEntryRecords.push(...mockRawData);
-    expect(mockHydroRepo.getWeekAvgOunces()).to.equal(27.5);
+    expect(mockHydroRepo.getWeekAvgOunces()).to.equal(21);
   })
 
 

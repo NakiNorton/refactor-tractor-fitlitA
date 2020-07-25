@@ -136,7 +136,7 @@ const hydrationCardHandler = () => {
     event.preventDefault();
     let input = document.querySelector('#input-ounces');
     let hydrationObj = {userID: currentUser.id, date: todaysDate, numOunces: input.value};
-    currentUser.hydrationInfo.individualEntryRecords.unshift(hydrationObj);
+    currentUser.hydrationInfo.individualEntryRecords.push(hydrationObj);
     domUpdates.hydrationCardDisplay(input.value); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
