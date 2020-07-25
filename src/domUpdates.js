@@ -12,10 +12,10 @@ const domUpdates = {
   ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayPage() {
     document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
-    this.hydrationCardDisplay();
+    this.sleepCardDisplay();
+    // this.hydrationCardDisplay();
     // this.stepCardDisplay();
     // this.stairsCardDisplay();
-    // this.sleepCardDisplay();
   },
   
   flipCard(cardToHide, cardToShow) {
@@ -152,25 +152,29 @@ const domUpdates = {
 
   //////// SLEEP DISPLAY SECTION //////////////////////////////////////
 
-  sleepCardDisplay(input1, input2) {
+  sleepCardDisplay() {
     let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
     let foundTodaySleepAmount = this.currentUser.sleepHoursRecord.find(sleep => sleep.date === this.todaysDate);
     foundTodaySleepAmount ? sleepUserHoursToday.innerText = `${foundTodaySleepAmount.hours}` : sleepUserHoursToday.innerText = "0";
     document.querySelector('#sleep-calendar-hours-average-weekly').innerText = this.currentUser.calculateAverageHoursThisWeek(this.todaysDate);
     document.querySelector('#sleep-calendar-quality-average-weekly').innerText = this.currentUser.calculateAverageQualityThisWeek(this.todaysDate);
     this.sleepInfoCardDisplay();
+
     // input1.innerText = "";
     // input2.innerText - "";
   },
 
-  sleepInfoCardDisplay() {
+  sleepInfoCardDisplay() {// this displays all of the information for sleep stats
     let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
-    let foundTodaySleepQuality = this.currentUser.sleepQualityRecord.find(sleep => sleep.date === this.todaysDate);
+    let foundTodaySleepQuality = 
+    
+    this.currentUser.sleepQualityRecord.find(sleep => sleep.date === this.todaysDate);
     foundTodaySleepQuality ? sleepInfoQualityToday.innerText = `${foundTodaySleepQuality.quality}` : sleepInfoQualityToday.innerText = "0";
-    document.querySelector('#sleep-info-hours-average-alltime').innerText = this.currentUser.hoursSleptAverage;
-    document.querySelector('#sleep-info-quality-average-alltime').innerText = this.currentUser.sleepQualityAverage;
-    document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todaysDate, sleepRepository)).getFirstName();
-    document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todaysDate, sleepRepository)).getFirstName();
+    console.log('this is current User', this.currentUser)
+    // document.querySelector('#sleep-info-hours-average-alltime').innerText = this.currentUser.hoursSleptAverage;
+    // document.querySelector('#sleep-info-quality-average-alltime').innerText = this.currentUser.sleepQualityAverage;
+    // document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todaysDate, sleepRepository)).getFirstName();
+    // document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todaysDate, sleepRepository)).getFirstName();
   },
 
   sleepAddInputDisplay() {
