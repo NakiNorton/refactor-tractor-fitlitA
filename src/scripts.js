@@ -22,6 +22,7 @@ function getData() {
     todaysDate = moment().format("L");
     let userRepository = new UserRepository(data, todaysDate);
     currentUser = userRepository.users[0];
+    console.log('CUR:', currentUser)
     domUpdates.defineData(currentUser, todaysDate, userRepository);
   }).then(() => {
     domUpdates.displayPage()
@@ -65,13 +66,14 @@ const stepCardHandler = () => {
     event.preventDefault();
     let inputSteps = document.querySelector('#input-steps');
     let inputMinutes = document.querySelector("#input-steps-minutes");
-    let activityObj = {
+    let newActivityEntry = {
       userID: currentUser.id,
       date: todaysDate,
-      numSteps: inputSteps.value,
-      minutesActive: inputMinutes.value
+      numSteps: Number(inputSteps.value),
+      minutesActive: Number(inputMinutes.value)
     };
-    currentUser.updateActivities(activityObj);
+    
+    currentUser.activityInfo.updateActivities(newActivityEntry);
     domUpdates.stepCardDisplay();
     inputSteps.value = ""; 
     inputMinutes.value = "";
