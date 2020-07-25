@@ -59,57 +59,46 @@ const domUpdates = {
   ///////////// STEPS DISPLAY SECTION /////////////////////////////////
 
   stepCardDisplay() {
-    // this.stepsAddInputDisplay();
     this.stepMainCardDisplay();
-    this.stepInfoCardDisplay();
-    this.stepCalendarCardDisplay();
-    // this.stepFriendCardDisplay();
+    this.stepsInfoCard();
+    this.stepCalendarCardMinutesDisplay();
+    this.stepCalendarCardStepsDisplay();
+    this.stepFriendCardDisplay();
     // this.stepTrendingCardDisplay();
   },
 
   stepMainCardDisplay() {
-    document.getElementById("steps-user-steps-today").innerText = '';
     document.getElementById("steps-user-steps-today").innerText = `${this.currentUser.activityInfo.getStepsForToday("2019/10/16")}`;
   },
-  
-  // stepMainCardDisplay() {
-  //   let todaySteps = document.querySelector('#steps-user-steps-today');
 
-  //   let foundStepsTodayObj = this.currentUser.activityRecord
-    
-  //   .find(activity => activity.date === this.todaysDate && activity.steps);
-  //   foundStepsTodayObj ? todaySteps.innerText = `${foundStepsTodayObj.steps}` : todaySteps.innerText = "100";
-  // },
-  
-  stepInfoCardDisplay() {
-    // let foundTodayMinutesActiveObj = this.currentUser.activityInfo.find(activity => activity.date === this.todaysDate && activity.minutesActive);
+  stepsInfoCard(date = "2019/10/16") { // default date if nothing is entered  
+    this.stepInfoCardMilesDisplay(date) 
+    this.stepInfoCardMinutesDisplay(date)
+  },
 
-    // let todayMinutesActive = document.querySelector("#steps-info-active-minutes-today");
-    // foundTodayMinutesActiveObj ? todayMinutesActive.innerText = `${foundTodayMinutesActiveObj.minutesActive}` : todayMinutesActive.innerText = "0";
+  stepInfoCardMilesDisplay(date) {
+    document.getElementById('steps-info-miles-walked-today').innerText = `${this.currentUser.activityInfo.calculateMiles(this.currentUser, date)}`;
+  },
 
-    
-    document.getElementById('steps-info-miles-walked-today').innerText = 'HI';
-    document.getElementById('steps-info-miles-walked-today').innerText = `${this.currentUser.activityInfo.calculateMiles(this.currentUser, "2019/10/16")}`;
-    
-
-    // let milesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
-
-    // let milesWalkedObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate);
-    // if (milesWalkedObj) {
-    //   milesWalkedObj = milesWalkedObj.calculateMiles(this.userRepository);
-    // }
-    // milesWalkedObj ? milesWalkedToday.innerText = `${milesWalkedObj}` : milesWalkedToday.innerText = "0";
+  stepInfoCardMinutesDisplay(date) {
+    document.getElementById('steps-info-active-minutes-today').innerText = `${this.currentUser.activityInfo.getActiveMinutesForToday(date)}`;
   },
   
-  stepCalendarCardDisplay() {
-    document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = this.currentUser.calculateAverageMinutesActiveThisWeek(this.todaysDate);
-    document.querySelector('#steps-calendar-total-steps-weekly').innerText = this.currentUser.calculateAverageStepsThisWeek(this.todaysDate);
+  stepCalendarCardMinutesDisplay() {
+    document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = this.currentUser.activityInfo.calculateAverageMinutesActiveThisWeek(this.todaysDate);
+  },
+
+  stepCalendarCardStepsDisplay() {
+    document.querySelector('#steps-calendar-total-steps-weekly').innerText = this.currentUser.activityInfo.calculateAverageStepsThisWeek(this.todaysDate)
   },
   
   stepFriendCardDisplay() {
-    document.querySelector('#steps-friend-steps-average-today').innerText = this.userRepository.calculateAverageMinutesActive(this.todaysDate);
-    document.querySelector('#steps-friend-average-step-goal').innerText = this.userRepository.calculateCommunityAvgStepGoal();
-    document.querySelector('#steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageSteps(this.todaysDate);
+    document.getElementById('steps-friend-steps-average-today').innerText = this.userRepository.calculateAllUsersAverageSteps("2019/10/16");
+
+    document.getElementById('steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageMinutesActive("2019/10/16");
+
+    // document.querySelector('#steps-friend-average-step-goal').innerText = this.userRepository.calculateCommunityAvgStepGoal();
+    // document.querySelector('#steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageSteps(this.todaysDate);
   },
 
   // stepTrendingCardDisplay() {
@@ -192,21 +181,6 @@ const domUpdates = {
   },
 
 
-////////////////////// COPYING ORIGINAL METHOD ////////////////////
-  // stepInfoCardDisplay() {
-  //   let foundTodayMinutesActiveObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate && activity.minutesActive);
-
-  //   let todayMinutesActive = document.querySelector("#steps-info-active-minutes-today");
-  //   foundTodayMinutesActiveObj ? todayMinutesActive.innerText = `${foundTodayMinutesActiveObj.minutesActive}` : todayMinutesActive.innerText = "0";
-
-  //   let milesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
-
-  //   let milesWalkedObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate);
-  //   if (milesWalkedObj) {
-  //     milesWalkedObj = milesWalkedObj.calculateMiles(this.userRepository);
-  //   }
-  //   milesWalkedObj ? milesWalkedToday.innerText = `${milesWalkedObj}` : milesWalkedToday.innerText = "0";
-  // },
 
 }
 export default domUpdates;
