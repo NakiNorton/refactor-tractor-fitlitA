@@ -32,7 +32,7 @@
 }
 
 .submit-button {
-  background-color: #54C6BE;
+  background-color: inherit;
   @include buttons('download.svg');
 }
 
