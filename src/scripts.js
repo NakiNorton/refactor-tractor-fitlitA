@@ -3,12 +3,6 @@ import './css/styles.scss';
 
 import fetchData from './fetchData';
 import domUpdates from './domUpdates';
-<<<<<<< HEAD
-import Hydration from './Hydration';
-import Sleep from './Sleep';
-// import Activity from './Activity';
-=======
->>>>>>> master
 import moment from 'moment';
 import UserRepository from './UserRepository';
 
@@ -167,7 +161,7 @@ const hydrationCardHandler = () => {
       currentUser.hydrationInfo.individualEntryRecords.push(hydrationObj);
     }
     // postData(hydrationObj, hydration);
-    domUpdates.hydrationCardDisplay(input.value); 
+    // domUpdates.hydrationCardDisplay(input.value); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
 }

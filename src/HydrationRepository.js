@@ -1,7 +1,7 @@
 class HydrationRepository {
   constructor(today) {
     this.individualEntryRecords = [];
-    this.todaysWaterData = this.findTodaysTotalWater(today);
+    // this.todaysWaterData = this.findTodaysTotalWater(today);
     this.averageOuncesAllTime = this.getAverageOuncesOverall();
   }
   
@@ -14,9 +14,9 @@ class HydrationRepository {
   }
 
 // DOM stuff 
-  findTodaysTotalWater(todaysDate) {
-    return this.individualEntryRecords.find(record => record.date === todaysDate).numOunces;
-  }
+  // findTodaysTotalWater(todaysDate) {
+  //   return this.individualEntryRecords.find(record => record.date === todaysDate).numOunces;
+  // }
     // return allTodayWaterEntries.reduce((sum, entry) => {
     //   sum += Number(entry.numOunces);
     //   return sum;
