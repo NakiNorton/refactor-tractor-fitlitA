@@ -173,5 +173,10 @@ const domUpdates = {
     document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todaysDate, sleepRepository)).getFirstName();
   },
 
+  sleepAddInputDisplay() {
+    document.getElementById("sleep-user-ounces-today").innerText = '';
+    document.getElementById("sleep-user-ounces-today").innerText = `${this.currentUser.sleepInfo.findTodaysTotalSleep(this.todaysDate)}`;
+  },
+
 }
 export default domUpdates;
