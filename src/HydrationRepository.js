@@ -24,8 +24,7 @@ class HydrationRepository {
     }, 0);
     return weekTotal / week.length;
   }
-}
-    
+}    
 
 
 
