@@ -1,5 +1,5 @@
 import HydrationRepository from "./HydrationRepository";
-import ActivityRepository from "./Activity-Repository";
+import ActivityRepository from "./ActivityRepository";
 import SleepRepository from "./SleepRepository";
 
 class User {
