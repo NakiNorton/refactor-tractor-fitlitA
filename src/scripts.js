@@ -22,7 +22,7 @@ function getData() {
   return fetchData().then((data) => {
     let todaysDate = moment().format("L");
     let userRepository = new UserRepository(data, todaysDate);
-    currentUser = new User(userRepository.users[0]);
+    currentUser = userRepository.users[0];
     domUpdates.defineData(currentUser, todaysDate, userRepository);
   }).then(() => {
     domUpdates.displayPage()

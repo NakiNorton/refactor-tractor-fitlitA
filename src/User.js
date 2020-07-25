@@ -30,11 +30,14 @@ class User {
   }
 
   updateHydration(today, amount) {
-    this.hydration.ouncesRecord.unshift({date: today, ounces: amount});
-    if (this.hydration.ouncesRecord.length) {
-      this.hydration.ouncesAverage = Math.round((amount + (this.ouncesAverage * (this.ouncesRecord.length - 1))) / this.ouncesRecord.length);
+    this.hydration.hydrationInfo.individualEntryRecords.unshift({date: today, ounces: amount});
+    if (this.hydration.hydrationInfo.individualEntryRecords.length) {
+     this.hydration.ouncesAverage = Math.round(
+      (amount + this.ouncesAverage * (this.ouncesRecord.length - 1)) /
+       this.ouncesRecord.length
+     );
     } else {
-      this.hydration.ouncesAverage = amount;
+     this.hydration.ouncesAverage = amount;
     }
   }
 
