@@ -120,9 +120,12 @@ const stairsCardHandler = () => {
     let inputStairs = document.querySelector("#input-stairs");
     let activityObj = {
       userID: currentUser.id,
-      date: todaysDate,
-      flightsOfStairs: inputStairs.value
+      date: Number(todaysDate),
+      flightsOfStairs: Number(inputStairs.value)
     };
+    let matchedToday = currentUser.activityInfo.individualEntryRecords.find(activityPoint => activityPoint.date === activityObj.date)
+    matchedToday.numSteps = matchedToday.numSteps + activityObj.numSteps;
+
     currentUser.updateActivities(activityObj);
     domUpdates.stepCardDisplay();
     inputStairs.value = "";
