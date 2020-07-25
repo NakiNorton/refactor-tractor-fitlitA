@@ -5,7 +5,7 @@ import User from '../src/User';
 import Sleep from '../src/Sleep';
 import HydrationRepository from '../src/HydrationRepository';
 import SleepRepository from '../src/SleepRepository';
-import ActivityRepository from '../src/Activity-Repository';
+import ActivityRepository from '../src/ActivityRepository';
 
 
 describe('UserRepository', function() {
