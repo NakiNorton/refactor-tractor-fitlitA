@@ -14,20 +14,19 @@ class HydrationRepository {
   }
 
 // DOM stuff 
-  findTodaysTotalWater(today) {
-    let allTodayWaterEntries = this.individualEntryRecords.filter(record => {
-      return record.date === today;
-    })
-    return allTodayWaterEntries.reduce((sum, entry) => {
-      sum += Number(entry.numOunces);
-      return sum;
-    }, 0);
+  findTodaysTotalWater(todaysDate) {
+    return this.individualEntryRecords.find(record => record.date === todaysDate).numOunces;
   }
+    // return allTodayWaterEntries.reduce((sum, entry) => {
+    //   sum += Number(entry.numOunces);
+    //   return sum;
+    // }, 0);
+  // }
 
   getOuncesByDay(date) {
     return this.individualEntryRecords.find(entry => entry.date === date);
   }
-
+  
   getWeekAvgOunces() {
     let week = this.individualEntryRecords.slice(-7);
     let numOuncesTotal = week.reduce((sum, entry) => {
