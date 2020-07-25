@@ -12,9 +12,9 @@ const domUpdates = {
   ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayPage() {
     document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
+    this.hydrationCardDisplay();
     // this.stepCardDisplay();
     // this.stairsCardDisplay();
-    this.hydrationCardDisplay();
     // this.sleepCardDisplay();
   },
   
@@ -131,23 +131,20 @@ const domUpdates = {
 
   //////////// HYDRATION DISPLAY SECTION /////////////////////////////////
 
-  hydrationCardDisplay(todayDate) {
-    this.hydrationAddInputDisplay(todayDate);
-    this.hydrationCalendarDisplay();
+  hydrationCardDisplay() {
+    this.hydrationAddInputDisplay();
+    // this.hydrationCalendarDisplay();
     // input.value = "";
   },
 
   hydrationAddInputDisplay() {
-    document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.findTodaysTotalWater(this.todayDate)}`;
+    document.getElementById("hydration-user-ounces-today").innerText = '';
+    document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.findTodaysTotalWater(this.todaysDate)}`;
   },
 
   hydrationCalendarDisplay() {
     let weeklyAvg = document.querySelector(".hydration-weekly-avg");
-    let weekList = document.querySelector(".hydration-week-data-list");
-    // let cardHtml = `<article class="hydration-amount-daily">${this.currentUser.hydrationInfo.getWeekOuncesByDay()}</br></article>`;
-    weeklyAvg.innerText = `You averaged ${this.currentUser.hydrationInfo.getWeekAvgOunces()} ounces this week!`;
-    weekList.innerText = "";
-    weekList.insertAdjacentHTML("beforeend", cardHtml);
+    weeklyAvg.innerText = `You averaged ${this.currentUser.hydrationInfo.weeklyAvgOunces} ounces this week!`;
   },
 
   // document.querySelector("#hydration-friend-ounces-today").innerText = userRepository.calculateAverageDailyWater(todaysDate);

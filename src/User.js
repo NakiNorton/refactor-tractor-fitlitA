@@ -29,18 +29,6 @@ class User {
     return names[0].toUpperCase();
   }
 
-  updateHydration(today, amount) {
-    this.hydration.hydrationInfo.individualEntryRecords.unshift({date: today, ounces: amount});
-    if (this.hydration.hydrationInfo.individualEntryRecords.length) {
-     this.hydration.ouncesAverage = Math.round(
-      (amount + this.ouncesAverage * (this.ouncesRecord.length - 1)) /
-       this.ouncesRecord.length
-     );
-    } else {
-     this.hydration.ouncesAverage = amount;
-    }
-  }
-
   calculateAverageHoursThisWeek(todaysDate) {
     return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
       let index = this.sleepHoursRecord.indexOf(this.sleepHoursRecord.find(sleep => sleep.date === todaysDate));

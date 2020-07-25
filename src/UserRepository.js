@@ -4,16 +4,14 @@ import User from './User';
 class UserRepository {
   constructor(rawData, todayDate) {
     this.users = this.matchDataWithUsers(rawData, todayDate); // all users should have appropriate data that matches their id
-    console.log('in constructor', this.users[0]);
   }
  
   matchDataWithUsers(rawData, todayDate) {
-    let instantiatedUsers = rawData.userData.map(rawUser => new User(rawUser, todayDate)); //instantiate each user w props for hydro activity and sleep
-    this.matchHydrationWithUser(instantiatedUsers, rawData.hydrationData); // match raw data points w approp user and send over to user's appropriate repo
+    let instantiatedUsers = rawData.userData.map(rawUser => new User(rawUser, todayDate));
+    this.matchHydrationWithUser(instantiatedUsers, rawData.hydrationData);
     this.matchSleepWithUser(instantiatedUsers, rawData.sleepData);
     this.matchActivityWithUser(instantiatedUsers, rawData.activityData);
-    console.log('inside method', instantiatedUsers[0]);
-    return instantiatedUsers; // returns users instantiated with their respective data
+    return instantiatedUsers;
   }
 
   matchHydrationWithUser(users, rawHydrationData) {
