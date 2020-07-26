@@ -1,5 +1,3 @@
-// import Activity from './Activity';
-
 class ActivityRepository {
   constructor(today) {
     this.individualEntryRecords = [];

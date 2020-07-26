@@ -1,6 +1,5 @@
 import {expect} from 'chai';
 import HydrationRepository from '../src/HydrationRepository';
-import Hydration from "../src/Hydration";
 
 describe('HydrationRepository', function() {
   let hydrate1, hydrate2, hydrate3, hydrate4, hydrate5, hydrate6, hydrate7, mockRawData, todaysDate, mockHydroRepo;
@@ -42,13 +41,13 @@ describe('HydrationRepository', function() {
 
   it('should return an array of ounces drank on each day', function() {
     mockHydroRepo.individualEntryRecords.push(...mockRawData);
-    expect(mockHydroRepo.getWeeksDailyOunces()).to.deep.equal([40, 30, 20, 20, 30, 20, 20]);
+    expect(mockHydroRepo.getWeeksDailyOunces()).to.deep.equal([40, 30, 20, 20, 30, 20]);
 
   }); 
 
   it("should get the week's average of ounces", function() {
     mockHydroRepo.individualEntryRecords.push(...mockRawData);
-    expect(mockHydroRepo.getWeekAvgOunces()).to.equal(26);
+    expect(mockHydroRepo.getWeekAvgOunces()).to.equal(23);
   });
 
   it('should add user input to records array, or update an existing record', function() {
