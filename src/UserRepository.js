@@ -28,11 +28,7 @@ class UserRepository {
 
   matchSleepWithUser(users, rawSleepData) {
     users.forEach((user) => {
-      user.sleepInfo.individualEntryRecord = rawSleepData.filter(
-        (sleepDataPoint) => {
-          return sleepDataPoint.userID === user.id;
-        }
-      );
+      user.sleepInfo.individualEntryRecords = rawSleepData.filter((sleepDataPoint) => sleepDataPoint.userID === user.id);
     });
   }
 
