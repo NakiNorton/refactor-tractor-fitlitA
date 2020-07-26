@@ -8,16 +8,10 @@ class SleepRepository {
     this.weeklyQualHoursSlept = this.calculateAverageHoursThisWeek(todaysDate)
   }
   
-  
   findTodaysTotalSleep() {
     return this.individualEntryRecord[0]
   }
 
-
-  // ^^^^^ ounces TODAY
-
-
-  // ^^^^^SEARCH ounces DAILY ???
   getWeeksDailyHours() {
     let week = this.individualEntryRecord.slice(-7, -1)
     return week.map(day => {
@@ -30,12 +24,7 @@ class SleepRepository {
     return week.map(day => {
       return day.sleepQuality
     })
-
   }
-
-
-  // ^^^^^LAST 7 DAYS ounces RECORD
-
 
   getAveQualitySleptOverall() {
     let qualityHours = this.individualEntryRecords.reduce((sum, entry) => {
@@ -44,9 +33,8 @@ class SleepRepository {
     }, 0);
     let overallAverageQuality = (qualityHours / this.individualEntryRecords.length).toFixed(0)
     return Number(overallAverageQuality);
-    }
-  
-
+  }
+ 
   getAveHoursSleptOverall() {
     let hoursSlept = this.individualEntryRecords.reduce((sum, entry) => {
       sum += entry.hoursSlept;
@@ -55,8 +43,6 @@ class SleepRepository {
     let overallAverageHoursSlept = (hoursSlept / this.individualEntryRecords.length).toFixed(0)
     return Number(overallAverageHoursSlept)
   }
-
-
 
   getWeekAvgQualityHrsSlept() {
     let week = this.getWeeksDailyQualHours();
@@ -67,8 +53,6 @@ class SleepRepository {
     let weeklyQualHrsSlept = (qualHrsSleptTotal / 7).toFixed(0);
     return Number(weeklyQualHrsSlept);
   }
-  // ^^^^^ average ounces BY WEEK
-
 
   getWeekAveHoursSlept(todaysDate) {
     let week = this.getWeeksDailyHours();
