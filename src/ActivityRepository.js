@@ -4,7 +4,6 @@ class ActivityRepository {
   constructor() {
     this.individualEntryRecords = [];
    
-    // this.doActivity(userRepository);
     // this.steps = data.numSteps;
     //     // this.minutesActive = data.minutesActive;
     //     // this.flightsOfStairs = data.flightsOfStairs;
@@ -12,12 +11,6 @@ class ActivityRepository {
     //     // this.reachedStepGoal = null;
   }
 
-  // doActivity(userRepo) {
-  //   var activity = this;
-  //   userRepo.users.find(function (user) {
-  //     return user.id === activity.userId;
-  //   }).updateActivities(this);
-  // }
 
   getActiveMinutesForToday(date) {
     let todaysActivityRecord = this.individualEntryRecords.filter(record => {
@@ -48,7 +41,7 @@ class ActivityRepository {
     return Math.round(this.getStepsForToday(date) * user.strideLength / 5280).toFixed(1); // doesn't need a reduce because if getStepsForToday should update this record?
   }
 
-    updateActivities(activity) {
+  updateActivities(activity) {
     console.log('WORKING')
     this.individualEntryRecords.unshift(activity);
     // if (activity.numSteps >= this.dailyStepGoal) {
@@ -83,11 +76,21 @@ class ActivityRepository {
   }
 
 
-  compareStepGoal(userRepository) {
-    let userStepGoal = userRepository.users
-      .find(user => user.id === this.userId).dailyStepGoal;
-    this.reachedStepGoal = this.steps >= userStepGoal;
+  compareUserGoalWithCommunityGoal(userGoal, userRepo) {
+    let communityStepGoal = userRepo.calculateCommunityAvgStepGoal()
+    let goalDifference = userGoal - communityStepGoal;
+    if (goalDifference) { 
+      return `Your goal is ${goalDifference} steps above average!`
+    } else {
+      return `Your goal is ${goalDifference} steps below average`
+  
+    }
   }
+  // compareStepGoal(userRepository) {
+  //   let userStepGoal = userRepository.users
+  //     .find(user => user.id === this.userId).dailyStepGoal;
+  //   this.reachedStepGoal = this.steps >= userStepGoal;
+  // }
 }
 
 
