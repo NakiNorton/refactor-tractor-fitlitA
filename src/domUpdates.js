@@ -68,6 +68,11 @@ const domUpdates = {
     // this.stepTrendingCardDisplay();
   },
 
+  resetInputField(field1, field2) {
+    document.querySelector(`${field1}`).value = "";
+    document.querySelector(`${field2}`).value = "";
+  },
+
   stepMainCardDisplay() {
     document.getElementById("steps-user-steps-today").innerText = `${this.currentUser.activityInfo.getStepsForToday(this.todaysDate)}`;
   },

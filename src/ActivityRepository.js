@@ -108,6 +108,17 @@ class ActivityRepository {
   //   this.reachedStepGoal = this.steps >= userStepGoal;
   // }
 
+  addActivityInput(input) {
+    let dayFound = this.individualEntryRecords.find(record => record.date === input.date);
+    if (dayFound) {
+      dayFound.numSteps += input.numSteps;
+      dayFound.minutesActive += input.minutesActive;
+    } else {
+      this.individualEntryRecords.push(input);
+    }
+  }
+
+
   addStairsInput(input) {
     let dayFound = this.individualEntryRecords.find(record => record.date === input.date);
     dayFound ? dayFound.flightsOfStairs += input.flightsOfStairs : this.individualEntryRecords.push(input);
