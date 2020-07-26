@@ -9,15 +9,15 @@ class HydrationRepository {
     return dayFound ? dayFound.numOunces : 0;
   }
 
-  getAverageOuncesOverall() {
-    let sumOunces = this.individualEntryRecords.reduce((sum, entry) => {
-      sum += entry.numOunces;
-      return sum;
-    }, 0);
-    let overallAverageOunces = (sumOunces / this.individualEntryRecords.length).toFixed(0)
-    return Number(overallAverageOunces);
+  // ^^^^^ ounces TODAY
+
+  getOuncesByDay(date) {
+    return this.individualEntryRecords.find(entry => entry.date === date);
   }
+
+  // ^^^^^SEARCH ounces DAILY 
   
+
   getWeeksDailyOunces() {
     let week = this.individualEntryRecords.slice(-7, -1);
     return week.map(day => {
@@ -26,9 +26,19 @@ class HydrationRepository {
     return sumOunces / this.individualEntryRecords.length;
   }
 
-  getOuncesByDay(date) {
-    return this.individualEntryRecords.find(entry => entry.date === date);
+  // ^^^^^LAST 7 DAYS ounces RECORD
+
+  getAverageOuncesOverall() {
+    let sumOunces = this.individualEntryRecords.reduce((sum, entry) => {
+      sum += entry.numOunces;
+      return sum;
+    }, 0);
+    let overallAverageOunces = (sumOunces / this.individualEntryRecords.length).toFixed(0)
+    return Number(overallAverageOunces);
   }
+  // ^^^^^average ounces OVERALL
+
+
 
   getWeekAvgOunces() {
     let week = this.getWeeksDailyOunces();
@@ -39,6 +49,7 @@ class HydrationRepository {
     let weekAverageOunces = (numOuncesTotal / 7).toFixed(0);
     return Number(weekAverageOunces);
   }
+  // ^^^^^ average ounces BY WEEK
 
   addHydroInfo(input) {
     let foundInRecord = this.individualEntryRecords.find(record => record.date === input.date);
