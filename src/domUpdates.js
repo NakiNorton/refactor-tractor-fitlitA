@@ -111,16 +111,12 @@ const domUpdates = {
 
   stairsCardDisplay() {
     document.querySelector("#stairs-user-stairs-today").innerText = this.currentUser.activityInfo.getStairsByDay(this.todaysDate);
-    // let flightsToday = document.querySelector("#stairs-info-flights-today");
-    // let foundFlightsTodayObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate && activity.flightsOfStairs);
-    // foundFlightsTodayObj ? flightsToday.innerText = `${foundFlightsTodayObj.flightsOfStairs}` : flightsToday = "0";
+    document.querySelector("#stairs-calendar-flights-average-weekly").innerText = this.currentUser.activityInfo.getWeeklyStairsClimbed();
+    document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = this.currentUser.activityInfo.getWeeklyFlightsClimbed();
+ 
     // document.querySelector("#stairs-friend-flights-average-today").innerText = (this.userRepository.calculateAverageStairs(this.todaysDate) / 12).toFixed(1);
   },
  
-  stairsCalendarCardDisplay() {
-    document.querySelector("#stairs-calendar-flights-average-weekly").innerText = this.currentUser.calculateAverageFlightsThisWeek(this.todaysDate);
-    document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (this.currentUser.calculateAverageFlightsThisWeek(this.todaysDate) * 12).toFixed(0);
-  },
 
   stairsTrendingCardDisplay() {
   // currentUser.findTrendingStairsDays();
