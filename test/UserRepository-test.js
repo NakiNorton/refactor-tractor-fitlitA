@@ -223,8 +223,8 @@ describe('UserRepository', function() {
   it('should match each activity data point with appropriate user', function() {
     userRepository.matchDataWithUsers(rawData, todayDate);
 
-    expect(userRepository.users[0].activityInfo.individualEntryRecord.length).to.deep.equal(2);
-    expect(userRepository.users[1].activityInfo.individualEntryRecord.length).to.deep.equal(1);
+    expect(userRepository.users[0].activityInfo.individualEntryRecords.length).to.deep.equal(2);
+    expect(userRepository.users[1].activityInfo.individualEntryRecords.length).to.deep.equal(1);
   })
 
   it('should return average step goal for all users', function () {
