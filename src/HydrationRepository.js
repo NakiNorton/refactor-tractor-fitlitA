@@ -1,7 +1,7 @@
 class HydrationRepository {
   constructor(today) {
     this.individualEntryRecords = [];
-    this.averageOuncesAllTime = this.getAverageOuncesOverall();
+    // this.averageOuncesAllTime = this.getAverageOuncesOverall();
   }
   
   getOuncesByDay(date) {

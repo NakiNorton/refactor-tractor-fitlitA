@@ -57,6 +57,16 @@ class UserRepository {
     return Math.floor(sumDrankOnDate / allUsersOuncesOnDate.length);
   }
 
+  getCommunityAvgOuncesOverall() {
+    let allUsersOunceAverages = this.users.map(user => user.hydrationInfo.getAverageOuncesOverall());
+    let allUsersOuncesSum = allUsersOunceAverages.reduce((sum, entry) => {
+      sum += entry; 
+      return sum;
+    }, 0);
+    let averageOunces = (allUsersOuncesSum / this.users.length).toFixed(0);
+    return Number(averageOunces);
+  }
+
   getCommunityAvgStairsOnDate(date) {
     let allUsersStairsOnDate = this.users.map(user => user.activityInfo.getStairsByDay(date));
     let sumStairsOnDate = allUsersStairsOnDate.reduce((totalStairs, stairs) => {
@@ -66,6 +76,15 @@ class UserRepository {
     return Math.floor(sumStairsOnDate / allUsersStairsOnDate.length);
   }
 
+  getCommunityAvgStairsOverall() {
+    let allUsersStairsAverages = this.users.map(user => user.activityInfo.getAverageStairsClimbedOverall());
+    let allUsersStairsSum = allUsersStairsAverages.reduce((sum, entry) => {
+      sum += entry; 
+      return sum;
+    }, 0);
+    let averageStairs = (allUsersStairsSum / this.users.length).toFixed(0);
+    return Number(averageStairs);
+  }
   
   
 

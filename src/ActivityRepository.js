@@ -70,12 +70,13 @@ class ActivityRepository {
       .find(user => user.id === this.userId).dailyStepGoal;
     this.reachedStepGoal = this.steps >= userStepGoal;
   }
+  // ^^ wrote notes for this in test
 
 
   calculateAverageStepsThisWeek(todaysDate) {
     return (this.individualEntryRecords.reduce((sum, activity) => {
-      let todaysEntry = this.individualEntryRecords.find(activity => activity.date === todaysDate);
-      let index = this.individualEntryRecords.indexOf(todaysEntry);
+      let dayFound = this.individualEntryRecords.find(activity => activity.date === todaysDate);
+      let index = this.individualEntryRecords.indexOf(dayFound);
       if (index <= this.individualEntryRecords.indexOf(activity) && this.individualEntryRecords.indexOf(activity) <= (index + 6)) {
         sum += activity.numSteps;
       }
@@ -95,17 +96,23 @@ class ActivityRepository {
 // Stairs Methods
 
   addStairsInput(input) {
-    let foundInRecord = this.individualEntryRecords.find(record => record.date === input.date);
-    if (foundInRecord) {
-      foundInRecord.flightsOfStairs = foundInRecord.flightsOfStairs + input.flightsOfStairs;
-    } else {
-      this.individualEntryRecords.push(input);
-    }
+    let dayFound = this.individualEntryRecords.find(record => record.date === input.date);
+    dayFound ? dayFound.flightsOfStairs += input.flightsOfStairs : this.individualEntryRecords.push(input);
   }
 
   getStairsByDay(date) {
     let dayFound = this.individualEntryRecords.find(entry => entry.date === date);
     return dayFound ? (dayFound.flightsOfStairs * 12) : 0;
+  }
+
+  getAverageStairsClimbedOverall() {
+    let allFlights = this.individualEntryRecords.map(entry => entry.flightsOfStairs);
+    let allFlightsSum = allFlights.reduce((sum, entry) => {
+      sum += entry;
+      return sum;
+    }, 0);
+    let averageFlights = (allFlightsSum / this.individualEntryRecords.length).toFixed(0);
+    return Number(averageFlights);
   }
 
   getHighestStairsRecord() {
@@ -114,15 +121,14 @@ class ActivityRepository {
   }
 
   getWeeklyFlightsClimbed(date) {
-    return this.individualEntryRecords.reduce((sum, activity) => {
-      let todaysEntry = this.individualEntryRecords.find(activity => activity.date === date);
-      let index = this.individualEntryRecords.indexOf(todaysEntry);
-      if (index <= this.individualEntryRecords.indexOf(activity) && this.individualEntryRecords.indexOf(activity) <= (index + 6)) {
-        sum += activity.flightsOfStairs;
+    return this.individualEntryRecords.reduce((sum, entry) => {
+      let dayFound = this.individualEntryRecords.find(entry => entry.date === date);
+      let index = this.individualEntryRecords.indexOf(dayFound);
+      if (index <= this.individualEntryRecords.indexOf(entry) && this.individualEntryRecords.indexOf(entry) <= (index + 6)) {
+        sum += entry.flightsOfStairs;
       }
       return sum;
     }, 0); 
-
   }
 
   getWeeklyStairsClimbed() {
