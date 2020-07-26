@@ -2,12 +2,13 @@
 import User from './User';
 
 class UserRepository {
-  constructor(rawData, todayDate) {
-    this.users = this.matchDataWithUsers(rawData, todayDate); // all users should have appropriate data that matches their id
+  constructor(rawData, todaysDate) {
+    this.users = this.matchDataWithUsers(rawData, todaysDate); // all users should have appropriate data that matches their id
   }
  
-  matchDataWithUsers(rawData, todayDate) {
-    let instantiatedUsers = rawData.userData.map(rawUser => new User(rawUser, todayDate));
+  matchDataWithUsers(rawData, todaysDate) {
+    console.log('lives in UserRepo', rawData.userData)
+    let instantiatedUsers = rawData.userData.map(rawUser => new User(rawUser, todaysDate));
     this.matchHydrationWithUser(instantiatedUsers, rawData.hydrationData);
     this.matchSleepWithUser(instantiatedUsers, rawData.sleepData);
     this.matchActivityWithUser(instantiatedUsers, rawData.activityData);
