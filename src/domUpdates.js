@@ -140,7 +140,6 @@ const domUpdates = {
 
   sleepCardDisplay() {
     document.querySelector('#sleep-user-hours-today').innerText = `${this.currentUser.sleepInfo.findTodaysTotalSleep('2019/06/15')}`;
-    foundTodaySleepAmount ? sleepUserHoursToday.innerText = `${foundTodaySleepAmount.hours}` : sleepUserHoursToday.innerText = "0";
     document.querySelector('#sleep-calendar-hours-average-weekly').innerText = this.currentUser.calculateAverageHoursThisWeek(this.todaysDate);
     document.querySelector('#sleep-calendar-quality-average-weekly').innerText = this.currentUser.calculateAverageQualityThisWeek(this.todaysDate);
     this.sleepInfoCardDisplay();
