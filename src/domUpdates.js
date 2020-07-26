@@ -12,10 +12,10 @@ const domUpdates = {
   ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayPage() {
     document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
+    this.sleepCardDisplay();
     this.hydrationCardDisplay();
     this.stairsCardDisplay();
     // this.stepCardDisplay();
-    // this.sleepCardDisplay();
   },
   
   flipCard(cardToHide, cardToShow) {
@@ -139,8 +139,7 @@ const domUpdates = {
   //////// SLEEP DISPLAY SECTION //////////////////////////////////////
 
   sleepCardDisplay() {
-    let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
-    let foundTodaySleepAmount = this.currentUser.sleepHoursRecord.find(sleep => sleep.date === this.todaysDate);
+    document.querySelector('#sleep-user-hours-today').innerText = `${this.currentUser.sleepInfo.findTodaysTotalSleep('2019/06/15')}`;
     foundTodaySleepAmount ? sleepUserHoursToday.innerText = `${foundTodaySleepAmount.hours}` : sleepUserHoursToday.innerText = "0";
     document.querySelector('#sleep-calendar-hours-average-weekly').innerText = this.currentUser.calculateAverageHoursThisWeek(this.todaysDate);
     document.querySelector('#sleep-calendar-quality-average-weekly').innerText = this.currentUser.calculateAverageQualityThisWeek(this.todaysDate);
