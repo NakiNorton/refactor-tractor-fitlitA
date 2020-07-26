@@ -155,7 +155,6 @@ const hydrationCardHandler = () => {
       currentUser.hydrationInfo.individualEntryRecords.push(hydrationObj);
     }
     // postData(hydrationObj, hydration);
-    console.log(currentUser.hydrationInfo);
     domUpdates.hydrationCardDisplay(input.value); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }

@@ -18,7 +18,7 @@ class HydrationRepository {
   }
   
   getWeeksDailyOunces() {
-    let week = this.individualEntryRecords.slice(-7)
+    let week = this.individualEntryRecords.slice(-7, -1);
     return week.map(day => {
       return day.numOunces;
     });
