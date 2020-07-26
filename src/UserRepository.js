@@ -134,28 +134,6 @@ class UserRepository {
     );
     return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
   }
-
-  // calculateAverageSleepQuality() {
-  //   let totalSleepQuality = this.users.reduce((sum, user) => {
-  //     sum += user.sleepQualityAverage;
-  //     return sum;
-  //   }, 0);
-  //   return totalSleepQuality / this.users.length;
-  // }
-
-  // findBestSleepers(today) {
-  //   return this.users.filter(user => user.calculateAverageQualityThisWeek(date) > 3);
-  // }
-
-  // getLongestSleepers(today, sleepRepository) {
-  //   let allSleepsOnDate = UserRepository.users.filter((sleep) => sleep.date === today);
-  //   return allSleepsOnDate ? allSleepsOnDate.sort((a, b) => b.hoursSlept - a.hoursSlept).shift().userID;
-  // }
-
-  // getWorstSleepers(date, sleepRepository) {
-  //   let allSleepsOnDate = sleepRepository.filter((sleep) => sleep.date === date);
-  //   return allSleepsOnDate ? allSleepsOnDate.sort((a, b) =>  a.hoursSlept - b.hoursSlept).shift().userID : "Data not found";
-  // }
 }
 
 

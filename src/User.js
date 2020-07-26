@@ -64,16 +64,6 @@ class User {
     }, []);
   }
 
-  // calculateAverageQualityThisWeek(todaysDate) {
-  //   return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
-  //     let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todaysDate));
-  //     if (index <= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
-  //       sum += sleepAct.quality;
-  //     }
-  //     return sum;
-  //   }, 0) / this.sleepQualityRecord.length).toFixed(1);
-  // } // should be in sleep class
-
   // findTrendingStepDays() {
   //   let positiveDays = [];
   //   for (var i = 0; i < this.activityRecord.length; i++) {
@@ -99,7 +89,6 @@ class User {
   // }
   // ^^ trend stuff is iteration 5
 
-<<<<<<< HEAD
   // findFriendsNames(users) {
   //   this.friends.forEach(friend => {
   //     this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
@@ -110,38 +99,6 @@ class User {
   
 
  
-=======
-  // findFriendsTotalStepsForWeek(users, date) {
-  //   this.friends.map(friend => {
-  //     let matchedFriend = users.find(user => user.id === friend);
-  //     matchedFriend.calculateTotalStepsThisWeek(date);
-  //     this.friendsActivityRecords.push(
-  //       {
-  //         'id': matchedFriend.id,
-  //         'firstName': matchedFriend.name.toUpperCase().split(' ')[0],
-  //         'totalWeeklySteps': matchedFriend.totalStepsThisWeek
-  //       })
-  //   })
-  //   this.calculateTotalStepsThisWeek(date);
-  //   this.friendsActivityRecords.push({
-  //     'id': this.id,
-  //     'firstName': 'YOU',
-  //     'totalWeeklySteps': this.totalStepsThisWeek
-  //   });
-  //   this.friendsActivityRecords = this.friendsActivityRecords
-  //     .sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
-  // }
-
-  // calculateAverageQualityThisWeek(todaysDate) {
-  //   return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
-  //     let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todaysDate));
-  //     if (index <= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
-  //       sum += sleepAct.quality;
-  //     }
-  //     return sum;
-  //   }, 0) / this.sleepQualityRecord.length).toFixed(1);
-  // } // should be in sleep repo
->>>>>>> master
 }
 
 export default User;
