@@ -40,7 +40,7 @@ describe('HydrationRepository', function() {
     expect(mockHydroRepo.getOuncesByDay(todaysDate)).to.equal(40);
   });
 
-  it('should return an arr of ounces drank on each day', function() {
+  it('should return an array of ounces drank on each day', function() {
     mockHydroRepo.individualEntryRecords.push(...mockRawData);
     expect(mockHydroRepo.getWeeksDailyOunces()).to.deep.equal([40, 30, 20, 20, 30, 20, 20]);
 
