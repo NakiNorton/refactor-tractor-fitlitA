@@ -165,7 +165,7 @@ const domUpdates = {
     // input2.innerText - "";
   },
 
-  sleepInfoCardDisplay() {// this displays all of the information for sleep stats
+  sleepStatsCardDisplay() {// this displays all of the information for sleep stats
     let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
     let foundTodaySleepQuality = 
     
