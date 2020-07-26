@@ -25,15 +25,17 @@ class HydrationRepository {
     });
   }
 
-  getWeekAvgOunces() {
-    let week = this.getWeeksDailyOunces();
-    let numOuncesTotal = week.reduce((sum, entry) => {
-      sum += entry;
+  getWeeklyAvgOunces(today) {
+    return (this.individualEntryRecords.reduce((sum, entry) => {
+      let todaysEntry = this.individualEntryRecords.find(entry => entry.date === today);
+      let index = this.individualEntryRecords.indexOf(todaysEntry);
+      if (index <= this.individualEntryRecords.indexOf(entry) && this.individualEntryRecords.indexOf(entry) <= (index + 6)) {
+        sum += entry.numOunces;
+      }
       return sum;
-    }, 0);
-    let weekAverageOunces = (numOuncesTotal / 7).toFixed(0);
-    return Number(weekAverageOunces);
+    }, 0) / 7).toFixed(0);
   }
+
 
   addHydroInfo(input) {
     let foundInRecord = this.individualEntryRecords.find(record => record.date === input.date);

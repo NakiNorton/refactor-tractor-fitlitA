@@ -83,42 +83,42 @@ describe('User', function() {
     expect(user).to.be.an.instanceof(User);
   });
 
-  it('should have an id', function() {
+  it('should return an id', function() {
     expect(user.id).to.equal(1);
   });
 
-  it('if user id is not a number or undefined, set to Date.now()', function() {
-    user2 = new User({id: 'five'});
-    const user3 = new User({name: 'Jane Doe'});
-    expect(user2.id).to.be.a('number');
-    expect(user2.id).to.equal(Date.now());
-    expect(user3.id).to.equal(Date.now());
-    // Note: may fail by one millisecond if internet is lagging or Webpack is being used.
+  it("should assign Date.now() if user id is not a number or undefined", function () {
+   user2 = new User({ id: "five" });
+   const user3 = new User({ name: "Jane Doe" });
+   expect(user2.id).to.be.a("number");
+   expect(user2.id).to.equal(Date.now());
+   expect(user3.id).to.equal(Date.now());
+   // Note: may fail by one millisecond if internet is lagging or Webpack is being used.
   });
 
-  it('should have a name', function() {
+  it('should return a name', function() {
     expect(user.name).to.equal('Luisa Hane');
   });
 
-  it('if name is not a string or undefined, set name to guest', function() {
-    const user3 = new User({id: 1, name: 123});
-    expect(user2.name).to.equal('guest');
-    expect(user3.name).to.equal('guest');
+  it("should assign name to guest if name is not a string or undefined", function () {
+   const user3 = new User({ id: 1, name: 123 });
+   expect(user2.name).to.equal("guest");
+   expect(user3.name).to.equal("guest");
   }); 
 
-  it('should have an address', function() {
+  it('should return an address', function() {
     expect(user.address).to.equal('15195 Nakia Tunnel, Erdmanport VA 19901-1697');
   });
 
-  it('if address is not given, have default message', function() {
-    expect(user2.address).to.equal('No address added.');
-  })
+  it('should return a default message if address is not given', function () {
+    expect(user2.address).to.equal("No address added.");
+  });
 
-  it('should have an email address', function() {
+  it('should return an email address', function() {
     expect(user.email).to.equal('Diana.Hayes1@hotmail.com');
   });
 
-  it('if email is not given, have default message', function() {
+  it('should return a default message if email is not given', function() {
     expect(user2.email).to.equal('No email address added.');
   })
 
@@ -126,38 +126,43 @@ describe('User', function() {
     expect(user.getFirstName()).to.equal("LUISA");
   });
 
-  it('should return default first name if only given first name', function() {
+  it('should return a default first name if only given first name', function() {
     expect(user2.getFirstName()).to.equal("GUEST");
   });
 
-  it('should have a stride length', function() {
+  it('should return a stride length', function() {
     expect(user.strideLength).to.equal(4.3);
   });
 
-  it('should have default message if stride length is not found', function() {
+  it('should return default message if stride length is not found', function() {
     expect(user2.strideLength).to.equal('Stride length not added.');
   });
 
-  it('should have a daily step goal', function() {
+  it('should return a daily step goal', function() {
     expect(user.dailyStepGoal).to.equal(10000);
   });
 
-  it('should have default message if daily step goal not found', function() {
-    expect(user2.dailyStepGoal).to.equal('Daily step goal not added.')
+  it('should return default message if daily step goal not found', function() {
+    expect(user2.dailyStepGoal).to.equal(0)
   });
 
-  it('should have friends', function() {
+  it('should return an array of friends IDs', function() {
     expect(user.friends).to.deep.equal([16, 4, 8]);
   });
 
-  it('should have default message if no friends are added', function() {
-    expect(user2.friends).to.deep.equal('Add friends for friendly competition!');
+  it('should return an empty array if no friends are added', function() {
+    expect(user2.friends).to.deep.equal([]);
+  });
+
+  it.only("should return an array of objects of friends' names and total number of steps this week", function() {
+    expect(user.findFriends(mockUserRepository).length).to.deep.equal(3);
   });
 
   it('should compare users step goal with community step goal and return the difference', function() {
     mockUserRepository.calculateCommunityAvgStepGoal(); 
     expect(user.compareUserGoalWithCommunityGoal(mockUserRepository)).to.equal(-2500);
-  })
+  });
+
 
 });
 

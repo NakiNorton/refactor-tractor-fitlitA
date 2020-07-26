@@ -126,7 +126,7 @@ const domUpdates = {
 
   hydrationCardDisplay() {
     document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.getOuncesByDay(this.todaysDate)}`;
-    document.querySelector(".hydration-weekly-avg").innerText = `You averaged ${this.currentUser.hydrationInfo.getWeekAvgOunces()} ounces this week!`;
+    document.querySelector(".hydration-weekly-avg").innerText = `You averaged ${this.currentUser.hydrationInfo.getWeeklyAvgOunces(this.todaysDate)} ounces this week!`;
     let dailyOz = document.querySelectorAll('.daily-oz');
     let allDaysOuncesOverWeek = this.currentUser.hydrationInfo.getWeeksDailyOunces().sort((a, b) => a - b);
     dailyOz.forEach((dailyOunces, i) => dailyOunces.innerText = allDaysOuncesOverWeek[i]);

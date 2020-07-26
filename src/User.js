@@ -9,9 +9,8 @@ class User {
     this.address = userDetails.address || "No address added.";
     this.email = userDetails.email || "No email address added.";
     this.strideLength = userDetails.strideLength || "Stride length not added.";
-    this.dailyStepGoal =
-   userDetails.dailyStepGoal || "Daily step goal not added.";
-    this.friends = userDetails.friends || "Add friends for friendly competition!";
+    this.dailyStepGoal = userDetails.dailyStepGoal || 0;
+    this.friends = userDetails.friends || [];
     this.hydrationInfo = new HydrationRepository(todayDate);
     this.sleepInfo = new SleepRepository(todayDate);
     this.activityInfo = new ActivityRepository(todayDate);
@@ -55,10 +54,10 @@ class User {
 
   findFriends(userRepository) {
     return this.friends.reduce((friendsInfo, friend) => {
-      friend = userRepository.user.find((user) => user.id === friend.id);
+      friend = userRepository.users.find(user => user.id === friend);
       let friendInfo = {
         firstName: friend.name,
-        weeklySteps: friend.calculateAverageStepsThisWeek(),
+        weeklySteps: friend.activityInfo.calculateAverageStepsThisWeek(),
       };
       friendsInfo.push(friendInfo);
       return friendsInfo;

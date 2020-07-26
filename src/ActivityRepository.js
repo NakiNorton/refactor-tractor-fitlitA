@@ -71,9 +71,11 @@ class ActivityRepository {
     this.reachedStepGoal = this.steps >= userStepGoal;
   }
 
+
   calculateAverageStepsThisWeek(todaysDate) {
     return (this.individualEntryRecords.reduce((sum, activity) => {
-      let index = this.individualEntryRecords.indexOf(this.individualEntryRecords.find(activity => activity.date === todaysDate));
+      let todaysEntry = this.individualEntryRecords.find(activity => activity.date === todaysDate);
+      let index = this.individualEntryRecords.indexOf(todaysEntry);
       if (index <= this.individualEntryRecords.indexOf(activity) && this.individualEntryRecords.indexOf(activity) <= (index + 6)) {
         sum += activity.numSteps;
       }
