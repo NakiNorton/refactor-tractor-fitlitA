@@ -27,12 +27,6 @@ class SleepRepository {
 
 
   // ^^^^^average ounces OVERALL
-  // ^^^^^ average ounces BY WEEK
-
-  //not sure we need this given what the card has show us
-  // findHoursSleptByDay(date) { 
-  //   return this.individualEntryRecords.find(entry => entry.date === date);
-  // }
   getAveQualitySleptOverall() {
     let qualityHours = this.individualEntryRecords.reduce((sum, entry) => {
       sum += entry.numOunces;
@@ -52,16 +46,9 @@ class SleepRepository {
     return Number(overallHoursSlept)
     }
   }
+  
+  // ^^^^^ average ounces BY WEEK
 
-
-  findUsersSleepData(rawSleepData) {
-    rawSleepData.filter(record => {
-      
-    })
-  }
-  instantiateRawData(rawSleepData) {
-    return rawSleepData.map(data => new Sleep(data));
-  }
 
   calculateAverageQualityThisWeek(todaysDate) {
     return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
