@@ -26,7 +26,6 @@ class SleepRepository {
   // ^^^^^LAST 7 DAYS ounces RECORD
 
 
-  // ^^^^^average ounces OVERALL
   getAveQualitySleptOverall() {
     let qualityHours = this.individualEntryRecords.reduce((sum, entry) => {
       sum += entry.numOunces;
@@ -44,9 +43,17 @@ class SleepRepository {
     }, 0);
     let overallHoursSlept = (hoursSlept / this.individualEntryRecords.length).toFixed(0)
     return Number(overallHoursSlept)
-    }
   }
-  
+
+  getWeekAvgHoursSlept() {
+    let week = this.getWeeksDailyHours();
+    let hoursSleptTotal = week.reduce((sum, entry) => {
+      sum += entry;
+      return sum;
+    }, 0);
+    let weeklyAverageHoursSlept = (hoursSleptTotal / 7).toFixed(0);
+    return Number(weeklyAverageHoursSlept);
+  }
   // ^^^^^ average ounces BY WEEK
 
 
