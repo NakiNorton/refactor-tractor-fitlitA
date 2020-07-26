@@ -38,7 +38,6 @@ class UserRepository {
     })
   }
 
-
   calculateCommunityAvgStepGoal() {
     let communityStepGoals = this.users.map((user) => user.dailyStepGoal);
     let communityTotal = communityStepGoals.reduce((sum, goal) => {
@@ -48,15 +47,15 @@ class UserRepository {
     return communityTotal / this.users.length;
   }
 
-  // calculateAverageDailyWater(date) {
-  //   let todaysDrinkers = this.users.filter(user => {
-  //     return user.addDailyOunces(date) > 0;
-  //   });
-  //   let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
-  //     return sum += drinker.addDailyOunces(date);
-  //   }, 0)
-  //   return Math.floor(sumDrankOnDate / todaysDrinkers.length);
-  // }
+  calculateAverageDailyWater() {
+    let todaysDrinkers = this.users.filter(user => {
+      return user.hydrationInfo.getAverageOuncesOverall() > 0;
+    });
+    let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
+      return sum += drinker.hydrationInfo.getAverageOuncesOverall();
+    }, 0)
+    return Math.floor(sumDrankOnDate / todaysDrinkers.length);
+  }
   
   // calculateAverageSleepQuality() {
   //   let totalSleepQuality = this.users.reduce((sum, user) => {

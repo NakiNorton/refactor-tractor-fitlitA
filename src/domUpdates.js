@@ -139,11 +139,11 @@ const domUpdates = {
     dailyOz.forEach((dailyOunces, i) => {
       dailyOunces.innerText = allDaysOuncesOverWeek[i];
     })
+    document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.calculateAverageDailyWater()}`;
     // input.value = "";
   },
   
   
-  // document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.calculateAverageDailyWater(this.todaysDate)}`;
 
 
   //////// SLEEP DISPLAY SECTION //////////////////////////////////////
