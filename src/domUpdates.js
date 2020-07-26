@@ -12,8 +12,8 @@ const domUpdates = {
   ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayPage() {
     document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
-    this.hydrationCardDisplay();
-    // this.stepCardDisplay();
+    // this.hydrationCardDisplay();
+    this.stepCardDisplay();
     // this.stairsCardDisplay();
     // this.sleepCardDisplay();
   },
@@ -59,39 +59,45 @@ const domUpdates = {
 
   stepCardDisplay() {
     this.stepMainCardDisplay();
-    this.stepInfoCardDisplay();
-    this.stepCalendarCardDisplay();
-    // this.stepFriendCardDisplay();
+    this.stepsInfoCard();
+    this.stepCalendarCardMinutesDisplay();
+    this.stepCalendarCardStepsDisplay();
+    this.stepFriendCardDisplay();
     // this.stepTrendingCardDisplay();
   },
-  
+
   stepMainCardDisplay() {
-    let todaySteps = document.querySelector('#steps-user-steps-today');
-    let foundStepsTodayObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate && activity.steps);
-    foundStepsTodayObj ? todaySteps.innerText = `${foundStepsTodayObj.steps}` : todaySteps.innerText = "0";
+    document.getElementById("steps-user-steps-today").innerText = `${this.currentUser.activityInfo.getStepsForToday("2019/10/16")}`;
+  },
+
+  stepsInfoCard(date = "2019/10/16") { // default date if nothing is entered  
+    this.stepInfoCardMilesDisplay(date) 
+    this.stepInfoCardMinutesDisplay(date)
+  },
+
+  stepInfoCardMilesDisplay(date) {
+    document.getElementById('steps-info-miles-walked-today').innerText = `${this.currentUser.activityInfo.calculateMiles(this.currentUser, date)}`;
+  },
+
+  stepInfoCardMinutesDisplay(date) {
+    document.getElementById('steps-info-active-minutes-today').innerText = `${this.currentUser.activityInfo.getActiveMinutesForToday(date)}`;
   },
   
-  stepInfoCardDisplay() {
-    let foundTodayMinutesActiveObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate && activity.minutesActive);
-    let todayMinutesActive = document.querySelector("#steps-info-active-minutes-today");
-    foundTodayMinutesActiveObj ? todayMinutesActive.innerText = `${foundTodayMinutesActiveObj.minutesActive}` : todayMinutesActive.innerText = "0";
-    let milesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
-    let milesWalkedObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate);
-    if (milesWalkedObj) {
-      milesWalkedObj = milesWalkedObj.calculateMiles(this.userRepository);
-    }
-    milesWalkedObj ? milesWalkedToday.innerText = `${milesWalkedObj}` : milesWalkedToday.innerText = "0";
+  stepCalendarCardMinutesDisplay() {
+    document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = this.currentUser.activityInfo.calculateAverageMinutesActiveThisWeek(this.todaysDate);
   },
-  
-  stepCalendarCardDisplay() {
-    document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = this.currentUser.calculateAverageMinutesActiveThisWeek(this.todaysDate);
-    document.querySelector('#steps-calendar-total-steps-weekly').innerText = this.currentUser.calculateAverageStepsThisWeek(this.todaysDate);
+
+  stepCalendarCardStepsDisplay() {
+    document.querySelector('#steps-calendar-total-steps-weekly').innerText = this.currentUser.activityInfo.calculateAverageStepsThisWeek(this.todaysDate)
   },
   
   stepFriendCardDisplay() {
-    document.querySelector('#steps-friend-steps-average-today').innerText = this.userRepository.calculateAverageMinutesActive(this.todaysDate);
-    document.querySelector('#steps-friend-average-step-goal').innerText = this.userRepository.calculateCommunityAvgStepGoal();
-    document.querySelector('#steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageSteps(this.todaysDate);
+    document.getElementById('steps-friend-steps-average-today').innerText = this.userRepository.calculateAllUsersAverageSteps("2019/10/16");
+
+    document.getElementById('steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAllUsersAverageMinutesActive("2019/10/16");
+
+    // document.querySelector('#steps-friend-average-step-goal').innerText = this.userRepository.calculateCommunityAvgStepGoal();
+    // document.querySelector('#steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageSteps(this.todaysDate);
   },
 
   // stepTrendingCardDisplay() {
@@ -131,16 +137,16 @@ const domUpdates = {
 
   //////////// HYDRATION DISPLAY SECTION /////////////////////////////////
 
-  hydrationCardDisplay() {
-    document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.findTodaysTotalWater(this.todaysDate)}`;
-    document.querySelector(".hydration-weekly-avg").innerText = `You averaged ${this.currentUser.hydrationInfo.getWeekAvgOunces()} ounces this week!`;
-    let dailyOz = document.querySelectorAll('.daily-oz');
-    let allDaysOuncesOverWeek = this.currentUser.hydrationInfo.getWeeksDailyOunces().sort((a, b) => a - b);
-    dailyOz.forEach((dailyOunces, i) => {
-      dailyOunces.innerText = allDaysOuncesOverWeek[i];
-    })
-    // input.value = "";
-  },
+  // hydrationCardDisplay() {
+  //   // document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.findTodaysTotalWater(this.todaysDate)}`;
+  //   // document.querySelector(".hydration-weekly-avg").innerText = `You averaged ${this.currentUser.hydrationInfo.getWeekAvgOunces()} ounces this week!`;
+  //   let dailyOz = document.querySelectorAll('.daily-oz');
+  //   let allDaysOuncesOverWeek = this.currentUser.hydrationInfo.getWeeksDailyOunces().sort((a, b) => a - b);
+  //   dailyOz.forEach((dailyOunces, i) => {
+  //     dailyOunces.innerText = allDaysOuncesOverWeek[i];
+  //   })
+  //   // input.value = "";
+  // },
   
   
   // document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.calculateAverageDailyWater(this.todaysDate)}`;
@@ -168,6 +174,8 @@ const domUpdates = {
     // document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todaysDate, sleepRepository)).getFirstName();
     // document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todaysDate, sleepRepository)).getFirstName();
   },
+
+
 
 }
 export default domUpdates;
