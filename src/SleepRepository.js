@@ -12,6 +12,8 @@ class SleepRepository {
   findTodaysTotalSleep() {
     return this.individualEntryRecord[0]
   }
+
+
   // ^^^^^ ounces TODAY
 
 
@@ -22,6 +24,15 @@ class SleepRepository {
       return day.hoursSlept
     })
   }
+
+  getWeeksDailyQualHours() {
+    let week = this.individualEntryRecord.slice(-7, -1)
+    return week.map(day => {
+      return day.sleepQuality
+    })
+
+  }
+
 
   // ^^^^^LAST 7 DAYS ounces RECORD
 
@@ -38,34 +49,45 @@ class SleepRepository {
 
   getAveHoursSleptOverall() {
     let hoursSlept = this.individualEntryRecords.reduce((sum, entry) => {
-      sum += entry.numOunces;
+      sum += entry.hoursSlept;
       return sum;
     }, 0);
-    let overallHoursSlept = (hoursSlept / this.individualEntryRecords.length).toFixed(0)
-    return Number(overallHoursSlept)
+    let overallAverageHoursSlept = (hoursSlept / this.individualEntryRecords.length).toFixed(0)
+    return Number(overallAverageHoursSlept)
   }
 
-  getWeekAvgHoursSlept() {
+
+
+  getWeekAvgQualityHrsSlept() {
+    let week = this.getWeeksDailyQualHours();
+    let qualHrsSleptTotal = week.reduce((sum, entry) => {
+      sum += entry;
+      return sum;
+    }, 0);
+    let weeklyQualHrsSlept = (qualHrsSleptTotal / 7).toFixed(0);
+    return Number(weeklyQualHrsSlept);
+  }
+  // ^^^^^ average ounces BY WEEK
+
+
+  getWeekAveHoursSlept(todaysDate) {
     let week = this.getWeeksDailyHours();
     let hoursSleptTotal = week.reduce((sum, entry) => {
       sum += entry;
       return sum;
     }, 0);
-    let weeklyAverageHoursSlept = (hoursSleptTotal / 7).toFixed(0);
-    return Number(weeklyAverageHoursSlept);
+    let weeklyHoursSlept = (hoursSleptTotal / 7).toFixed(0);
+    return Number(weeklyHoursSlept);
   }
-  // ^^^^^ average ounces BY WEEK
 
-
-  calculateAverageQualityThisWeek(todaysDate) {
-    return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
-      let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todaysDate));
-      if (index <= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
-        sum += sleepAct.quality;
-      }
-      return sum;
-    }, 0) / this.sleepQualityRecord.length).toFixed(1);
-  }
+  // addSleepInput(input) {
+  //   let foundInRecord = this.individualEntryRecords.find(record => record.date === input.date);
+  //   if (foundInRecord) {
+  //     foundInRecord.hoursSlept = foundInRecord.numOunces + input.numOunces;
+  //   } else {
+  //     this.individualEntryRecords.push(input);
+  //   }
+  // }
 }
 
 export default SleepRepository;
