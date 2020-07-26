@@ -5,6 +5,16 @@ class ActivityRepository {
     this.individualEntryRecords = [];
   }
 
+  getStepsForToday(date) {
+    let todaysStepRecord = this.individualEntryRecords.filter(record => {
+      return record.date === date;
+    })
+      .reduce((sum, entry) => {
+        sum += entry.numSteps;
+        return sum;
+      }, 0);
+    return todaysStepRecord;
+  }
 
   getActiveMinutesForToday(date) {
     let todaysActivityRecord = this.individualEntryRecords.filter(record => {
@@ -17,18 +27,16 @@ class ActivityRepository {
     return todaysActivityRecord;
   }
 
-  // i think these two methods could be modified if change how the input comes in scripts.
-
-  getStepsForToday(date) {
-    let todaysStepRecord = this.individualEntryRecords.filter(record => {
-      return record.date === date;
-    })
-      .reduce((sum, entry) => {
-        sum += entry.numSteps;
-        return sum;
-      }, 0);
-    return todaysStepRecord;
+  updateActivities(activity) {
+    console.log('WORKING')
+    this.individualEntryRecords.unshift(activity);
+    // if (activity.numSteps >= this.dailyStepGoal) {
+    //   this.accomplishedDays.unshift(activity.date);
+    // }
+    console.log(this.individualEntryRecords)
   }
+  // i think these  methods could be modified if change how the input comes in scripts.
+
 
   calculateMiles(user, date) {
     this.individualEntryRecords.filter(record => {
@@ -37,14 +45,7 @@ class ActivityRepository {
     return Math.round(this.getStepsForToday(date) * user.strideLength / 5280).toFixed(1); // doesn't need a reduce because if getStepsForToday should update this record?
   }
 
-    updateActivities(activity) {
-    console.log('WORKING')
-    this.individualEntryRecords.unshift(activity);
-    // if (activity.numSteps >= this.dailyStepGoal) {
-    //   this.accomplishedDays.unshift(activity.date);
-    // }
-      console.log(this.individualEntryRecords)
-  }
+  //reminder for Leigh to ask Steph about names
 
   calculateAverageMinutesActiveThisWeek(todaysDate) {
     return (this.individualEntryRecords.reduce((sum, activity) => {
@@ -72,18 +73,20 @@ class ActivityRepository {
     }, 0) / 7).toFixed(0);
   }
 
-  getStairsByDay(date) {
-    let dayFound = this.individualEntryRecords.find(entry => entry.date === date);
-    return dayFound ? (dayFound.flightsOfStairs * 12) : 0;
-  }
+// Stairs Methods
 
-  addStairsInfo(input) {
+  addStairsInput(input) {
     let foundInRecord = this.individualEntryRecords.find(record => record.date === input.date);
     if (foundInRecord) {
       foundInRecord.flightsOfStairs = foundInRecord.flightsOfStairs + input.flightsOfStairs;
     } else {
       this.individualEntryRecords.push(input);
     }
+  }
+
+  getStairsByDay(date) {
+    let dayFound = this.individualEntryRecords.find(entry => entry.date === date);
+    return dayFound ? (dayFound.flightsOfStairs * 12) : 0;
   }
 
   getHighestStairsRecord() {
@@ -105,6 +108,8 @@ class ActivityRepository {
   getWeeklyStairsClimbed() {
     return this.getWeeklyFlightsClimbed() * 12;
   }
+
+
 
 }
 

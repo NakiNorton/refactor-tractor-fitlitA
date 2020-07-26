@@ -64,19 +64,6 @@ class User {
     }
   }
 
-  // updateActivities(activity) {
-  //   this.activityRecord.unshift(activity);
-  //   if (activity.numSteps >= this.dailyStepGoal) {
-  //     this.accomplishedDays.unshift(activity.date);
-  //   }
-  // }
-
-  findClimbingRecord() {
-    return this.activityRecord.sort((a, b) => {
-      return b.flightsOfStairs - a.flightsOfStairs;
-    })[0].flightsOfStairs;
-  }
-
   calculateDailyCalories(date) {
     let totalMinutes = this.activityRecord.filter(activity => {
       return activity.date === date
@@ -84,18 +71,6 @@ class User {
       return sumMinutes += activity.minutesActive
     }, 0);
     return Math.round(totalMinutes * 7.6);
-  }
-
-
-
-  calculateAverageFlightsThisWeek(todaysDate) {
-    return (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todaysDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.flightsOfStairs;
-      }
-      return sum;
-    }, 0) / 7).toFixed(1);
   }
 
   // findTrendingStepDays() {
@@ -123,12 +98,14 @@ class User {
   // }
   // ^^ trend stuff is iteration 5
 
-  // findFriendsNames(users) {
-  //   this.friends.forEach(friend => {
-  //     this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
-  //   })
-  // }
-  // ^^ friend stuff is iteration 5
+  findFriends(userRepository) {
+    return this.friends.reduce((friendsInfo, friend)  => {
+      friend = userRepository.user.find(user => user.id === friend.id);
+      let friendInfo = {firstName: friend.name, weeklySteps: friend.calculateAverageStepsThisWeek()};
+      friendsInfo.push(friendInfo);
+      return friendsInfo;
+    }, []);
+  }
 
   calculateTotalStepsThisWeek(todaysDate) {
     this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
@@ -139,6 +116,7 @@ class User {
       return sum;
     }, 0));
   }
+
 
   // findFriendsTotalStepsForWeek(users, date) {
   //   this.friends.map(friend => {

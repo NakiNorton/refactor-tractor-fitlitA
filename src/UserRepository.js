@@ -47,16 +47,15 @@ class UserRepository {
     return communityTotal / this.users.length;
   }
 
-  getAverageWaterOnDate(date) {
+  getCommunityAvgWaterOnDate(date) {
     let allUsersOuncesOnDate = this.users.map(user => user.hydrationInfo.getOuncesByDay(date));
     let sumDrankOnDate = allUsersOuncesOnDate.reduce((sum, ounces) => {
       return sum += ounces;
     }, 0)
     return Math.floor(sumDrankOnDate / allUsersOuncesOnDate.length);
   }
-  // ^^ need to modify this, review spec
 
-  getAverageStairsOnDate(date) {
+  getCommunityAvgStairsOnDate(date) {
     let allUsersStairsOnDate = this.users.map(user => user.activityInfo.getStairsByDay(date));
     let sumStairsOnDate = allUsersStairsOnDate.reduce((totalStairs, stairs) => {
       totalStairs += stairs;
@@ -64,6 +63,9 @@ class UserRepository {
     }, 0);
     return Math.floor(sumStairsOnDate / allUsersStairsOnDate.length);
   }
+
+  
+  
 
   
   // calculateAverageSleepQuality() {

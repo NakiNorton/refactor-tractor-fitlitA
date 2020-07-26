@@ -84,7 +84,6 @@ const stepCardHandler = () => {
       numSteps: Number(inputSteps.value),
       minutesActive: Number(inputMinutes.value)
     };
-    
     currentUser.activityInfo.updateActivities(newActivityEntry);
     domUpdates.stepCardDisplay();
     inputSteps.value = ""; 
@@ -125,7 +124,7 @@ const stairsCardHandler = () => {
       date: todaysDate,
       flightsOfStairs: inputStairs.value * 12
     };
-    currentUser.activityInfo.addStairsInfo(activityObj);
+    currentUser.activityInfo.addStairsInput(activityObj);
     domUpdates.stairsCardDisplay();
     domUpdates.flipCard(stairsInfoCard, stairsMainCard);
     inputStairs.value = "";
@@ -157,7 +156,7 @@ const hydrationCardHandler = () => {
     let hydrationObj = {userID: currentUser.id, date: todaysDate, numOunces: Number(input.value)};
     currentUser.hydrationInfo.addHydroInfo(hydrationObj);
     // postData(hydrationObj, hydration);
-    // domUpdates.hydrationCardDisplay(input.value); 
+    domUpdates.hydrationCardDisplay(input); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
 }

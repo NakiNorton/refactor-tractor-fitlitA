@@ -28,31 +28,29 @@ const domUpdates = {
     document.querySelector('#dropdown-name').innerText = this.currentUser.name.toUpperCase();
     document.querySelector('#dropdown-goal').innerText = `DAILY STEP GOAL | ${this.currentUser.dailyStepGoal}`;
     document.querySelector('#dropdown-email').innerText = `EMAIL | ${this.currentUser.email}`;
-    // showLeaderBoard(); // currently broken
+    showLeaderBoard();
   },
 
-  // leaderboard in dropdown menu, not sure what's happening here, will need to follow HTML, method is broken in User file
-  // const showLeaderBoard = () => {
-  //   let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
-  //   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
-  //   currentUser.findFriendsNames(userRepository.users); // went thru original JS, couldn't find this, don't know where it came from
-  //   currentUser.findFriendsTotalStepsForWeek(userRepository.users, todaysDate);
-  //   currentUser.friendsActivityRecords.forEach(friend => {
-  //     dropdownFriendsStepsContainer.innerHTML += `
-  //         <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>`;
-  //   });
-  //   friendsStepsParagraphs.forEach(paragraph => {
-  //     if (friendsStepsParagraphs[0] === paragraph) {
-  //       paragraph.classList.add('green-text');
-  //     }
-  //     if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
-  //       paragraph.classList.add('red-text');
-  //     }
-  //     if (paragraph.innerText.includes('YOU')) {
-  //       paragraph.classList.add('yellow-text');
-  //     }
-  //   });
-  // }
+  showLeaderBoard() {
+    let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
+    let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
+    let friendsWeeklySteps = this.currentUser.findFriends(this.userRepository);
+    friendsWeeklySteps.forEach(friend => {
+      dropdownFriendsStepsContainer.innerHTML += `
+          <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.weeklySteps}</p>`;
+    });
+    friendsStepsParagraphs.forEach(paragraph => {
+      if (friendsStepsParagraphs[0] === paragraph) {
+        paragraph.classList.add('green-text');
+      }
+      if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
+        paragraph.classList.add('red-text');
+      }
+      if (paragraph.innerText.includes('YOU')) {
+        paragraph.classList.add('yellow-text');
+      }
+    });
+  },
 
 
   ///////////// STEPS DISPLAY SECTION /////////////////////////////////
@@ -113,7 +111,7 @@ const domUpdates = {
     document.querySelector("#stairs-user-stairs-today").innerText = this.currentUser.activityInfo.getStairsByDay(this.todaysDate);
     document.querySelector("#stairs-calendar-flights-average-weekly").innerText = this.currentUser.activityInfo.getWeeklyStairsClimbed();
     document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = this.currentUser.activityInfo.getWeeklyFlightsClimbed();
-    document.querySelector("#stairs-friend-flights-average-today").innerText = this.userRepository.getAverageStairsOnDate(this.todaysDate);
+    document.querySelector("#stairs-friend-flights-average-today").innerText = this.userRepository.getCommunityAvgStairsOnDate(this.todaysDate);
   },
  
   // stairsTrendingCardDisplay() {
@@ -132,7 +130,7 @@ const domUpdates = {
     let dailyOz = document.querySelectorAll('.daily-oz');
     let allDaysOuncesOverWeek = this.currentUser.hydrationInfo.getWeeksDailyOunces().sort((a, b) => a - b);
     dailyOz.forEach((dailyOunces, i) => dailyOunces.innerText = allDaysOuncesOverWeek[i]);
-    document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.getAverageWaterOnDate(this.todaysDate)}`;
+    document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.getCommunityAvgWaterOnDate(this.todaysDate)}`;
     // document.querySelector("#input-ounces").value.innerText = ''; // not working
   },
   
