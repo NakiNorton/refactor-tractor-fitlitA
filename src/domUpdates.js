@@ -28,13 +28,13 @@ const domUpdates = {
     document.querySelector('#dropdown-name').innerText = this.currentUser.name.toUpperCase();
     document.querySelector('#dropdown-goal').innerText = `DAILY STEP GOAL | ${this.currentUser.dailyStepGoal}`;
     document.querySelector('#dropdown-email').innerText = `EMAIL | ${this.currentUser.email}`;
-//     this.showLeaderBoard(); // may be broken
+    this.showLeaderBoard(); // CSS is finnicky on it
   },
 
   showLeaderBoard() {
     let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
     let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
-    let friendsWeeklySteps = this.currentUser.findFriends();
+    let friendsWeeklySteps = this.currentUser.findFriends(this.userRepository);
     friendsWeeklySteps.forEach(friend => {
       dropdownFriendsStepsContainer.innerHTML += `
           <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.weeklySteps}</p>`;
