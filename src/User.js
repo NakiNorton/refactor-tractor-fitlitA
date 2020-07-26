@@ -130,42 +130,9 @@ class User {
   // }
   // ^^ friend stuff is iteration 5
 
-  calculateTotalStepsThisWeek(todaysDate) {
-    this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todaysDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.steps;
-      }
-      return sum;
-    }, 0));
-  }
+  
 
-  // findFriendsTotalStepsForWeek(users, date) {
-  //   this.friends.map(friend => {
-  //     let matchedFriend = users.find(user => user.id === friend);
-  //     matchedFriend.calculateTotalStepsThisWeek(date);
-  //     this.friendsActivityRecords.push(
-  //       {
-  //         'id': matchedFriend.id,
-  //         'firstName': matchedFriend.name.toUpperCase().split(' ')[0],
-  //         'totalWeeklySteps': matchedFriend.totalStepsThisWeek
-  //       })
-  //   })
-  //   this.calculateTotalStepsThisWeek(date);
-  //   this.friendsActivityRecords.push({
-  //     'id': this.id,
-  //     'firstName': 'YOU',
-  //     'totalWeeklySteps': this.totalStepsThisWeek
-  //   });
-  //   this.friendsActivityRecords = this.friendsActivityRecords
-  //     .sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
-  // }
-
-  compareUserGoalWithCommunityGoal(userRepository) {
-    let communityStepGoal = userRepository.calculateCommunityAvgStepGoal()
-    let goalDifference = communityStepGoal - this.dailyStepGoal;
-    return goalDifference; 
-  }
+ 
 }
 
 export default User;
