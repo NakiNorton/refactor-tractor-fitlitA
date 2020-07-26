@@ -25,24 +25,15 @@ class ActivityRepository {
     return todaysActivityRecord;
   }
 
-  calculateMiles(user, date) {
+  getMiles(user, date) {
     this.individualEntryRecords.filter(record => {
       return record.date === date; // get record for today
     })
     return Math.round(this.getStepsForToday(date) * user.strideLength / 5280).toFixed(1); 
   }
 
-  updateActivities(activity) {
-    console.log('WORKING')
-    this.individualEntryRecords.unshift(activity);
-    // if (activity.numSteps >= this.dailyStepGoal) {
-    //   this.accomplishedDays.unshift(activity.date);
-    // }
-      console.log(this.individualEntryRecords)
-  //reminder for Leigh to ask Steph about names
-  }
 
-  calculateTotalStepsThisWeek(todaysDate) {
+  getTotalStepsThisWeek(todaysDate) {
     this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todaysDate));
       if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
@@ -52,7 +43,7 @@ class ActivityRepository {
     }, 0));
   }
 
-  calculateAverageMinutesActiveThisWeek(todaysDate) {
+  getAverageMinutesActiveThisWeek(todaysDate) {
     return (this.individualEntryRecords.reduce((sum, activity) => {
       let index = this.individualEntryRecords.indexOf(this.individualEntryRecords.find(activity => activity.date === todaysDate));
       if (index <= this.individualEntryRecords.indexOf(activity) && this.individualEntryRecords.indexOf(activity) <= (index + 6)) {
@@ -62,15 +53,25 @@ class ActivityRepository {
     }, 0) / 7).toFixed(0);
   }
 
-  compareStepGoal(userRepository) {
-    let userStepGoal = userRepository.users
-      .find(user => user.id === this.userId).dailyStepGoal;
-    this.reachedStepGoal = this.steps >= userStepGoal;
+  checkIfStepGoalAchieved(date, user) {
+    let todaysRecord = this.individualEntryRecords.find(record => record.date === date)
+    let goalReached = (todaysRecord.numSteps >= user.dailyStepGoal)
+    return goalReached;
   }
-  // ^^ wrote notes for this in test
 
+  findAllDaysStepsExceededGoal(user) {
+    let goalAchievedDates = []
+    this.individualEntryRecords.filter(record => { 
+      if (record.numSteps >= user.dailyStepGoal) {
+        goalAchievedDates.push(record.date)
+      }
+      return goalAchievedDates;
+    })
+  }
+  
+    
 
-  calculateAverageStepsThisWeek(todaysDate) {
+  getAverageStepsThisWeek(todaysDate) {
     return (this.individualEntryRecords.reduce((sum, activity) => {
       let dayFound = this.individualEntryRecords.find(activity => activity.date === todaysDate);
       let index = this.individualEntryRecords.indexOf(dayFound);
@@ -90,10 +91,9 @@ class ActivityRepository {
     return Math.round(totalMinutes * 7.6);
   }
 
-// Stairs Methods
 
   compareUserGoalWithCommunityGoal(userGoal, userRepo) {
-    let communityStepGoal = userRepo.calculateCommunityAvgStepGoal()
+    let communityStepGoal = userRepo.getCommunityAvgStepGoal()
     let goalDifference = userGoal - communityStepGoal;
     if (goalDifference) { 
       return `Your goal is ${goalDifference} steps above average!`
@@ -102,11 +102,7 @@ class ActivityRepository {
   
     }
   }
-  // compareStepGoal(userRepository) {
-  //   let userStepGoal = userRepository.users
-  //     .find(user => user.id === this.userId).dailyStepGoal;
-  //   this.reachedStepGoal = this.steps >= userStepGoal;
-  // }
+ 
 
   addActivityInput(input) {
     let dayFound = this.individualEntryRecords.find(record => record.date === input.date);
