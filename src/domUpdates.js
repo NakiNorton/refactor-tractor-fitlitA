@@ -12,10 +12,9 @@ const domUpdates = {
   ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayPage() {
     document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
-    this.sleepCardDisplay();
     // this.hydrationCardDisplay();
-    // this.stepCardDisplay();
-    // this.stairsCardDisplay();
+    this.stepCardDisplay();
+    this.stairsCardDisplay();
   },
   
   flipCard(cardToHide, cardToShow) {
@@ -31,67 +30,73 @@ const domUpdates = {
     // showLeaderBoard(); // currently broken
   },
 
-// leaderboard in dropdown menu, not sure what's happening here, will need to follow HTML, method is broken in User file
-// const showLeaderBoard = () => {
-//   let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
-//   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
-//   currentUser.findFriendsNames(userRepository.users); // went thru original JS, couldn't find this, don't know where it came from
-//   currentUser.findFriendsTotalStepsForWeek(userRepository.users, todaysDate);
-//   currentUser.friendsActivityRecords.forEach(friend => {
-//     dropdownFriendsStepsContainer.innerHTML += `
-//         <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>`;
-//   });
-//   friendsStepsParagraphs.forEach(paragraph => {
-//     if (friendsStepsParagraphs[0] === paragraph) {
-//       paragraph.classList.add('green-text');
-//     }
-//     if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
-//       paragraph.classList.add('red-text');
-//     }
-//     if (paragraph.innerText.includes('YOU')) {
-//       paragraph.classList.add('yellow-text');
-//     }
-//   });
-// }
+  // leaderboard in dropdown menu, not sure what's happening here, will need to follow HTML, method is broken in User file
+  // const showLeaderBoard = () => {
+  //   let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
+  //   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
+  //   currentUser.findFriendsNames(userRepository.users); // went thru original JS, couldn't find this, don't know where it came from
+  //   currentUser.findFriendsTotalStepsForWeek(userRepository.users, todaysDate);
+  //   currentUser.friendsActivityRecords.forEach(friend => {
+  //     dropdownFriendsStepsContainer.innerHTML += `
+  //         <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>`;
+  //   });
+  //   friendsStepsParagraphs.forEach(paragraph => {
+  //     if (friendsStepsParagraphs[0] === paragraph) {
+  //       paragraph.classList.add('green-text');
+  //     }
+  //     if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
+  //       paragraph.classList.add('red-text');
+  //     }
+  //     if (paragraph.innerText.includes('YOU')) {
+  //       paragraph.classList.add('yellow-text');
+  //     }
+  //   });
+  // }
 
 
   ///////////// STEPS DISPLAY SECTION /////////////////////////////////
 
   stepCardDisplay() {
     this.stepMainCardDisplay();
-    this.stepInfoCardDisplay();
-    this.stepCalendarCardDisplay();
-    // this.stepFriendCardDisplay();
+    this.stepsInfoCard();
+    this.stepCalendarCardMinutesDisplay();
+    this.stepCalendarCardStepsDisplay();
+    this.stepFriendCardDisplay();
     // this.stepTrendingCardDisplay();
   },
-  
+
   stepMainCardDisplay() {
-    let todaySteps = document.querySelector('#steps-user-steps-today');
-    let foundStepsTodayObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate && activity.steps);
-    foundStepsTodayObj ? todaySteps.innerText = `${foundStepsTodayObj.steps}` : todaySteps.innerText = "0";
+    document.getElementById("steps-user-steps-today").innerText = `${this.currentUser.activityInfo.getStepsForToday("2019/10/16")}`;
+  },
+
+  stepsInfoCard(date = "2019/10/16") { // default date if nothing is entered  
+    this.stepInfoCardMilesDisplay(date) 
+    this.stepInfoCardMinutesDisplay(date)
+  },
+
+  stepInfoCardMilesDisplay(date) {
+    document.getElementById('steps-info-miles-walked-today').innerText = `${this.currentUser.activityInfo.calculateMiles(this.currentUser, date)}`;
+  },
+
+  stepInfoCardMinutesDisplay(date) {
+    document.getElementById('steps-info-active-minutes-today').innerText = `${this.currentUser.activityInfo.getActiveMinutesForToday(date)}`;
   },
   
-  stepInfoCardDisplay() {
-    let foundTodayMinutesActiveObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate && activity.minutesActive);
-    let todayMinutesActive = document.querySelector("#steps-info-active-minutes-today");
-    foundTodayMinutesActiveObj ? todayMinutesActive.innerText = `${foundTodayMinutesActiveObj.minutesActive}` : todayMinutesActive.innerText = "0";
-    let milesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
-    let milesWalkedObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate);
-    if (milesWalkedObj) {
-      milesWalkedObj = milesWalkedObj.calculateMiles(this.userRepository);
-    }
-    milesWalkedObj ? milesWalkedToday.innerText = `${milesWalkedObj}` : milesWalkedToday.innerText = "0";
+  stepCalendarCardMinutesDisplay() {
+    document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = this.currentUser.activityInfo.calculateAverageMinutesActiveThisWeek(this.todaysDate);
   },
-  
-  stepCalendarCardDisplay() {
-    document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = this.currentUser.calculateAverageMinutesActiveThisWeek(this.todaysDate);
-    document.querySelector('#steps-calendar-total-steps-weekly').innerText = this.currentUser.calculateAverageStepsThisWeek(this.todaysDate);
+
+  stepCalendarCardStepsDisplay() {
+    document.querySelector('#steps-calendar-total-steps-weekly').innerText = this.currentUser.activityInfo.calculateAverageStepsThisWeek(this.todaysDate)
   },
   
   stepFriendCardDisplay() {
-    document.querySelector('#steps-friend-steps-average-today').innerText = this.userRepository.calculateAverageMinutesActive(this.todaysDate);
-    document.querySelector('#steps-friend-average-step-goal').innerText = this.userRepository.calculateCommunityAvgStepGoal();
-    document.querySelector('#steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageSteps(this.todaysDate);
+    document.getElementById('steps-friend-steps-average-today').innerText = this.userRepository.calculateAllUsersAverageSteps("2019/10/16");
+
+    document.getElementById('steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAllUsersAverageMinutesActive("2019/10/16");
+
+    // document.querySelector('#steps-friend-average-step-goal').innerText = this.userRepository.calculateCommunityAvgStepGoal();
+    // document.querySelector('#steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageSteps(this.todaysDate);
   },
 
   // stepTrendingCardDisplay() {
@@ -131,23 +136,19 @@ const domUpdates = {
 
   //////////// HYDRATION DISPLAY SECTION /////////////////////////////////
 
-  hydrationCardDisplay() {
-    this.hydrationAddInputDisplay();
-    // this.hydrationCalendarDisplay();
-    // input.value = "";
-  },
-
-  hydrationAddInputDisplay() {
-    document.getElementById("hydration-user-ounces-today").innerText = '';
-    document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.findTodaysTotalWater(this.todaysDate)}`;
-  },
-
-  hydrationCalendarDisplay() {
-    let weeklyAvg = document.querySelector(".hydration-weekly-avg");
-    weeklyAvg.innerText = `You averaged ${this.currentUser.hydrationInfo.weeklyAvgOunces} ounces this week!`;
-  },
-
-  // document.querySelector("#hydration-friend-ounces-today").innerText = userRepository.calculateAverageDailyWater(todaysDate);
+  // hydrationCardDisplay() {
+  //   // document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.findTodaysTotalWater(this.todaysDate)}`;
+  //   // document.querySelector(".hydration-weekly-avg").innerText = `You averaged ${this.currentUser.hydrationInfo.getWeekAvgOunces()} ounces this week!`;
+  //   let dailyOz = document.querySelectorAll('.daily-oz');
+  //   let allDaysOuncesOverWeek = this.currentUser.hydrationInfo.getWeeksDailyOunces().sort((a, b) => a - b);
+  //   dailyOz.forEach((dailyOunces, i) => {
+  //     dailyOunces.innerText = allDaysOuncesOverWeek[i];
+  //   })
+  //   // input.value = "";
+  // },
+  
+  
+  // document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.calculateAverageDailyWater(this.todaysDate)}`;
 
 
   //////// SLEEP DISPLAY SECTION //////////////////////////////////////
