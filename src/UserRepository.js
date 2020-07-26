@@ -38,14 +38,14 @@ class UserRepository {
     })
   }
 
-  // calculateCommunityAvgStepGoal() {
-  //   let communityStepGoals = this.users.map((user) => user.dailyStepGoal);
-  //   let communityTotal = communityStepGoals.reduce((sum, goal) => {
-  //     sum += goal;
-  //     return sum;
-  //   }, 0);
-  //   return communityTotal / this.users.length;
-  // }
+  calculateCommunityAvgStepGoal() {
+    let communityStepGoalTotal = this.users.map((user) => user.dailyStepGoal)
+      .reduce((sum, goal) => {
+        sum += goal;
+        return sum;
+      }, 0);
+    return communityStepGoalTotal / this.users.length;
+  }
   
   // calculateAverageSleepQuality() {
   //   let totalSleepQuality = this.users.reduce((sum, user) => {
