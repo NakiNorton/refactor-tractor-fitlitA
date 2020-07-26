@@ -39,11 +39,6 @@
         <section class='info-card hide' id='steps-info-card'>
           <button name='button' class='go-back-button steps-go-back-button' aria-label='Return To Previous Information'>
           </button>
-              <div class="input-box">
-                <p class="steps-date-text">SUMMARY OF TODAY'S STEPS, OR SEARCH BY DATE:</p>
-                <input type="text" class="inputs" id="input-date" placeholder="YYYY/MM/DD" maxlength="10" minlength="10">
-                <button class='submit-button date-input-submit'></button>
-              </div>
           <div class='card-data-line'>
             <p>TOTAL ACTIVE MINUTES TODAY:</p>
             <h4 id='steps-info-active-minutes-today'>0</h4>
@@ -72,8 +67,8 @@
             <h4 id='steps-friend-average-step-goal'></h4>
           </div>
           <div class='card-data-line'>
-            <p>HOW YOUR STEP GOAL COMPARES:</p>
-            <h4 id='steps-goal-comparison'></h4>
+    
+            <p id='steps-goal-comparison' class='step-goal-comparison-all-users'></p>
           </div>
         </section>
         <section class='trending-card hide' id='steps-trending-card'>

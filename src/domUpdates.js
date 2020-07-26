@@ -62,7 +62,10 @@ const domUpdates = {
     this.stepsInfoCard();
     this.stepCalendarCardMinutesDisplay();
     this.stepCalendarCardStepsDisplay();
-    this.stepFriendCardDisplay();
+    this.stepFriendstepsCardDisplay();
+    this.stepFriendCardActiveMinsDisplay();
+    this.stepFriendCardAveStepGoalDisplay();
+    this.displayUsersStepGoalComparison()
     // this.stepTrendingCardDisplay();
   },
 
@@ -70,7 +73,7 @@ const domUpdates = {
     document.getElementById("steps-user-steps-today").innerText = `${this.currentUser.activityInfo.getStepsForToday(this.todaysDate)}`;
   },
 
-  stepsInfoCard(date = this.todaysDate) { // default date if nothing is entered  
+  stepsInfoCard(date) {
     this.stepInfoCardMilesDisplay(date) 
     this.stepInfoCardMinutesDisplay(date)
   },
@@ -90,14 +93,22 @@ const domUpdates = {
   stepCalendarCardStepsDisplay() {
     document.querySelector('#steps-calendar-total-steps-weekly').innerText = this.currentUser.activityInfo.calculateAverageStepsThisWeek(this.todaysDate)
   },
-  
-  stepFriendCardDisplay() {
+  // change from friends to users?
+  stepFriendstepsCardDisplay() {
     document.getElementById('steps-friend-steps-average-today').innerText = this.userRepository.calculateAllUsersAverageSteps(this.todaysDate);
+  },
 
+  stepFriendCardActiveMinsDisplay() {
     document.getElementById('steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAllUsersAverageMinutesActive(this.todaysDate);
+  },
 
-    // document.querySelector('#steps-friend-average-step-goal').innerText = this.userRepository.calculateCommunityAvgStepGoal();
-    // document.querySelector('#steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageSteps(this.todaysDate);
+  stepFriendCardAveStepGoalDisplay() {
+    document.getElementById('steps-friend-average-step-goal').innerText = this.userRepository.calculateCommunityAvgStepGoal();
+  },
+
+  displayUsersStepGoalComparison() {
+    document.getElementById('steps-goal-comparison').innerText = this.currentUser.activityInfo.compareUserGoalWithCommunityGoal(this.currentUser.dailyStepGoal, this.userRepository)
+
   },
 
   // stepTrendingCardDisplay() {
@@ -129,9 +140,9 @@ const domUpdates = {
   },
 
   stairsTrendingCardDisplay() {
-  // currentUser.findTrendingStairsDays();
-  // let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
-  // trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
+  currentUser.findTrendingStairsDays();
+  let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
+  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
   },
 
 

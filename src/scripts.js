@@ -65,12 +65,6 @@ const stepCardHandler = () => {
   }
   if (event.target.classList.contains("steps-go-back-button")) {
     domUpdates.flipCard(event.target.parentNode, stepsMainCard);
-  } 
-  if (event.target.classList.contains('date-input-submit')) {
-    event.preventDefault();
-    let input = document.querySelector('#input-date');
-    domUpdates.stepsInfoCard(input.value);
-    input.value = ""; 
   }
   if (event.target.classList.contains('user-steps-submit')) {
     event.preventDefault();
