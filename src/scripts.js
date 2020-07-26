@@ -84,7 +84,6 @@ const stepCardHandler = () => {
       numSteps: Number(inputSteps.value),
       minutesActive: Number(inputMinutes.value)
     };
-    
     currentUser.activityInfo.updateActivities(newActivityEntry);
     domUpdates.stepCardDisplay();
     inputSteps.value = ""; 
@@ -123,12 +122,12 @@ const stairsCardHandler = () => {
     let activityObj = {
       userID: currentUser.id,
       date: todaysDate,
-      flightsOfStairs: inputStairs.value
+      flightsOfStairs: inputStairs.value * 12
     };
-    currentUser.updateActivities(activityObj);
-    domUpdates.stepCardDisplay();
-    inputStairs.value = "";
+    currentUser.activityInfo.addStairsInput(activityObj);
+    domUpdates.stairsCardDisplay();
     domUpdates.flipCard(stairsInfoCard, stairsMainCard);
+    inputStairs.value = "";
   }
 }
 
@@ -155,9 +154,9 @@ const hydrationCardHandler = () => {
     event.preventDefault();
     let input = document.querySelector('#input-ounces');
     let hydrationObj = {userID: currentUser.id, date: todaysDate, numOunces: Number(input.value)};
-    currentUser.hydrationInfo.addHydroInfo(hydrationObj);
+    currentUser.hydrationInfo.addHydroInput(hydrationObj);
     // postData(hydrationObj, hydration);
-    // domUpdates.hydrationCardDisplay(input.value); 
+    domUpdates.hydrationCardDisplay(input); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
 }
@@ -193,7 +192,6 @@ function sleepCardHandler() {
       hoursSlept: inputHours.value,
       sleepQuality: inputQuality.value
     };
-
     currentUser.updateSleep(todaysDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
     domUpdates.sleepCardDisplay(inputHours, inputQuality);
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
