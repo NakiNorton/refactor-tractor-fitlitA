@@ -1,26 +1,33 @@
-import Sleep from "../src/Sleep";
+// import Sleep from "../src/Sleep";
 
 class SleepRepository {
   constructor(todaysDate) {
-    this.individualEntryRecord;
-    this.hoursSlept = this.findTodaysTotalSleep(todaysDate);
-    this.weeklyHoursSlept = this.getWeekAvgHours()
-    this.weeklyQualHoursSlept = this.calculateAverageHoursThisWeek(todaysDate)
+    this.individualEntryRecords = [];
+    // this.hoursSlept = this.findTodaysTotalSleep(todaysDate);
+    // this.weeklyHoursSlept = this.getWeekAveHoursSlept()
+    // this.weeklyQualHoursSlept = this.calculateAverageHoursThisWeek(todaysDate)
   }
   
-  findTodaysTotalSleep() {
-    return this.individualEntryRecord[0]
+  findTodaysTotalSleep(date) {
+    let hoursSleptToday = this.individualEntryRecords.filter(record => {
+      return record.date === date;
+    })
+      .reduce((sum, entry) => {
+        sum += entry.hoursSlept;
+        return sum;
+      }, 0);
+    return hoursSleptToday;
   }
 
   getWeeksDailyHours() {
-    let week = this.individualEntryRecord.slice(-7, -1)
+    let week = this.individualEntryRecords.slice(-7, -1)
     return week.map(day => {
       return day.hoursSlept
     })
   }
 
   getWeeksDailyQualHours() {
-    let week = this.individualEntryRecord.slice(-7, -1)
+    let week = this.individualEntryRecords.slice(-7, -1)
     return week.map(day => {
       return day.sleepQuality
     })
