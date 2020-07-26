@@ -1,11 +1,24 @@
 import Sleep from "../src/Sleep";
 
 class SleepRepository {
-  constructor(rawSleepData) {
-    this.individualEntryRecord = ;
+  constructor(todaysDate) {
+    this.individualEntryRecord;
     this.hoursSlept = this.findTodaysTotalSleep(todaysDate);
     this.weeklyHoursSlept = this.getWeekAvgHours()
     this.weeklyQualHoursSlept = this.calculateAverageHoursThisWeek(todaysDate)
+  }
+
+  findHoursSleptByDay(date) {
+    return this.individualEntryRecords.find(entry => entry.date === date);
+  }
+
+  getWeeksAveHoursSlept() {
+    let week = this.individualEntryRecords.slice(-7);
+    let hoursSlepTotal = week.reduce((sum, entry) => {
+      sum += entry.hoursSlept;
+      return sum;
+    }, 0);
+    return Number((hoursSlepTotal / 7).toFixed(0));
   }
 
   findUsersSleepData(rawSleepData) {
