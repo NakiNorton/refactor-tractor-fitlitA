@@ -11,9 +11,9 @@ class User {
     this.strideLength = userDetails.strideLength || "Stride length not added.";
     this.dailyStepGoal = userDetails.dailyStepGoal || 0;
     this.friends = userDetails.friends || [];
-    this.hydrationInfo = new HydrationRepository(todayDate);
-    this.sleepInfo = new SleepRepository(todayDate);
-    this.activityInfo = new ActivityRepository(todayDate);
+    this.hydrationInfo = new HydrationRepository(todaysDate);
+    this.sleepInfo = new SleepRepository(todaysDate);
+    this.activityInfo = new ActivityRepository(todaysDate);
   }
 
   checkUserId(user) {

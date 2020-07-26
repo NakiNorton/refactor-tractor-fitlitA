@@ -2,13 +2,13 @@
 import User from './User';
 
 class UserRepository {
-  constructor(rawData, todayDate) {
-    this.users = this.matchDataWithUsers(rawData, todayDate);
+  constructor(rawData, todaysDate) {
+    this.users = this.matchDataWithUsers(rawData, todaysDate);
   }
 
-  matchDataWithUsers(rawData, todayDate) {
+  matchDataWithUsers(rawData, todaysDate) {
     let instantiatedUsers = rawData.userData.map(
-      (rawUser) => new User(rawUser, todayDate)
+      (rawUser) => new User(rawUser, todaysDate)
     );
     this.matchHydrationWithUser(instantiatedUsers, rawData.hydrationData);
     this.matchSleepWithUser(instantiatedUsers, rawData.sleepData);
