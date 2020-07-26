@@ -1,23 +1,10 @@
 // import Activity from './Activity';
 
 class ActivityRepository {
-  constructor() {
+  constructor(today) {
     this.individualEntryRecords = [];
-   
-    // this.doActivity(userRepository);
-    // this.steps = data.numSteps;
-    //     // this.minutesActive = data.minutesActive;
-    //     // this.flightsOfStairs = data.flightsOfStairs;
-    //     // this.milesWalked = 0;
-    //     // this.reachedStepGoal = null;
   }
 
-  // doActivity(userRepo) {
-  //   var activity = this;
-  //   userRepo.users.find(function (user) {
-  //     return user.id === activity.userId;
-  //   }).updateActivities(this);
-  // }
 
   getActiveMinutesForToday(date) {
     let todaysActivityRecord = this.individualEntryRecords.filter(record => {
@@ -29,6 +16,8 @@ class ActivityRepository {
       }, 0);
     return todaysActivityRecord;
   }
+
+  // i think these two methods could be modified if change how the input comes in scripts.
 
   getStepsForToday(date) {
     let todaysStepRecord = this.individualEntryRecords.filter(record => {
@@ -67,6 +56,11 @@ class ActivityRepository {
     }, 0) / 7).toFixed(0);
   }
 
+  compareStepGoal(userRepository) {
+    let userStepGoal = userRepository.users
+      .find(user => user.id === this.userId).dailyStepGoal;
+    this.reachedStepGoal = this.steps >= userStepGoal;
+  }
 
   calculateAverageStepsThisWeek(todaysDate) {
     return (this.individualEntryRecords.reduce((sum, activity) => {
@@ -78,16 +72,40 @@ class ActivityRepository {
     }, 0) / 7).toFixed(0);
   }
 
-  calculateFlightOfStairs(input) {
-    return this.flightsOfStairs += (12 * input);
+  getStairsByDay(date) {
+    let dayFound = this.individualEntryRecords.find(entry => entry.date === date);
+    return dayFound ? (dayFound.flightsOfStairs * 12) : 0;
   }
 
-
-  compareStepGoal(userRepository) {
-    let userStepGoal = userRepository.users
-      .find(user => user.id === this.userId).dailyStepGoal;
-    this.reachedStepGoal = this.steps >= userStepGoal;
+  addStairsInfo(input) {
+    let foundInRecord = this.individualEntryRecords.find(record => record.date === input.date);
+    if (foundInRecord) {
+      foundInRecord.flightsOfStairs = foundInRecord.flightsOfStairs + input.flightsOfStairs;
+    } else {
+      this.individualEntryRecords.push(input);
+    }
   }
+
+  getHighestStairsRecord() {
+    let totalFlights = this.individualEntryRecords.reduce((totalFlights, entry) => {
+      totalFlights += entry.flightsOfStairs;
+      return totalFlights;
+    }, 0);
+    return (totalFlights / 12).toFixed(0); 
+  }
+
+  getWeeklyFlightsClimbed() {
+    let week = this.individualEntryRecords.slice(-7);
+    return week.reduce((totalFlights, day) => {
+      totalFlights += day.flightsOfStairs;
+      return totalFlights;
+    }, 0);
+  }
+
+  getWeeklyStairsClimbed() {
+    return this.getWeeklyFlightsClimbed() * 12;
+  }
+
 }
 
 

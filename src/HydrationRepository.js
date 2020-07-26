@@ -23,11 +23,6 @@ class HydrationRepository {
     return week.map(day => {
       return day.numOunces;
     });
-    return sumOunces / this.individualEntryRecords.length;
-  }
-
-  getOuncesByDay(date) {
-    return this.individualEntryRecords.find(entry => entry.date === date);
   }
 
   getWeekAvgOunces() {

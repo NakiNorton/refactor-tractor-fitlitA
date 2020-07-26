@@ -123,12 +123,12 @@ const stairsCardHandler = () => {
     let activityObj = {
       userID: currentUser.id,
       date: todaysDate,
-      flightsOfStairs: inputStairs.value
+      flightsOfStairs: inputStairs.value * 12
     };
-    currentUser.updateActivities(activityObj);
-    domUpdates.stepCardDisplay();
-    inputStairs.value = "";
+    currentUser.activityInfo.addStairsInfo(activityObj);
+    domUpdates.stairsCardDisplay();
     domUpdates.flipCard(stairsInfoCard, stairsMainCard);
+    inputStairs.value = "";
   }
 }
 

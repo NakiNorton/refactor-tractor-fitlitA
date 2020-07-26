@@ -12,9 +12,9 @@ const domUpdates = {
   ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayPage() {
     document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
-    // this.hydrationCardDisplay();
-    this.stepCardDisplay();
-    // this.stairsCardDisplay();
+    this.hydrationCardDisplay();
+    this.stairsCardDisplay();
+    // this.stepCardDisplay();
     // this.sleepCardDisplay();
   },
   
@@ -110,19 +110,13 @@ const domUpdates = {
   ///////////// STEPS DISPLAY SECTION /////////////////////////////////
 
   stairsCardDisplay() {
-    this.stairsMainCardDisplay();
-    let flightsToday = document.querySelector("#stairs-info-flights-today");
-    let foundFlightsTodayObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate && activity.flightsOfStairs);
-    foundFlightsTodayObj ? flightsToday.innerText = `${foundFlightsTodayObj.flightsOfStairs}` : flightsToday = "0";
+    document.querySelector("#stairs-user-stairs-today").innerText = this.currentUser.activityInfo.getStairsByDay(this.todaysDate);
+    // let flightsToday = document.querySelector("#stairs-info-flights-today");
+    // let foundFlightsTodayObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate && activity.flightsOfStairs);
+    // foundFlightsTodayObj ? flightsToday.innerText = `${foundFlightsTodayObj.flightsOfStairs}` : flightsToday = "0";
     // document.querySelector("#stairs-friend-flights-average-today").innerText = (this.userRepository.calculateAverageStairs(this.todaysDate) / 12).toFixed(1);
   },
-  
-  stairsMainCardDisplay() {
-    let stairsToday = document.querySelector("#stairs-user-stairs-today");
-    let foundStairsTodayObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate && activity.flightsOfStairs);
-    foundStairsTodayObj ? stairsToday.innerText = `${foundStairsTodayObj.flightsOfStairs * 12}` : stairsToday.innerText = "0";
-  },
-
+ 
   stairsCalendarCardDisplay() {
     document.querySelector("#stairs-calendar-flights-average-weekly").innerText = this.currentUser.calculateAverageFlightsThisWeek(this.todaysDate);
     document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (this.currentUser.calculateAverageFlightsThisWeek(this.todaysDate) * 12).toFixed(0);
@@ -145,7 +139,7 @@ const domUpdates = {
     let allDaysOuncesOverWeek = this.currentUser.hydrationInfo.getWeeksDailyOunces().sort((a, b) => a - b);
     dailyOz.forEach((dailyOunces, i) => dailyOunces.innerText = allDaysOuncesOverWeek[i]);
     document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.calculateAverageDailyWater()}`;
-    document.querySelector("#input-ounces").innerText = ''; // not working
+    // document.querySelector("#input-ounces").value.innerText = ''; // not working
   },
   
 
