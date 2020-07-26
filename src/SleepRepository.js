@@ -42,14 +42,14 @@ class SleepRepository {
     return Number(overallAverageQuality);
     }
   }
-  
+
   getAveHoursSleptOverall() {
-    let qualityHours = this.individualEntryRecords.reduce((sum, entry) => {
+    let hoursSlept = this.individualEntryRecords.reduce((sum, entry) => {
       sum += entry.numOunces;
       return sum;
     }, 0);
-    let overallAverageQuality = (qualityHours / this.individualEntryRecords.length).toFixed(0)
-    return Number(overallAverageQuality);
+    let overallHoursSlept = (hoursSlept / this.individualEntryRecords.length).toFixed(0)
+    return Number(overallHoursSlept)
     }
   }
 
