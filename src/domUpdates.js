@@ -83,7 +83,7 @@ const domUpdates = {
   },
 
   stepInfoCardMilesDisplay(date) {
-    document.getElementById('steps-info-miles-walked-today').innerText = `${this.currentUser.activityInfo.calculateMiles(this.currentUser, date)}`;
+    document.getElementById('steps-info-miles-walked-today').innerText = `${this.currentUser.activityInfo.getMiles(this.currentUser, date)}`;
   },
 
   stepInfoCardMinutesDisplay(date) {
@@ -91,23 +91,23 @@ const domUpdates = {
   },
   
   stepCalendarCardMinutesDisplay() {
-    document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = this.currentUser.activityInfo.calculateAverageMinutesActiveThisWeek(this.todaysDate);
+    document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = this.currentUser.activityInfo.getAverageMinutesActiveThisWeek(this.todaysDate);
   },
 
   stepCalendarCardStepsDisplay() {
-    document.querySelector('#steps-calendar-total-steps-weekly').innerText = this.currentUser.activityInfo.calculateAverageStepsThisWeek(this.todaysDate)
+    document.querySelector('#steps-calendar-total-steps-weekly').innerText = this.currentUser.activityInfo.getAverageStepsThisWeek(this.todaysDate)
   },
   // change from friends to users?
   stepFriendstepsCardDisplay() {
-    document.getElementById('steps-friend-steps-average-today').innerText = this.userRepository.calculateAllUsersAverageSteps(this.todaysDate);
+    document.getElementById('steps-friend-steps-average-today').innerText = this.userRepository.getAllUsersAverageSteps(this.todaysDate);
   },
 
   stepFriendCardActiveMinsDisplay() {
-    document.getElementById('steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAllUsersAverageMinutesActive(this.todaysDate);
+    document.getElementById('steps-friend-active-minutes-average-today').innerText = this.userRepository.getAllUsersAverageMinutesActive(this.todaysDate);
   },
 
   stepFriendCardAveStepGoalDisplay() {
-    document.getElementById('steps-friend-average-step-goal').innerText = this.userRepository.calculateCommunityAvgStepGoal();
+    document.getElementById('steps-friend-average-step-goal').innerText = this.userRepository.getCommunityAvgStepGoal();
   },
 
   displayUsersStepGoalComparison() {

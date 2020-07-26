@@ -46,7 +46,7 @@ class UserRepository {
     });
   }
 
-  calculateCommunityAvgStepGoal() {
+  getCommunityAvgStepGoal() {
     let communityStepGoals = this.users.map((user) => user.dailyStepGoal);
     let communityTotal = communityStepGoals.reduce((sum, goal) => {
       if (typeof goal === "number") {
@@ -102,7 +102,7 @@ class UserRepository {
     return Number(averageStairs);
   }
 
-  calculateAllUsersAverageSteps(date) {
+  getAllUsersAverageSteps(date) {
     let allUsersStepsCount = this.users.map((user) => {
       return user.activityInfo.individualEntryRecords.filter((activity) => {
         return activity.date === date;
@@ -117,7 +117,7 @@ class UserRepository {
     return Math.round(sumOfSteps / allUsersStepsCount.length);
   }
 
-  calculateAllUsersAverageMinutesActive(date) {
+  getAllUsersAverageMinutesActive(date) {
     let allUsersMinutesActiveCount = this.users.map((user) => {
       return user.activityInfo.individualEntryRecords.filter((activity) => {
         return activity.date === date;
