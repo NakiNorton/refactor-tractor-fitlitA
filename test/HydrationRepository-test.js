@@ -45,9 +45,9 @@ describe('HydrationRepository', function() {
 
   }); 
 
-  it("should get the week's average of ounces", function() {
+  it.only("should get the week's average of ounces", function() {
     mockHydroRepo.individualEntryRecords.push(...mockRawData);
-    expect(mockHydroRepo.getWeekAvgOunces()).to.equal(23);
+    expect(mockHydroRepo.getWeeklyAvgOunces()).to.equal(23);
   });
 
   it('should add user input to records array, or update an existing record', function() {

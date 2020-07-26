@@ -95,7 +95,6 @@ describe('ActivityRepository', function() {
     expect(mockActivityRepo[1].reachedStepGoal).to.equal(null);
   });
 
-
   it('should have a method that calculate miles walked', function() {
     expect(activity1.calculateMiles(mockActivityRepo)).to.equal('3.0');
   });

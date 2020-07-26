@@ -154,7 +154,7 @@ describe('User', function() {
     expect(user2.friends).to.deep.equal([]);
   });
 
-  it.only("should return an array of objects of friends' names and total number of steps this week", function() {
+  it("should return an array of objects of friends' names and total number of steps this week", function() {
     expect(user.findFriends(mockUserRepository).length).to.deep.equal(3);
   });
 

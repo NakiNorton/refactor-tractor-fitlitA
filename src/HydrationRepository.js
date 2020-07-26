@@ -26,14 +26,16 @@ class HydrationRepository {
   }
 
   getWeeklyAvgOunces(today) {
-    return (this.individualEntryRecords.reduce((sum, entry) => {
+    let totalWeeklyOunces = this.individualEntryRecords.reduce((sum, entry) => {
       let todaysEntry = this.individualEntryRecords.find(entry => entry.date === today);
       let index = this.individualEntryRecords.indexOf(todaysEntry);
       if (index <= this.individualEntryRecords.indexOf(entry) && this.individualEntryRecords.indexOf(entry) <= (index + 6)) {
         sum += entry.numOunces;
       }
       return sum;
-    }, 0) / 7).toFixed(0);
+    }, 0);
+    let averageWeeklyOunces = (totalWeeklyOunces / 7).toFixed(0);
+    return Number(averageWeeklyOunces);
   }
 
 
