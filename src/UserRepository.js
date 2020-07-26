@@ -41,7 +41,9 @@ class UserRepository {
   calculateCommunityAvgStepGoal() {
     let communityStepGoals = this.users.map((user) => user.dailyStepGoal);
     let communityTotal = communityStepGoals.reduce((sum, goal) => {
-      sum += goal;
+      if (typeof goal === "number") {
+        sum += goal;
+      }
       return sum;
     }, 0);
     return communityTotal / this.users.length;

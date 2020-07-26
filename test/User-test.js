@@ -6,23 +6,23 @@ import SleepRepository from '../src/SleepRepository';
 import ActivityRepository from '../src/ActivityRepository';
 
 describe('User', function() {
-  let user, user2, user3, friend1, friend2, friend3, mockUserRepository, todayDate;
+  let user, user2, mockUserRepository, user3, friend1, friend2, friend3, todayDate;
   beforeEach(() => {
     user = new User({
-      'id': 1,
-      'name': 'Luisa Hane',
-      'address': '15195 Nakia Tunnel, Erdmanport VA 19901-1697',
-      'email': 'Diana.Hayes1@hotmail.com',
-      'strideLength': 4.3,
-      'dailyStepGoal': 10000,
-      'friends': [
+      id: 1,
+      name: 'Luisa Hane',
+      address: '15195 Nakia Tunnel, Erdmanport VA 19901-1697',
+      email: 'Diana.Hayes1@hotmail.com',
+      strideLength: 4.3,
+      dailyStepGoal: 10000,
+      friends: [
         16,
         4,
         8
       ],
-      "hydrationInfo": new HydrationRepository(todayDate),
-      "sleepInfo": new SleepRepository(todayDate),
-      "activityInfo": new ActivityRepository(todayDate)
+      hydrationInfo: new HydrationRepository(todayDate),
+      sleepInfo: new SleepRepository(todayDate),
+      activityInfo: new ActivityRepository(todayDate)
     });
     user2 = new User({});
     user3 = new User({
@@ -45,9 +45,9 @@ describe('User', function() {
       strideLength: 4.7,
       dailyStepGoal: 10000,
       friends: [1, 2, 3],
-      hydrationInfo: new HydrationRepository(todayDate),
-      sleepInfo: new SleepRepository(todayDate),
-      activityInfo: new ActivityRepository(todayDate),
+      // hydrationInfo: new HydrationRepository(todayDate),
+      // sleepInfo: new SleepRepository(todayDate),
+      // activityInfo: {individualEntryRecords: {userID: 1, numSteps: } }
     }),
     friend2 = new User({
       id: 16,
@@ -67,15 +67,13 @@ describe('User', function() {
       dailyStepGoal: 10000,
       friends: [1, 2, 3],
     }),
-    mockUserRepository = new UserRepository([
-      user,
-      user2,
-      user3,
-      friend1,
-      friend2,
-      friend3,
-    ]);
-  })
+    mockUserRepository = new UserRepository({
+      userData: [user, user2, user3, friend1, friend2, friend3],
+      hydrationData: [{ userID: 1, date: "06/12/2020", numOunces: 15 }],
+      sleepData: [{ userID: 1, date: "06/12/2020", hoursSlept: 15 }],
+      activityData: [{ userID: 1, date: "06/12/2020", minutesActive: 15 }],
+    });    
+  });
 
   it('should be a function', function() {
     expect(User).to.be.a('function');
@@ -156,38 +154,10 @@ describe('User', function() {
     expect(user2.friends).to.deep.equal('Add friends for friendly competition!');
   });
 
-
-
-  describe('updateSleep', function() {
-    beforeEach(() => {
-      user.updateSleep("2019/06/15", 7, 4.7);
-      user.updateSleep("2019/07/14", 6, 4);
-      user.updateSleep("2019/08/04", 8, 5.4);
-    })
-    it('should update user\'s quality of sleep record', function() {
-      expect(user.sleepQualityRecord.length).to.equal(3);
-    });
-    it('should update user\'s average hours of sleep', function() {
-      expect(user.hoursSleptAverage).to.equal('7.0');
-    });
-    it('should update user\'s average quality of sleep', function() {
-      expect(user.sleepQualityAverage).to.equal('4.7');
-    });
-  })
-
-  it('calculateAverageHoursThisWeek should calculate average sleep hours for week before given date', function() {
-    user.sleepHoursRecord = [{date: "2019/09/22", hours: 9.6}, {date: "2019/09/21", hours: 8.2}, {date: "2019/09/20", hours: 9.9}, {date: "2019/09/19", hours: 4.2}, {date: "2019/09/18", hours: 9.5}, {date: "2019/09/17", hours: 7.8}, {date: "2019/09/16", hours: 10.2}, {date: "2019/09/15", hours: 5.7}, {date: "2019/09/14", hours: 8.8}, {date: "2019/09/13", hours: 4.6}, {date: "2019/09/12", hours: 5.3}];
-    expect(user.calculateAverageHoursThisWeek('2019/09/21')).to.equal('7.9');
-  });
-
-  it('calculateAverageQualityThisWeek should calculate average quality of sleep for week before a given date', function() {
-    user.sleepQualityRecord = [{date: "2019/09/22", quality: 9.6}, {date: "2019/09/21", quality: 8.2}, {date: "2019/09/20", quality: 9.9}, {date: "2019/09/19", quality: 4.2}, {date: "2019/09/18", quality: 9.5}, {date: "2019/09/17", quality: 7.8}, {date: "2019/09/16", quality: 10.2}, {date: "2019/09/15", quality: 5.7}, {date: "2019/09/14", quality: 8.8}, {date: "2019/09/13", quality: 4.6}, {date: "2019/09/12", quality: 5.3}];
-    expect(user.calculateAverageQualityThisWeek('2019/09/22')).to.equal('8.5')
-  });
-  
   it('should compare users step goal with community step goal and return the difference', function() {
     mockUserRepository.calculateCommunityAvgStepGoal(); 
-    expect(user.compareUserGoalWithCommunityGoal()).to.equal(-3300);
+    expect(user.compareUserGoalWithCommunityGoal(mockUserRepository)).to.equal(-2500);
   })
+
 });
 

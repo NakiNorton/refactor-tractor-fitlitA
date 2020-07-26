@@ -45,6 +45,16 @@ class ActivityRepository {
 
   //reminder for Leigh to ask Steph about names
 
+   calculateTotalStepsThisWeek(todaysDate) {
+    this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
+      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todaysDate));
+      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
+        sum += activity.steps;
+      }
+      return sum;
+    }, 0));
+  }
+
   calculateAverageMinutesActiveThisWeek(todaysDate) {
     return (this.individualEntryRecords.reduce((sum, activity) => {
       let index = this.individualEntryRecords.indexOf(this.individualEntryRecords.find(activity => activity.date === todaysDate));
@@ -69,6 +79,15 @@ class ActivityRepository {
       }
       return sum;
     }, 0) / 7).toFixed(0);
+  }
+
+  calculateDailyCalories(date) {
+    let totalMinutes = this.activityRecord.filter(activity => {
+      return activity.date === date
+    }).reduce((sumMinutes, activity) => {
+      return sumMinutes += activity.minutesActive
+    }, 0);
+    return Math.round(totalMinutes * 7.6);
   }
 
 // Stairs Methods
