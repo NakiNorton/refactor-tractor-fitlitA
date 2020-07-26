@@ -192,7 +192,6 @@ function sleepCardHandler() {
       hoursSlept: inputHours.value,
       sleepQuality: inputQuality.value
     };
-
     currentUser.updateSleep(todaysDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
     domUpdates.sleepCardDisplay(inputHours, inputQuality);
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);

@@ -131,7 +131,7 @@ const domUpdates = {
     let allDaysOuncesOverWeek = this.currentUser.hydrationInfo.getWeeksDailyOunces().sort((a, b) => a - b);
     dailyOz.forEach((dailyOunces, i) => dailyOunces.innerText = allDaysOuncesOverWeek[i]);
     document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.getCommunityAvgOuncesOverall()}`;
-    // document.querySelector("#input-ounces").value.innerText = ''; // not working
+    document.querySelector("#input-ounces").value = ''; 
   },
   
 
