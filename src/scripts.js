@@ -27,7 +27,7 @@ function getData() {
 }
 
 // categories would be sleep, hydration, and activity
-// const postData = (dataObj, category) => {
+// function postData(dataObj, category) {
 //    fetch(`https://fe-apps.herokuapp.com/api/v1/fitlit/1908/${category}/${category}Data`, {
 //   method: 'POST',
 //   headers: {
