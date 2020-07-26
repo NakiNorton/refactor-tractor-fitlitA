@@ -34,7 +34,7 @@ const domUpdates = {
   showLeaderBoard() {
     let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
     let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
-    let friendsWeeklySteps = this.currentUser.findFriends(this.userRepository);
+    let friendsWeeklySteps = this.currentUser.findFriends();
     friendsWeeklySteps.forEach(friend => {
       dropdownFriendsStepsContainer.innerHTML += `
           <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.weeklySteps}</p>`;

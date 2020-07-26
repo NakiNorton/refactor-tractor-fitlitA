@@ -3,7 +3,7 @@ import User from './User';
 
 class UserRepository {
   constructor(rawData, todayDate) {
-    this.users = this.matchDataWithUsers(rawData, todayDate); // all users should have appropriate data that matches their id
+    this.users = this.matchDataWithUsers(rawData, todayDate);
   }
  
   matchDataWithUsers(rawData, todayDate) {

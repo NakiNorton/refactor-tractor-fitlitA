@@ -33,7 +33,7 @@ class ActivityRepository {
     // }
     console.log(this.individualEntryRecords)
   }
-  // i think these  methods could be modified if change how the input comes in scripts.
+  // i think these 3 methods could be modified if we change how the input comes in scripts.
 
 
   calculateMiles(user, date) {
@@ -45,7 +45,7 @@ class ActivityRepository {
 
   //reminder for Leigh to ask Steph about names
 
-   calculateTotalStepsThisWeek(todaysDate) {
+  calculateTotalStepsThisWeek(todaysDate) {
     this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todaysDate));
       if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
@@ -109,19 +109,20 @@ class ActivityRepository {
   }
 
   getHighestStairsRecord() {
-    let totalFlights = this.individualEntryRecords.reduce((totalFlights, entry) => {
-      totalFlights += entry.flightsOfStairs;
-      return totalFlights;
-    }, 0);
-    return (totalFlights / 12).toFixed(0); 
+    let sortedEntriesByStairs = this.individualEntryRecords.sort((a, b) => a.flightsOfStairs - b.flightsOfStairs);
+    return sortedEntriesByStairs.pop();
   }
 
-  getWeeklyFlightsClimbed() {
-    let week = this.individualEntryRecords.slice(-7);
-    return week.reduce((totalFlights, day) => {
-      totalFlights += day.flightsOfStairs;
-      return totalFlights;
-    }, 0);
+  getWeeklyFlightsClimbed(date) {
+    return this.individualEntryRecords.reduce((sum, activity) => {
+      let todaysEntry = this.individualEntryRecords.find(activity => activity.date === date);
+      let index = this.individualEntryRecords.indexOf(todaysEntry);
+      if (index <= this.individualEntryRecords.indexOf(activity) && this.individualEntryRecords.indexOf(activity) <= (index + 6)) {
+        sum += activity.flightsOfStairs;
+      }
+      return sum;
+    }, 0); 
+
   }
 
   getWeeklyStairsClimbed() {

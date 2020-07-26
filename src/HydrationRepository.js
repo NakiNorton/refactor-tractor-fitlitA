@@ -39,7 +39,7 @@ class HydrationRepository {
   }
 
 
-  addHydroInfo(input) {
+  addHydroInput(input) {
     let foundInRecord = this.individualEntryRecords.find(record => record.date === input.date);
     if (foundInRecord) {
       foundInRecord.numOunces = foundInRecord.numOunces + input.numOunces;
