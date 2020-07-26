@@ -33,7 +33,6 @@ class HydrationRepository {
     let weekAverageOunces = (numOuncesTotal / 7).toFixed(0);
     return Number(weekAverageOunces);
   }
-
   
 }
 

@@ -40,7 +40,13 @@ describe('HydrationRepository', function() {
     expect(mockHydroRepo.getOuncesByDay(todaysDate)).to.equal(40);
   });
 
-  it.only("should get the week's average of ounces", function() {
+  it.only('should return an arr of ounces drank on each day', function() {
+    mockHydroRepo.individualEntryRecords.push(...mockRawData);
+    expect(mockHydroRepo.getWeeksDailyOunces()).to.deep.equal([40, 30, 20, 20, 30, 20, 20]);
+
+  }); 
+
+  it("should get the week's average of ounces", function() {
     mockHydroRepo.individualEntryRecords.push(...mockRawData);
     expect(mockHydroRepo.getWeekAvgOunces()).to.equal(26);
   })
