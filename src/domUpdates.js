@@ -113,16 +113,14 @@ const domUpdates = {
     document.querySelector("#stairs-user-stairs-today").innerText = this.currentUser.activityInfo.getStairsByDay(this.todaysDate);
     document.querySelector("#stairs-calendar-flights-average-weekly").innerText = this.currentUser.activityInfo.getWeeklyStairsClimbed();
     document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = this.currentUser.activityInfo.getWeeklyFlightsClimbed();
- 
-    // document.querySelector("#stairs-friend-flights-average-today").innerText = (this.userRepository.calculateAverageStairs(this.todaysDate) / 12).toFixed(1);
+    document.querySelector("#stairs-friend-flights-average-today").innerText = this.userRepository.getAverageStairsOnDate(this.todaysDate);
   },
  
-
-  stairsTrendingCardDisplay() {
-  // currentUser.findTrendingStairsDays();
-  // let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
-  // trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
-  },
+  // stairsTrendingCardDisplay() {
+  // // currentUser.findTrendingStairsDays();
+  // // let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
+  // // trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
+  // },
 
 
   //////////// HYDRATION DISPLAY SECTION /////////////////////////////////
@@ -134,7 +132,7 @@ const domUpdates = {
     let dailyOz = document.querySelectorAll('.daily-oz');
     let allDaysOuncesOverWeek = this.currentUser.hydrationInfo.getWeeksDailyOunces().sort((a, b) => a - b);
     dailyOz.forEach((dailyOunces, i) => dailyOunces.innerText = allDaysOuncesOverWeek[i]);
-    document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.calculateAverageDailyWater()}`;
+    document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.getAverageWaterOnDate(this.todaysDate)}`;
     // document.querySelector("#input-ounces").value.innerText = ''; // not working
   },
   

@@ -38,7 +38,6 @@ class UserRepository {
     })
   }
 
-
   calculateCommunityAvgStepGoal() {
     let communityStepGoals = this.users.map((user) => user.dailyStepGoal);
     let communityTotal = communityStepGoals.reduce((sum, goal) => {
@@ -48,14 +47,22 @@ class UserRepository {
     return communityTotal / this.users.length;
   }
 
-  calculateAverageDailyWater() {
-    let todaysDrinkers = this.users.filter(user => {
-      return user.hydrationInfo.getAverageOuncesOverall() > 0;
-    });
-    let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
-      return sum += drinker.hydrationInfo.getAverageOuncesOverall();
+  getAverageWaterOnDate(date) {
+    let allUsersOuncesOnDate = this.users.map(user => user.hydrationInfo.getOuncesByDay(date));
+    let sumDrankOnDate = allUsersOuncesOnDate.reduce((sum, ounces) => {
+      return sum += ounces;
     }, 0)
-    return Math.floor(sumDrankOnDate / todaysDrinkers.length);
+    return Math.floor(sumDrankOnDate / allUsersOuncesOnDate.length);
+  }
+  // ^^ need to modify this, review spec
+
+  getAverageStairsOnDate(date) {
+    let allUsersStairsOnDate = this.users.map(user => user.activityInfo.getStairsByDay(date));
+    let sumStairsOnDate = allUsersStairsOnDate.reduce((totalStairs, stairs) => {
+      totalStairs += stairs;
+      return totalStairs;
+    }, 0);
+    return Math.floor(sumStairsOnDate / allUsersStairsOnDate.length);
   }
 
   
@@ -66,7 +73,6 @@ class UserRepository {
   //   }, 0);
   //   return totalSleepQuality / this.users.length;
   // }
-
   
   // findBestSleepers(today) {
   //   return this.users.filter(user => user.calculateAverageQualityThisWeek(date) > 3);
@@ -98,7 +104,6 @@ class UserRepository {
     return Math.round(sumOfSteps / allUsersStepsCount.length);
   }
 
-
   calculateAllUsersAverageMinutesActive(date) {
     let allUsersMinutesActiveCount = this.users.map(user => {
       return user.activityInfo.individualEntryRecords.filter(activity => {
@@ -113,6 +118,9 @@ class UserRepository {
     }, 0);
     return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
   }
+
+
+
 }
 
 
@@ -132,20 +140,6 @@ class UserRepository {
   //   return Math.round(sumOfSteps / allUsersStepsCount.length);
   // }
 
-  // calculateAverageStairs(date) {
-  //   let allUsersStairsCount = this.users.map(user => {
-  //     return user.activityRecord.filter(activity => {
-  //       return activity.date === date;
-  //     });
-  //   })
-  //   let sumOfStairs = allUsersStairsCount.reduce((stairsSum, activityCollection) => {
-  //     activityCollection.forEach(activity => {
-  //       stairsSum += activity.flightsOfStairs
-  //     })
-  //     return stairsSum;
-  //   }, 0);
-  //   return Math.round(sumOfStairs / allUsersStairsCount.length);
-  // }
 
   // calculateAverageMinutesActive(date) {
   //   let allUsersMinutesActiveCount = this.users.map(user => {
