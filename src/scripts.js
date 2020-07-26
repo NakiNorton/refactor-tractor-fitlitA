@@ -26,18 +26,20 @@ function getData() {
     .catch((err) => console.log(err.message));
 }
 
+// categories would be sleep, hydration, and activity
 // const postData = (dataObj, category) => {
-//    fetch("https://fe-apps.herokuapp.com/api/v1/fitlit/1908/${category}/${category}Data", {
+//    fetch(`https://fe-apps.herokuapp.com/api/v1/fitlit/1908/${category}/${category}Data`, {
 //   method: 'POST',
 //   headers: {
 //   	'Content-Type': 'application/json'
 //   },
-//   body: JSON.stringify(dataObj), // remember how HTTP can only send and receive strings, just like localStorage?
+//   body: JSON.stringify(dataObj),
 // })
 //   .then(response => response.json())
-//   .then(json => /*do something with json*/)
-//   .catch(err => /*do something with the error*/);
+//   .then(json => /*do something with json*/) // i actually don't think we need this line, postman is a good tool for this
+//   .catch(err => console.log(err.message));
 // }
+
 
 const populateUserProfile = () => {
   domUpdates.showDropdown(currentUser);
@@ -152,10 +154,8 @@ const hydrationCardHandler = () => {
     } else {
       currentUser.hydrationInfo.individualEntryRecords.push(hydrationObj);
     }
-<<<<<<< HEAD
-=======
     // postData(hydrationObj, hydration);
->>>>>>> 0d5fc87bb1a95b61ce9504ef059e54200a39a3f0
+    console.log(currentUser.hydrationInfo);
     domUpdates.hydrationCardDisplay(input.value); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }

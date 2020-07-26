@@ -1,43 +1,39 @@
 class HydrationRepository {
   constructor(today) {
     this.individualEntryRecords = [];
-    // this.todaysWaterData = this.findTodaysTotalWater(today);
-    this.averageOuncesAllTime = this.getAverageOuncesOverall();
   }
   
+  getOuncesByDay(date) {
+    let dayFound = this.individualEntryRecords.find(entry => entry.date === date);
+    return dayFound ? dayFound.numOunces : 0;
+  }
+
   getAverageOuncesOverall() {
     let sumOunces = this.individualEntryRecords.reduce((sum, entry) => {
       sum += entry.numOunces;
       return sum;
     }, 0);
-    return sumOunces / this.individualEntryRecords.length;
+    let overallAverageOunces = (sumOunces / this.individualEntryRecords.length).toFixed(0)
+    return Number(overallAverageOunces);
   }
-
-// DOM stuff 
-  findTodaysTotalWater(today) {
-    return this.individualEntryRecords.find(record => record.date === today).numOunces;
-  }
-
-
-  getOuncesByDay(date) {
-    return this.individualEntryRecords.find(entry => entry.date === date);
-  }
-
-  getWeekAvgOunces() {
-    let week = this.individualEntryRecords.slice(-7);
-    let numOuncesTotal = week.reduce((sum, entry) => {
-      sum += entry.numOunces;
-      return sum;
-    }, 0);
-    return Number((numOuncesTotal / 7).toFixed(0));
-  }
-
+  
   getWeeksDailyOunces() {
     let week = this.individualEntryRecords.slice(-7)
     return week.map(day => {
       return day.numOunces;
     });
   }
+
+  getWeekAvgOunces() {
+    let week = this.getWeeksDailyOunces();
+    let numOuncesTotal = week.reduce((sum, entry) => {
+      sum += entry;
+      return sum;
+    }, 0);
+    let weekAverageOunces = (numOuncesTotal / 7).toFixed(0);
+    return Number(weekAverageOunces);
+  }
+
   
 }
 
