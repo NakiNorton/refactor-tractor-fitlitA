@@ -136,15 +136,11 @@ const domUpdates = {
     document.querySelector(".hydration-weekly-avg").innerText = `You averaged ${this.currentUser.hydrationInfo.getWeekAvgOunces()} ounces this week!`;
     let dailyOz = document.querySelectorAll('.daily-oz');
     let allDaysOuncesOverWeek = this.currentUser.hydrationInfo.getWeeksDailyOunces().sort((a, b) => a - b);
-    dailyOz.forEach((dailyOunces, i) => {
-      dailyOunces.innerText = allDaysOuncesOverWeek[i];
-    })
+    dailyOz.forEach((dailyOunces, i) => dailyOunces.innerText = allDaysOuncesOverWeek[i]);
     document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.calculateAverageDailyWater()}`;
-    // input.value = "";
+    document.querySelector("#input-ounces").innerText = '';
   },
   
-  
-
 
   //////// SLEEP DISPLAY SECTION //////////////////////////////////////
 

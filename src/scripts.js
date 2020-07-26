@@ -148,12 +148,7 @@ const hydrationCardHandler = () => {
     event.preventDefault();
     let input = document.querySelector('#input-ounces');
     let hydrationObj = {userID: currentUser.id, date: todaysDate, numOunces: Number(input.value)};
-    let matchedToday = currentUser.hydrationInfo.individualEntryRecords.find(hydroPoint => hydroPoint.date === hydrationObj.date)
-    if (matchedToday) {
-      matchedToday.numOunces = matchedToday.numOunces + hydrationObj.numOunces;
-    } else {
-      currentUser.hydrationInfo.individualEntryRecords.push(hydrationObj);
-    }
+    currentUser.hydrationInfo.addHydroInfo(hydrationObj);
     // postData(hydrationObj, hydration);
     domUpdates.hydrationCardDisplay(input.value); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);

@@ -33,6 +33,16 @@ class HydrationRepository {
     let weekAverageOunces = (numOuncesTotal / 7).toFixed(0);
     return Number(weekAverageOunces);
   }
+
+  addHydroInfo(input) {
+    let foundInRecord = this.individualEntryRecords.find(record => record.date === input.date);
+    if (foundInRecord) {
+      foundInRecord.numOunces = foundInRecord.numOunces + input.numOunces;
+    } else {
+      this.individualEntryRecords.push(input);
+    }
+  }
+
   
 }
 
