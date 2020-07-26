@@ -105,7 +105,7 @@ class ActivityRepository {
     return dayFound ? (dayFound.flightsOfStairs * 12) : 0;
   }
 
-  getAverageStairsClimbedOverall() {
+  getAverageFlightsClimbedOverall() {
     let allFlights = this.individualEntryRecords.map(entry => entry.flightsOfStairs);
     let allFlightsSum = allFlights.reduce((sum, entry) => {
       sum += entry;

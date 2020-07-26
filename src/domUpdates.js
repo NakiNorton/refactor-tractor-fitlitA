@@ -111,7 +111,7 @@ const domUpdates = {
     document.querySelector("#stairs-user-stairs-today").innerText = this.currentUser.activityInfo.getStairsByDay(this.todaysDate);
     document.querySelector("#stairs-calendar-flights-average-weekly").innerText = this.currentUser.activityInfo.getWeeklyStairsClimbed();
     document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = this.currentUser.activityInfo.getWeeklyFlightsClimbed();
-    document.querySelector("#stairs-friend-flights-average-today").innerText = this.userRepository.getCommunityAvgStairsOverall(this.todaysDate);
+    document.querySelector("#stairs-friend-flights-average-today").innerText = this.userRepository.getCommunityAvgFlightsOverall(this.todaysDate);
   },
  
   // stairsTrendingCardDisplay() {
