@@ -9,14 +9,6 @@ class HydrationRepository {
     return dayFound ? dayFound.numOunces : 0;
   }
 
-  // ^^^^^ ounces TODAY
-
-  getOuncesByDay(date) {
-    return this.individualEntryRecords.find(entry => entry.date === date);
-  }
-
-  // ^^^^^SEARCH ounces DAILY 
-  
 
   getWeeksDailyOunces() {
     let week = this.individualEntryRecords.slice(-7, -1);
