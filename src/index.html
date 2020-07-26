@@ -29,7 +29,7 @@
             <button name='button' class='friends-button steps-friends-button' aria-label='Open Friends Step Information'>
             </button>
           </div>
-          <h2 id='steps-user-steps-today'>X</h2>
+          <h2 id='steps-user-steps-today'>0</h2>
           <div class='main-card-top-row'>
             <button name='button' class='trending-button steps-trending-button' aria-label='Open Trending Step Information'></button>
             <h3>STEPS TODAY</h3>
@@ -39,13 +39,18 @@
         <section class='info-card hide' id='steps-info-card'>
           <button name='button' class='go-back-button steps-go-back-button' aria-label='Return To Previous Information'>
           </button>
+              <div class="input-box">
+                <p class="steps-date-text">SUMMARY OF TODAY'S STEPS, OR SEARCH BY DATE:</p>
+                <input type="text" class="inputs" id="input-date" placeholder="YYYY/MM/DD" maxlength="10" minlength="10">
+                <button class='submit-button date-input-submit'></button>
+              </div>
           <div class='card-data-line'>
             <p>TOTAL ACTIVE MINUTES TODAY:</p>
-            <h4 id='steps-info-active-minutes-today'></h4>
+            <h4 id='steps-info-active-minutes-today'>0</h4>
           </div>
           <div class='card-data-line'>
             <p>TOTAL MILES WALKED TODAY:</p>
-            <h4 id='steps-info-miles-walked-today'></h4>
+            <h4 id='steps-info-miles-walked-today'>0</h4>
           </div>
           <div class="input-box">
             <input type="text" class="inputs" id="input-steps-minutes" placeholder="minutes" maxlength="10" minlength="0">
@@ -56,11 +61,11 @@
           <button name='button' class='go-back-button steps-go-back-button' aria-label='Return To Previous Information'></button>
           <div class='card-data-line'>
             <p>ALL USERS' AVERAGE ACTIVE MINUTES TODAY:</p>
-            <h4 id='steps-friend-active-minutes-average-today'></h4>
+            <h4 id='steps-friend-active-minutes-average-today'>0</h4>
           </div>
           <div class='card-data-line'>
             <p>ALL USERS' AVERAGE STEPS TODAY:</p>
-            <h4 id='steps-friend-steps-average-today'></h4>
+            <h4 id='steps-friend-steps-average-today'>0</h4>
           </div>
           <div class='card-data-line'>
             <p>ALL USERS' AVERAGE STEP GOAL:</p>
