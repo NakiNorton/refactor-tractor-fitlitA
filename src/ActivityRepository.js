@@ -107,6 +107,7 @@ class ActivityRepository {
   //     .find(user => user.id === this.userId).dailyStepGoal;
   //   this.reachedStepGoal = this.steps >= userStepGoal;
   // }
+
   addStairsInput(input) {
     let dayFound = this.individualEntryRecords.find(record => record.date === input.date);
     dayFound ? dayFound.flightsOfStairs += input.flightsOfStairs : this.individualEntryRecords.push(input);

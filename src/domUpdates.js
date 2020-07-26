@@ -11,10 +11,11 @@ const domUpdates = {
 
   ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayPage() {
+    console.log(this.currentUser)
     document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
     this.hydrationCardDisplay();
     this.stairsCardDisplay();
-    // this.stepCardDisplay();
+    this.stepCardDisplay();
     // this.sleepCardDisplay();
   },
   
@@ -28,29 +29,29 @@ const domUpdates = {
     document.querySelector('#dropdown-name').innerText = this.currentUser.name.toUpperCase();
     document.querySelector('#dropdown-goal').innerText = `DAILY STEP GOAL | ${this.currentUser.dailyStepGoal}`;
     document.querySelector('#dropdown-email').innerText = `EMAIL | ${this.currentUser.email}`;
-    this.showLeaderBoard(); // CSS is finnicky on it
+    // this.showLeaderBoard(); // CSS is finnicky on it
   },
 
-  showLeaderBoard() {
-    let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
-    let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
-    let friendsWeeklySteps = this.currentUser.findFriends(this.userRepository);
-    friendsWeeklySteps.forEach(friend => {
-      dropdownFriendsStepsContainer.innerHTML += `
-          <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.weeklySteps}</p>`;
-    });
-    friendsStepsParagraphs.forEach(paragraph => {
-      if (friendsStepsParagraphs[0] === paragraph) {
-        paragraph.classList.add('green-text');
-      }
-      if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
-        paragraph.classList.add('red-text');
-      }
-      if (paragraph.innerText.includes('YOU')) {
-        paragraph.classList.add('yellow-text');
-      }
-    });
-  },
+  // showLeaderBoard() {
+  //   let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
+  //   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
+  //   let friendsWeeklySteps = this.currentUser.findFriends(this.userRepository);
+  //   friendsWeeklySteps.forEach(friend => {
+  //     dropdownFriendsStepsContainer.innerHTML += `
+  //         <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.weeklySteps}</p>`;
+  //   });
+  //   friendsStepsParagraphs.forEach(paragraph => {
+  //     if (friendsStepsParagraphs[0] === paragraph) {
+  //       paragraph.classList.add('green-text');
+  //     }
+  //     if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
+  //       paragraph.classList.add('red-text');
+  //     }
+  //     if (paragraph.innerText.includes('YOU')) {
+  //       paragraph.classList.add('yellow-text');
+  //     }
+  //   });
+  // },
 
 
   ///////////// STEPS DISPLAY SECTION /////////////////////////////////
@@ -119,29 +120,19 @@ const domUpdates = {
   ///////////// STEPS DISPLAY SECTION /////////////////////////////////
 
   stairsCardDisplay() {
-    this.stairsMainCardDisplay();
-    let flightsToday = document.querySelector("#stairs-info-flights-today");
-    let foundFlightsTodayObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate && activity.flightsOfStairs);
-    foundFlightsTodayObj ? flightsToday.innerText = `${foundFlightsTodayObj.flightsOfStairs}` : flightsToday = "0";
-    // document.querySelector("#stairs-friend-flights-average-today").innerText = (this.userRepository.calculateAverageStairs(this.todaysDate) / 12).toFixed(1);
-  },
-  
-  stairsMainCardDisplay() {
-    let stairsToday = document.querySelector("#stairs-user-stairs-today");
-    let foundStairsTodayObj = this.currentUser.activityRecord.find(activity => activity.date === this.todaysDate && activity.flightsOfStairs);
-    foundStairsTodayObj ? stairsToday.innerText = `${foundStairsTodayObj.flightsOfStairs * 12}` : stairsToday.innerText = "0";
+    document.querySelector("#stairs-user-stairs-today").innerText = this.currentUser.activityInfo.getStairsByDay(this.todaysDate);
+    document.querySelector("#stairs-calendar-flights-average-weekly").innerText = this.currentUser.activityInfo.getWeeklyStairsClimbed();
+    document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = this.currentUser.activityInfo.getWeeklyFlightsClimbed();
+    document.querySelector("#stairs-friend-flights-average-today").innerText = this.userRepository.getCommunityAvgFlightsOverall(this.todaysDate);
+    document.querySelector("#input-stairs").value = "";
   },
 
-  stairsCalendarCardDisplay() {
-    document.querySelector("#stairs-calendar-flights-average-weekly").innerText = this.currentUser.calculateAverageFlightsThisWeek(this.todaysDate);
-    document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = (this.currentUser.calculateAverageFlightsThisWeek(this.todaysDate) * 12).toFixed(0);
-  },
 
-  stairsTrendingCardDisplay() {
-    currentUser.findTrendingStairsDays();
-    let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
-    trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
-  },
+  // stairsTrendingCardDisplay() {
+  //   currentUser.findTrendingStairsDays();
+  //   let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
+  //   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
+  // },
 
 
   //////////// HYDRATION DISPLAY SECTION /////////////////////////////////
@@ -156,30 +147,31 @@ const domUpdates = {
     document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.getCommunityAvgOuncesOverall()}`;
     document.querySelector("#input-ounces").value = ''; 
   },
+
   
 
   //////// SLEEP DISPLAY SECTION //////////////////////////////////////
 
-  sleepCardDisplay(input1, input2) {
-    let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
-    let foundTodaySleepAmount = this.currentUser.sleepHoursRecord.find(sleep => sleep.date === this.todaysDate);
-    foundTodaySleepAmount ? sleepUserHoursToday.innerText = `${foundTodaySleepAmount.hours}` : sleepUserHoursToday.innerText = "0";
-    document.querySelector('#sleep-calendar-hours-average-weekly').innerText = this.currentUser.calculateAverageHoursThisWeek(this.todaysDate);
-    document.querySelector('#sleep-calendar-quality-average-weekly').innerText = this.currentUser.calculateAverageQualityThisWeek(this.todaysDate);
-    this.sleepInfoCardDisplay();
-    // input1.innerText = "";
-    // input2.innerText - "";
-  },
+  // sleepCardDisplay(input1, input2) {
+  //   let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
+  //   let foundTodaySleepAmount = this.currentUser.sleepHoursRecord.find(sleep => sleep.date === this.todaysDate);
+  //   foundTodaySleepAmount ? sleepUserHoursToday.innerText = `${foundTodaySleepAmount.hours}` : sleepUserHoursToday.innerText = "0";
+  //   document.querySelector('#sleep-calendar-hours-average-weekly').innerText = this.currentUser.calculateAverageHoursThisWeek(this.todaysDate);
+  //   document.querySelector('#sleep-calendar-quality-average-weekly').innerText = this.currentUser.calculateAverageQualityThisWeek(this.todaysDate);
+  //   this.sleepInfoCardDisplay();
+  //   // input1.innerText = "";
+  //   // input2.innerText - "";
+  // },
 
-  sleepInfoCardDisplay() {
-    let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
-    let foundTodaySleepQuality = this.currentUser.sleepQualityRecord.find(sleep => sleep.date === this.todaysDate);
-    foundTodaySleepQuality ? sleepInfoQualityToday.innerText = `${foundTodaySleepQuality.quality}` : sleepInfoQualityToday.innerText = "0";
-    document.querySelector('#sleep-info-hours-average-alltime').innerText = this.currentUser.hoursSleptAverage;
-    document.querySelector('#sleep-info-quality-average-alltime').innerText = this.currentUser.sleepQualityAverage;
-    // document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todaysDate, sleepRepository)).getFirstName();
-    // document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todaysDate, sleepRepository)).getFirstName();
-  },
+  // sleepInfoCardDisplay() {
+  //   let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
+  //   let foundTodaySleepQuality = this.currentUser.sleepQualityRecord.find(sleep => sleep.date === this.todaysDate);
+  //   foundTodaySleepQuality ? sleepInfoQualityToday.innerText = `${foundTodaySleepQuality.quality}` : sleepInfoQualityToday.innerText = "0";
+  //   document.querySelector('#sleep-info-hours-average-alltime').innerText = this.currentUser.hoursSleptAverage;
+  //   document.querySelector('#sleep-info-quality-average-alltime').innerText = this.currentUser.sleepQualityAverage;
+  //   // document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todaysDate, sleepRepository)).getFirstName();
+  //   // document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todaysDate, sleepRepository)).getFirstName();
+  // },
 
 
 

@@ -115,15 +115,11 @@ const stairsCardHandler = () => {
     let inputStairs = document.querySelector("#input-stairs");
     let activityObj = {
       userID: currentUser.id,
-      date: Number(todaysDate),
-      flightsOfStairs: Number(inputStairs.value)
+      date: todaysDate,
+      flightsOfStairs: inputStairs.value * 12
     };
-    let matchedToday = currentUser.activityInfo.individualEntryRecords.find(activityPoint => activityPoint.date === activityObj.date)
-    matchedToday.numSteps = matchedToday.numSteps + activityObj.numSteps;
-
-    currentUser.updateActivities(activityObj);
-    domUpdates.stepCardDisplay();
-    inputStairs.value = "";
+    currentUser.activityInfo.addStairsInput(activityObj);
+    domUpdates.stairsCardDisplay();
     domUpdates.flipCard(stairsInfoCard, stairsMainCard);
     inputStairs.value = "";
   }
