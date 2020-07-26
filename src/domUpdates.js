@@ -28,7 +28,7 @@ const domUpdates = {
     document.querySelector('#dropdown-name').innerText = this.currentUser.name.toUpperCase();
     document.querySelector('#dropdown-goal').innerText = `DAILY STEP GOAL | ${this.currentUser.dailyStepGoal}`;
     document.querySelector('#dropdown-email').innerText = `EMAIL | ${this.currentUser.email}`;
-    showLeaderBoard();
+//     this.showLeaderBoard(); // may be broken
   },
 
   showLeaderBoard() {
