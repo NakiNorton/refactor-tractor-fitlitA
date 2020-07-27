@@ -143,7 +143,7 @@ describe('User', function() {
   });
 
   it('should return default message if daily step goal not found', function() {
-    expect(user2.dailyStepGoal).to.equal(0)
+    expect(user2.dailyStepGoal).to.equal('Daily step goal not added.')
   });
 
   it('should return an array of friends IDs', function() {
@@ -159,8 +159,8 @@ describe('User', function() {
   });
 
   it('should compare users step goal with community step goal and return the difference', function() {
-    mockUserRepository.calculateCommunityAvgStepGoal(); 
-    expect(user.compareUserGoalWithCommunityGoal(mockUserRepository)).to.equal(-2500);
+    mockUserRepository.getCommunityAvgStepGoal(); 
+    expect(user.activityInfo.compareUserGoalWithCommunityGoal(user.dailyStepGoal, mockUserRepository)).to.equal('Your goal is 2500 steps above average!');
   });
 
 
