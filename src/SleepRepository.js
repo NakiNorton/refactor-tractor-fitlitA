@@ -50,7 +50,7 @@ class SleepRepository {
   getAveQualitySleptOverall() {
     console.log('Lives in getAveQualSleptOVerall', this.individualEntryRecords)
     let qualityHours = this.individualEntryRecords.reduce((sum, entry) => {
-      sum += entry.numOunces;
+      sum += entry.sleepQuality;
       return sum;
     }, 0);
     let overallAverageQuality = (qualityHours / this.individualEntryRecords.length).toFixed(0)
