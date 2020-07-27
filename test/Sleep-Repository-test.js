@@ -1,6 +1,5 @@
 import {expect} from "chai";
 import SleepRepository from "../src/SleepRepository";
-import Sleep from "../src/Sleep";
 import UserRepository from '../src/UserRepository';
 
 describe('SleepRepository', function() {

@@ -1,5 +1,3 @@
-// import Sleep from "../src/Sleep";
-
 class SleepRepository {
   constructor() {
     this.individualEntryRecords = [];
@@ -28,7 +26,6 @@ class SleepRepository {
   }
 
   getAveQualitySleptOverall() {
-    console.log('Lives in getAveQualSleptOVerall', this.individualEntryRecords)
     let qualityHours = this.individualEntryRecords.reduce((sum, entry) => {
       sum += entry.sleepQuality;
       return sum;

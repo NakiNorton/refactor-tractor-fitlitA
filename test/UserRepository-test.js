@@ -2,7 +2,6 @@ import { expect } from 'chai';
 
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
-import Sleep from '../src/Sleep';
 import HydrationRepository from '../src/HydrationRepository';
 import SleepRepository from '../src/SleepRepository';
 import ActivityRepository from '../src/ActivityRepository';

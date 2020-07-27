@@ -38,7 +38,6 @@
 .hydration-go-back-button {
   @include buttons('hydration-goback.png');
   margin: 1vw 1vw;
-
 }
 
 .hydration-info-button {
@@ -56,13 +55,11 @@
 .stairs-go-back-button {
   @include buttons('stairs-goback.png');
   margin: 1vw 1vw;
-
 }
 
 .stairs-info-button {
   @include buttons('stairs-info.png');
 }
-
 
 .stairs-friends-button {
   @include buttons('stairs-friends.png');
@@ -75,7 +72,6 @@
 .sleep-go-back-button {
   @include buttons('sleep-goback.png');
   margin: 1vw 1vw;
-
 }
 
 .sleep-info-button {

@@ -70,20 +70,14 @@ class User {
   }
 
   calculateAverageFlightsThisWeek(todaysDate) {
-    return (
-      this.activityRecord.reduce((sum, activity) => {
-        let index = this.activityRecord.indexOf(
-          this.activityRecord.find((activity) => activity.date === todaysDate)
-        );
-        if (
-          index <= this.activityRecord.indexOf(activity) &&
-     this.activityRecord.indexOf(activity) <= index + 6
-        ) {
-          sum += activity.flightsOfStairs;
-        }
-        return sum;
-      }, 0) / 7
-    ).toFixed(1);
+    return (this.activityRecord.reduce((sum, activity) => {
+      let index = this.activityRecord.indexOf(this.activityRecord.find((activity) => activity.date === todaysDate));
+      if (
+        index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= index + 6) {
+        sum += activity.flightsOfStairs;
+      }
+      return sum;
+    }, 0) / 7).toFixed(1);
   }
 
   ////// NOT USING THIS:
