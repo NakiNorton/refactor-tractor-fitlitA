@@ -11,7 +11,6 @@ const domUpdates = {
 
   ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayPage() {
-    console.log(this.currentUser)
     document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
     this.stepCardDisplay();
     this.sleepCardDisplay();
@@ -63,7 +62,6 @@ const domUpdates = {
     this.stepFriendCardActiveMinsDisplay();
     this.stepFriendCardAveStepGoalDisplay();
     this.displayUsersStepGoalComparison()
-    // this.stepTrendingCardDisplay();
   },
 
   resetInputField(field1, field2) {
@@ -142,9 +140,7 @@ const domUpdates = {
     document.querySelector('#sleep-user-hours-today').innerText = `${this.currentUser.sleepInfo.findLastNightsHours()}`;
     this.displaySleepCalendar()
     this.displaySleepStats();
-    
-    // input1.innerText = "";
-    // input2.innerText - "";
+  
   },
 
   displaySleepCalendar() {

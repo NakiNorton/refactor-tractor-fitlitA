@@ -2,18 +2,18 @@ import {expect} from "chai";
 import SleepRepository from "../src/SleepRepository";
 import UserRepository from '../src/UserRepository';
 
-describe('SleepRepository', function() {
+describe("SleepRepository", function () {
   let sleep1, sleep2, sleep3, mockRawData, mockSleepRepo, todaysDate;
   beforeEach(() => {
-    sleep1 = {
+    sleep1 =  {
       "userID": 1,
-      "date": "2019/06/15",
+      "date": "2019/06/17",
       "hoursSlept": 6.1,
       "sleepQuality": 2.2
     }
     sleep2 = {
       "userID": 2,
-      "date": "2019/06/15",
+      "date": "2019/06/16",
       "hoursSlept": 7,
       "sleepQuality": 4.7
     }
@@ -27,98 +27,56 @@ describe('SleepRepository', function() {
     mockRawData = [sleep1, sleep2, sleep3];
     mockSleepRepo = new SleepRepository(todaysDate);
     mockSleepRepo.individualEntryRecords = mockRawData
-
   });
 
-  it('should be a function', function() {
-    expect(SleepRepository).to.be.a("function")
-  })
-  
-})
+  it("should be an instance of sleep repository", function () {
+    expect(mockSleepRepo).to.be.an.instanceof(SleepRepository);
+  });
 
+  it("should be an instance of user repository", function () {
+    expect(mockSleepRepo).to.be.an.instanceof(SleepRepository);
+  });
 
-// describe.only("SleepRepository", function () {
-//   let sleep1, sleep2, sleep3, mockRawData, mockSleepRepo, todaysDate;
-//   beforeEach(() => {
-//     sleep1 =  {
-//       "userID": 1,
-//       "date": "2019/06/15",
-//       "hoursSlept": 6.1,
-//       "sleepQuality": 2.2
-//     }
-//     sleep2 = {
-//       "userID": 2,
-//       "date": "2019/06/15",
-//       "hoursSlept": 7,
-//       "sleepQuality": 4.7
-//     }
-//     sleep3 = {
-//       "userID": 3,
-//       "date": "2019/06/15",
-//       "hoursSlept": 10.8,
-//       "sleepQuality": 4.7
-//     }
-//     todaysDate = "07/21/2020"
-//     mockRawData = [sleep1, sleep2, sleep3];
-//     mockSleepRepo = new SleepRepository(todaysDate);
-//     mockSleepRepo.individualEntryRecords = mockRawData
-//     console.log(mockSleepRepo)
-//   });
+  it('should hold all individual entries in an array', function () {
+    expect(mockSleepRepo.individualEntryRecords.length).to.deep.equal(3);
+  });
 
-//   it("should be a function", function () {
-//     expect(SleepRepository).to.be.a("function");
-//   });
+  it('should return most recent sleep quality', function () {
+    expect(mockSleepRepo.findLastNightsSleepQual()).to.equal(2.2);
+  });
+ 
+  it('should return most recent hours slept', function () {
+    expect(mockSleepRepo.findLastNightsHours()).to.equal(6.1);
+  });
 
-//   it("should be an instance of sleep repository", function () {
-//     expect(mockSleepRepo).to.be.an.instanceof(SleepRepository);
-//   });
+  it('should return overall average hours of sleep', function () {
+    expect(mockSleepRepo.getAveHoursSleptOverall()).to.equal(8);
+  });
 
-//   it("should be an instance of user repository", function () {
-//     expect(mockHydroRepo).to.be.an.instanceof(HydrationRepository);
-//   });
+  it('should return overall average quality of sleep', function () {
+    expect(mockSleepRepo.getAveQualitySleptOverall()).to.equal(3.9);
+  });
 
-//   it('should hold all individual entries in an array', function () {
-//     mockHydroRepo.individualEntryRecords.push(...mockRawData);
-//     expect(mockHydroRepo.individualEntryRecords.length).to.deep.equal(7);
-//   });
+  it('should return an array of sleep quality over a week', function () {
+    expect(mockSleepRepo.getWeeksDailyQual()).to.deep.equal([2.2, 4.7, 4.7]);
+  });
 
-//   it('should return overall average ounces', function () {
-//     mockHydroRepo.individualEntryRecords.push(...mockRawData);
-//     expect(mockHydroRepo.getAverageOuncesOverall()).to.equal(26);
-//   })
+  it("should return an array of hours slept over a week", function () {
+    expect(mockSleepRepo.getWeeksDailyHours()).to.deep.equal([6.1, 7, 10.8]);
+  });
 
-//   it('should return a sum of all ounces of water drank today', function () {
-//     mockHydroRepo.individualEntryRecords.push(...mockRawData);
-//     expect(mockHydroRepo.getOuncesByDay(todaysDate)).to.equal(40);
-//   });
+  it("should get the week's average of hours slept", function () {
+    expect(mockSleepRepo.getWeekAvgHoursSlept(todaysDate)).to.equal(8);
+  });
 
-//   it('should return an array of ounces drank on each day', function () {
-//     mockHydroRepo.individualEntryRecords.push(...mockRawData);
-//     expect(mockHydroRepo.getWeeksDailyOunces()).to.deep.equal([40, 30, 20, 20, 30, 20]);
-//   });
+  it("should get the week's average of quality sleep", function () {
+    expect(mockSleepRepo.getWeekAvgQualitySlept(todaysDate)).to.equal(3.9);
+  });
 
-//   it("should get the week's average of ounces", function () {
-//     mockHydroRepo.individualEntryRecords.push(...mockRawData);
-//     expect(mockHydroRepo.getWeeklyAvgOunces()).to.equal(23);
-//   });
+  it('should add user input to records array, or update an existing record', function () {
+    const userInput = { userId: 1, date: "2019/06/19", hoursSlept: 8 };
+    mockSleepRepo.addSleepInput(userInput);
+    expect(mockSleepRepo.individualEntryRecords[3].hoursSlept).to.equal(8);
+  });
 
-//   it('should add user input to records array, or update an existing record', function () {
-//     mockHydroRepo.individualEntryRecords.push(...mockRawData);
-//     const userInput = { userId: 1, date: todaysDate, numOunces: 22 };
-//     mockHydroRepo.addHydroInput(userInput);
-//     expect(mockHydroRepo.individualEntryRecords[0].numOunces).to.equal(62);
-//   });
-
-
-//   // it('should')
-
-//   // it("should hold an array of instantiated users", function () {
-//   //   expect(mockSleepRepo.sleepData[0]).to.deep.equal({
-//   //     userID: 1,
-//   //     date: "2019/06/15",
-//   //     hoursSlept: 6.1,
-//   //     sleepQuality: 2.2,
-//   //   });
-//   //   expect(mockSleepRepo.sleepData.length).to.deep.equal(3);
-//   // });
-// });
+});

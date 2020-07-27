@@ -12,14 +12,14 @@ class SleepRepository {
   }
 
   getWeeksDailyHours() {
-    let week = this.individualEntryRecords.slice(-7, -1)
+    let week = this.individualEntryRecords.slice(-7)
     return week.map(day => {
       return day.hoursSlept
     })
   }
 
-  getWeeksDailyQualHours() {
-    let week = this.individualEntryRecords.slice(-7, -1)
+  getWeeksDailyQual() {
+    let week = this.individualEntryRecords.slice(-7)
     return week.map(day => {
       return day.sleepQuality
     })
@@ -30,7 +30,7 @@ class SleepRepository {
       sum += entry.sleepQuality;
       return sum;
     }, 0);
-    let overallAverageQuality = (qualityHours / this.individualEntryRecords.length).toFixed(0)
+    let overallAverageQuality = (qualityHours / this.individualEntryRecords.length).toFixed(1)
     return Number(overallAverageQuality);
   }
  
@@ -43,23 +43,23 @@ class SleepRepository {
     return Number(overallAverageHoursSlept)
   }
 
-  getWeekAvgQualityHrsSlept(todaysDate) {
-    return (this.individualEntryRecords.reduce((sum, sleep) => {
-      let index = this.individualEntryRecords.indexOf(this.individualEntryRecords.find(sleep => sleep.date === todaysDate));
-      if (index <= this.individualEntryRecords.indexOf(sleep) && this.individualEntryRecords.indexOf(sleep) <= (index + 6)) {
-        sum += sleep.sleepQuality;
-      }
+  getWeekAvgQualitySlept(todaysDate) {
+    let week = this.getWeeksDailyQual();
+    let sleepQualityTotal = week.reduce((sum, entry) => {
+      sum += entry;
       return sum;
-    }, 0) / 7).toFixed(0);
+    }, 0);
+    let weeklyQuality = (sleepQualityTotal / week.length).toFixed(1);
+    return Number(weeklyQuality); 
   }
 
-  getWeekAveHoursSlept(todaysDate) {
+  getWeekAvgHoursSlept(todaysDate) {
     let week = this.getWeeksDailyHours();
     let hoursSleptTotal = week.reduce((sum, entry) => {
       sum += entry;
       return sum;
     }, 0);
-    let weeklyHoursSlept = (hoursSleptTotal / 7).toFixed(0);
+    let weeklyHoursSlept = (hoursSleptTotal / week.length).toFixed(0);
     return Number(weeklyHoursSlept);
   }
 
