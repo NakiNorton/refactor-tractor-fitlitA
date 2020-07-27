@@ -207,19 +207,20 @@ function postHydrationData() {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ 
+
+    body: JSON.stringify({
       "userID": integer,
-      "date": string, 
-      "numOunces": integer 
+      "date": string,
+      "numOunces": integer
     })
   })
-  .then((response) => response.json())
-  .then((data) => {
-    console.log('we are winning!:' data)
-  })
-  .catch((error) => {
-    console.log('we are losing!', error)
-  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('we are winning!:' data)
+    })
+    .catch((error) => {
+      console.log('we are losing!', error)
+    })
 }
 
 function postSleepData() {
@@ -228,20 +229,20 @@ function postSleepData() {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ 
+    body: JSON.stringify({
       "userID": integer,
-      "date": string, 
-      "hoursSlept": integer, 
-      "sleepQuality": integer 
+      "date": string,
+      "hoursSlept": integer,
+      "sleepQuality": integer
     })
   })
-  .then((response) => response.json())
-  .then((data) => {
-    console.log('we are winning!:' data)
-  })
-  .catch((error) => {
-    console.log('we are losing!', error)
-  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('we are winning!:' data)
+    })
+    .catch((error) => {
+      console.log('we are losing!', error)
+    })
 }
 
 function postActivityData() {
@@ -250,21 +251,21 @@ function postActivityData() {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ 
-      "userID": integer, 
-      "date": string, 
-      "numSteps": integer, 
-      "minutesActive": integer, 
+    body: JSON.stringify({
+      "userID": integer,
+      "date": string,
+      "numSteps": integer,
+      "minutesActive": integer,
       "flightsOfStairs": integer
     })
   })
-  .then((response) => response.json())
-  .then((data) => {
-    console.log('we are winning!:' data)
-  })
-  .catch((error) => {
-    console.log('we are losing!', error)
-  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('we are winning!:' data)
+    })
+    .catch((error) => {
+      console.log('we are losing!', error)
+    })
 }
 
 /////// EVENT LISTENERS ////////
