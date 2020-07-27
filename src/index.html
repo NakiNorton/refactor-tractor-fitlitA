@@ -48,8 +48,8 @@
             <h4 id='steps-info-miles-walked-today'>0</h4>
           </div>
           <div class="input-box">
-            <input type="text" class="inputs" id="input-steps-minutes" placeholder="minutes" maxlength="10" minlength="0">
-            <input type="text" class="inputs" id="input-steps" placeholder="steps" maxlength="10" minlength="0">
+            <input type="number" class="inputs" id="input-steps-minutes" placeholder="minutes" maxlength="10" minlength="0">
+            <input type="number" class="inputs" id="input-steps" placeholder="steps" maxlength="10" minlength="0">
             <button class="submit-button user-steps-submit"></button>
         </section>
         <section class='friends-card hide' id='steps-friends-card'>
@@ -108,7 +108,7 @@
           <div class='card-data-line'>
             <p>Add today's water consumption:</p>
             <div class="input-box">
-              <input type="text" class="inputs" id="input-ounces" placeholder="oz" maxlength="5" minlength="0">
+              <input type="number" class="inputs" id="input-ounces" placeholder="oz" maxlength="5" minlength="0">
               <button class='submit-button user-ounces-submit'></button>
             </div>
           </div>
@@ -171,7 +171,7 @@
             <p>FLIGHTS CLIMBED TODAY:</p>
             <h4 id='stairs-info-flights-today'></h4>
             <div class="input-box">
-              <input type="text" class="inputs" id="input-stairs" placeholder="flights" maxlength="5" minlength="0">
+              <input type="number" class="inputs" id="input-stairs" placeholder="flights" maxlength="5" minlength="0">
               <button class="submit-button user-stairs-submit"></button>
           </div>
         </section>
@@ -220,8 +220,8 @@
           <button name='button' class='go-back-button sleep-go-back-button' aria-label='Return to Previous Information'></button>
           <p>Add last night's hours of sleep and sleep quality (scale 1-5):</p>
           <div class="input-box">
-            <input type="text" class="inputs" id="input-sleep" placeholder="hours" maxlength="5" minlength="0">
-            <input type="text" class="inputs" id="input-sleep-quality" placeholder="quality" maxlength="5" minlength="0">
+            <input type="number" class="inputs" id="input-sleep" placeholder="hours" max="24" maxlength="5" minlength="0">
+            <input type="number" class="inputs" id="input-sleep-quality" placeholder="quality" max="5" min="1" maxlength="5" minlength="0">
             <button class="submit-button user-sleep-submit"></button>
           </div>
           <div class='card-data-line'>
