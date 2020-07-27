@@ -78,10 +78,9 @@ const stepCardHandler = () => {
       numSteps: Number(inputSteps.value),
       minutesActive: Number(inputMinutes.value)
     };
-    currentUser.activityInfo.updateActivities(newActivityEntry);
+    currentUser.activityInfo.addActivityInput(newActivityEntry);
+    domUpdates.resetInputField('#input-steps', '#input-steps-minutes') 
     domUpdates.stepCardDisplay();
-    inputSteps.value = ""; 
-    inputMinutes.value = "";
     domUpdates.flipCard(stepsInfoCard, stepsMainCard);
   }
 }
@@ -121,7 +120,6 @@ const stairsCardHandler = () => {
     currentUser.activityInfo.addStairsInput(activityObj);
     domUpdates.stairsCardDisplay();
     domUpdates.flipCard(stairsInfoCard, stairsMainCard);
-    inputStairs.value = "";
   }
 }
 
