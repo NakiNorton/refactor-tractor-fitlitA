@@ -10,14 +10,7 @@ class SleepRepository {
   }
 
   findLastNightsHoursSlept(date) {
-    let hoursSleptToday = this.individualEntryRecords.filter(record => {
-      return record.date === date;
-    })
-      .reduce((sum, entry) => {
-        sum += entry.hoursSlept;
-        return sum;
-      }, 0);
-    return hoursSleptToday;
+    return this.individualEntryRecords[0].hoursSlept
   }
 
   getWeeksDailyHours() {
