@@ -68,12 +68,6 @@ const stepCardHandler = () => {
   }
   if (event.target.classList.contains("steps-go-back-button")) {
     domUpdates.flipCard(event.target.parentNode, stepsMainCard);
-  } 
-  if (event.target.classList.contains('date-input-submit')) {
-    event.preventDefault();
-    let input = document.querySelector('#input-date');
-    domUpdates.stepsInfoCard(input.value);
-    input.value = ""; 
   }
   if (event.target.classList.contains('user-steps-submit')) {
     event.preventDefault();
@@ -85,10 +79,9 @@ const stepCardHandler = () => {
       numSteps: Number(inputSteps.value),
       minutesActive: Number(inputMinutes.value)
     };
-    currentUser.activityInfo.updateActivities(newActivityEntry);
+    currentUser.activityInfo.addActivityInput(newActivityEntry);
+    domUpdates.resetInputField('#input-steps', '#input-steps-minutes') 
     domUpdates.stepCardDisplay();
-    inputSteps.value = ""; 
-    inputMinutes.value = "";
     domUpdates.flipCard(stepsInfoCard, stepsMainCard);
   }
 }
@@ -128,7 +121,6 @@ const stairsCardHandler = () => {
     currentUser.activityInfo.addStairsInput(activityObj);
     domUpdates.stairsCardDisplay();
     domUpdates.flipCard(stairsInfoCard, stairsMainCard);
-    inputStairs.value = "";
   }
 }
 

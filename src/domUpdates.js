@@ -11,11 +11,12 @@ const domUpdates = {
 
   ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayPage() {
+    console.log(this.currentUser)
     document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
+    this.stepCardDisplay();
     this.sleepCardDisplay();
     this.hydrationCardDisplay();
     this.stairsCardDisplay();
-    // this.stepCardDisplay();
   },
   
   flipCard(cardToHide, cardToShow) {
@@ -28,53 +29,62 @@ const domUpdates = {
     document.querySelector('#dropdown-name').innerText = this.currentUser.name.toUpperCase();
     document.querySelector('#dropdown-goal').innerText = `DAILY STEP GOAL | ${this.currentUser.dailyStepGoal}`;
     document.querySelector('#dropdown-email').innerText = `EMAIL | ${this.currentUser.email}`;
-    this.showLeaderBoard(); // CSS is finnicky on it
+    // this.showLeaderBoard(); // CSS is finnicky on it
   },
 
-  showLeaderBoard() {
-    let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
-    let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
-    let friendsWeeklySteps = this.currentUser.findFriends(this.userRepository);
-    friendsWeeklySteps.forEach(friend => {
-      dropdownFriendsStepsContainer.innerHTML += `
-          <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.weeklySteps}</p>`;
-    });
-    friendsStepsParagraphs.forEach(paragraph => {
-      if (friendsStepsParagraphs[0] === paragraph) {
-        paragraph.classList.add('green-text');
-      }
-      if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
-        paragraph.classList.add('red-text');
-      }
-      if (paragraph.innerText.includes('YOU')) {
-        paragraph.classList.add('yellow-text');
-      }
-    });
-  },
+  // showLeaderBoard() {
+  //   let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
+  //   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
+  //   let friendsWeeklySteps = this.currentUser.findFriends(this.userRepository);
+  //   friendsWeeklySteps.forEach(friend => {
+  //     dropdownFriendsStepsContainer.innerHTML += `
+  //         <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.weeklySteps}</p>`;
+  //   });
+  //   friendsStepsParagraphs.forEach(paragraph => {
+  //     if (friendsStepsParagraphs[0] === paragraph) {
+  //       paragraph.classList.add('green-text');
+  //     }
+  //     if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
+  //       paragraph.classList.add('red-text');
+  //     }
+  //     if (paragraph.innerText.includes('YOU')) {
+  //       paragraph.classList.add('yellow-text');
+  //     }
+  //   });
+  // },
 
 
   ///////////// STEPS DISPLAY SECTION /////////////////////////////////
 
   stepCardDisplay() {
     this.stepMainCardDisplay();
-    this.stepsInfoCard();
+    this.stepsInfoCard(this.todaysDate);
     this.stepCalendarCardMinutesDisplay();
     this.stepCalendarCardStepsDisplay();
-    this.stepFriendCardDisplay();
+    this.stepFriendstepsCardDisplay();
+    this.stepFriendCardActiveMinsDisplay();
+    this.stepFriendCardAveStepGoalDisplay();
+    this.displayUsersStepGoalComparison()
     // this.stepTrendingCardDisplay();
   },
 
-  stepMainCardDisplay() {
-    document.getElementById("steps-user-steps-today").innerText = `${this.currentUser.activityInfo.getStepsForToday("2019/10/16")}`;
+  resetInputField(field1, field2) {
+    document.querySelector(`${field1}`).value = "";
+    document.querySelector(`${field2}`).value = "";
   },
 
-  stepsInfoCard(date = "2019/10/16") { // default date if nothing is entered  
+  stepMainCardDisplay() {
+    document.getElementById("steps-user-steps-today").innerText = `${this.currentUser.activityInfo.getStepsForToday(this.todaysDate)}`;
+  },
+
+  stepsInfoCard(date) {
     this.stepInfoCardMilesDisplay(date) 
     this.stepInfoCardMinutesDisplay(date)
   },
 
   stepInfoCardMilesDisplay(date) {
-    document.getElementById('steps-info-miles-walked-today').innerText = `${this.currentUser.activityInfo.calculateMiles(this.currentUser, date)}`;
+    document.getElementById('steps-info-miles-walked-today').innerText = 
+    `${this.currentUser.activityInfo.getUsersMilesforDay(this.currentUser, date)}`;
   },
 
   stepInfoCardMinutesDisplay(date) {
@@ -82,20 +92,28 @@ const domUpdates = {
   },
   
   stepCalendarCardMinutesDisplay() {
-    document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = this.currentUser.activityInfo.calculateAverageMinutesActiveThisWeek(this.todaysDate);
+    document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = this.currentUser.activityInfo.getAverageMinutesActiveThisWeek(this.todaysDate);
   },
 
   stepCalendarCardStepsDisplay() {
-    document.querySelector('#steps-calendar-total-steps-weekly').innerText = this.currentUser.activityInfo.calculateAverageStepsThisWeek(this.todaysDate)
+    document.querySelector('#steps-calendar-total-steps-weekly').innerText = this.currentUser.activityInfo.getAverageStepsThisWeek(this.todaysDate)
   },
-  
-  stepFriendCardDisplay() {
-    document.getElementById('steps-friend-steps-average-today').innerText = this.userRepository.calculateAllUsersAverageSteps("2019/10/16");
+  // change from friends to users?
+  stepFriendstepsCardDisplay() {
+    document.getElementById('steps-friend-steps-average-today').innerText = this.userRepository.getAllUsersAverageSteps(this.todaysDate);
+  },
 
-    document.getElementById('steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAllUsersAverageMinutesActive("2019/10/16");
+  stepFriendCardActiveMinsDisplay() {
+    document.getElementById('steps-friend-active-minutes-average-today').innerText = this.userRepository.getAllUsersAverageMinutesActive(this.todaysDate);
+  },
 
-    // document.querySelector('#steps-friend-average-step-goal').innerText = this.userRepository.calculateCommunityAvgStepGoal();
-    // document.querySelector('#steps-friend-active-minutes-average-today').innerText = this.userRepository.calculateAverageSteps(this.todaysDate);
+  stepFriendCardAveStepGoalDisplay() {
+    document.getElementById('steps-friend-average-step-goal').innerText = this.userRepository.getCommunityAvgStepGoal();
+  },
+
+  displayUsersStepGoalComparison() {
+    document.getElementById('steps-goal-comparison').innerText = this.currentUser.activityInfo.compareUserGoalWithCommunityGoal(this.currentUser.dailyStepGoal, this.userRepository)
+
   },
 
   // stepTrendingCardDisplay() {
@@ -114,11 +132,12 @@ const domUpdates = {
     document.querySelector("#stairs-friend-flights-average-today").innerText = this.userRepository.getCommunityAvgFlightsOverall(this.todaysDate);
     document.querySelector("#input-stairs").value = "";
   },
- 
+
+
   // stairsTrendingCardDisplay() {
-  // // currentUser.findTrendingStairsDays();
-  // // let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
-  // // trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
+  //   currentUser.findTrendingStairsDays();
+  //   let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
+  //   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
   // },
 
 
@@ -134,6 +153,7 @@ const domUpdates = {
     document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.getCommunityAvgOuncesOverall()}`;
     document.querySelector("#input-ounces").value = ''; 
   },
+
   
 
   //////// SLEEP DISPLAY SECTION //////////////////////////////////////
