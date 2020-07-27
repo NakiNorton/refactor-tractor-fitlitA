@@ -40,6 +40,7 @@ main {
   background-color: #54C6BE;
   grid-area: hydration;
   margin: .5vw;
+  overflow: scroll;
 }
 
 #stairs-card-container {
@@ -52,6 +53,7 @@ main {
   background-color: #FBD089;
   grid-area: sleep;
   margin: .5vw;
+  overflow: scroll;
 }
 
 .card-data-line {
@@ -84,7 +86,7 @@ main {
 
 .hydration-weekly-label {
   font-size: 1vw;
-  padding-top: 1vw;
+  // padding-top: 1vw;
 }
 
 .hydration-weekly-amount {
@@ -93,8 +95,9 @@ main {
 
 .hydration-data-line {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-bottom: .2vw;
+  // margin-bottom: .2vw;
 }
 
 .hydration-weekly-avg,
