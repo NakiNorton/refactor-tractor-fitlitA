@@ -141,7 +141,7 @@ const domUpdates = {
   sleepCardDisplay() {
     document.querySelector('#sleep-user-hours-today').innerText = `${this.currentUser.sleepInfo.findLastNightsHoursSlept('2019/06/15')}`;
     this.displaySleepCalendar()
-    this.sleepStatsCardDisplay();
+    this.displaySleepStats();
     
     // input1.innerText = "";
     // input2.innerText - "";
@@ -154,6 +154,8 @@ const domUpdates = {
   
   displaySleepStats() {// this displays all of the information for sleep stats
     document.querySelector('#sleep-info-quality-today').innerText = `${this.currentUser.sleepInfo.findLastNightsSleepQual(this.todaysDate)}`
+    document.getElementById('input-sleep-quality')
+
     // document.querySelector('#sleep-info-hours-average-alltime').innerText = this.currentUser.hoursSleptAverage;
     // document.querySelector('#sleep-info-quality-average-alltime').innerText = this.currentUser.sleepQualityAverage;
     // document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todaysDate, sleepRepository)).getFirstName();
