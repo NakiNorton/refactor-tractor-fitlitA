@@ -207,6 +207,7 @@ function postHydrationData() {
     headers: {
       'Content-Type': 'application/json'
     },
+
     body: JSON.stringify({
       "userID": integer,
       "date": string,
