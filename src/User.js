@@ -17,15 +17,15 @@ class User {
   }
 
   checkUserId(user) {
-    return typeof user === 'number' ? user : Date.now();
+    return typeof user === "number" ? user : Date.now();
   }
 
   checkName(user) {
-    return typeof user === 'string' ? user : "guest";
+    return typeof user === "string" ? user : "guest";
   }
 
   getFirstName() {
-    let names = this.name.split(' ');
+    let names = this.name.split(" ");
     return names[0].toUpperCase();
   }
 
@@ -62,14 +62,6 @@ class User {
   //   } else {
   //     this.sleepQualityAverage = quality;
   //   }
-  // }
-
-  // updateActivities(activity) {
-  //   this.activityRecord.unshift(activity);
-  //   if (activity.numSteps >= this.dailyStepGoal) {
-  //     this.accomplishedDays.unshift(activity.date);
-  //   }
-  // }
 
   findClimbingRecord() {
     return this.activityRecord.sort((a, b) => {
@@ -78,48 +70,45 @@ class User {
   }
 
   calculateAverageFlightsThisWeek(todaysDate) {
-    return (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todaysDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.flightsOfStairs;
-      }
-      return sum;
-    }, 0) / 7).toFixed(1);
+    return (
+      this.activityRecord.reduce((sum, activity) => {
+        let index = this.activityRecord.indexOf(
+          this.activityRecord.find((activity) => activity.date === todaysDate)
+        );
+        if (
+          index <= this.activityRecord.indexOf(activity) &&
+     this.activityRecord.indexOf(activity) <= index + 6
+        ) {
+          sum += activity.flightsOfStairs;
+        }
+        return sum;
+      }, 0) / 7
+    ).toFixed(1);
   }
 
   ////// NOT USING THIS:
   calculateDailyCalories(date) {
-    let totalMinutes = this.activityRecord.filter(activity => {
-      return activity.date === date
-    }).reduce((sumMinutes, activity) => {
-      return sumMinutes += activity.minutesActive
-    }, 0);
+    let totalMinutes = this.activityRecord
+      .filter((activity) => {
+        return activity.date === date;
+      })
+      .reduce((sumMinutes, activity) => {
+        return (sumMinutes += activity.minutesActive);
+      }, 0);
     return Math.round(totalMinutes * 7.6);
   }
 
-
-
-  findFriendsNames(users) {
-    this.friends.forEach(friend => {
-      this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
-    })
+  findFriends(userRepository) {
+    return this.friends.reduce((friendsInfo, friend) => {
+      friend = userRepository.users.find((user) => user.id === friend);
+      let friendInfo = {
+        firstName: friend.name,
+        weeklySteps: friend.activityInfo.getAverageStepsThisWeek(),
+      };
+      friendsInfo.push(friendInfo);
+      return friendsInfo;
+    }, []);
   }
-
-
-  // findTrendingStepDays() {
-  //   let positiveDays = [];
-  //   for (var i = 0; i < this.activityRecord.length; i++) {
-  //     if (this.activityRecord[i + 1] && this.activityRecord[i].steps > this.activityRecord[i + 1].steps) {
-  //       positiveDays.unshift(this.activityRecord[i].date);
-  //     } else if (positiveDays.length > 2) {
-  //       this.trendingStepDays.push(`Your most recent positive step streak was ${positiveDays[0]} - ${positiveDays[positiveDays.length - 1]}!`);
-  //       positiveDays = [];
-  //     }
-  //   }
-  // }
-
-
-
 }
 
 export default User;

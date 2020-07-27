@@ -29,29 +29,30 @@ const domUpdates = {
     document.querySelector('#dropdown-name').innerText = this.currentUser.name.toUpperCase();
     document.querySelector('#dropdown-goal').innerText = `DAILY STEP GOAL | ${this.currentUser.dailyStepGoal}`;
     document.querySelector('#dropdown-email').innerText = `EMAIL | ${this.currentUser.email}`;
-    // this.showLeaderBoard(); // CSS is finnicky on it
+    this.showLeaderBoard(); // CSS is finnicky on it
   },
 
-  // showLeaderBoard() {
-  //   let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
-  //   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
-  //   let friendsWeeklySteps = this.currentUser.findFriends(this.userRepository);
-  //   friendsWeeklySteps.forEach(friend => {
-  //     dropdownFriendsStepsContainer.innerHTML += `
-  //         <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.weeklySteps}</p>`;
-  //   });
-  //   friendsStepsParagraphs.forEach(paragraph => {
-  //     if (friendsStepsParagraphs[0] === paragraph) {
-  //       paragraph.classList.add('green-text');
-  //     }
-  //     if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
-  //       paragraph.classList.add('red-text');
-  //     }
-  //     if (paragraph.innerText.includes('YOU')) {
-  //       paragraph.classList.add('yellow-text');
-  //     }
-  //   });
-  // },
+  showLeaderBoard() {
+    let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
+    let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
+    let friendsWeeklySteps = this.currentUser.findFriends(this.userRepository);
+    dropdownFriendsStepsContainer.innerText = '';
+    friendsWeeklySteps.forEach(friend => {
+      dropdownFriendsStepsContainer.innerHTML += `
+          <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.weeklySteps}</p>`;
+    });
+    friendsStepsParagraphs.forEach(paragraph => {
+      if (friendsStepsParagraphs[0] === paragraph) {
+        paragraph.classList.add('green-text');
+      }
+      if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
+        paragraph.classList.add('red-text');
+      }
+      if (paragraph.innerText.includes('YOU')) {
+        paragraph.classList.add('yellow-text');
+      }
+    });
+  },
 
 
   ///////////// STEPS DISPLAY SECTION /////////////////////////////////
@@ -84,7 +85,7 @@ const domUpdates = {
 
   stepInfoCardMilesDisplay(date) {
     document.getElementById('steps-info-miles-walked-today').innerText = 
-    `${this.currentUser.activityInfo.getUsersMilesforDay(this.currentUser, date)}`;
+    `${this.currentUser.activityInfo.getUsersMilesForDay(this.currentUser, date)}`;
   },
 
   stepInfoCardMinutesDisplay(date) {
@@ -116,33 +117,17 @@ const domUpdates = {
 
   },
 
-  // stepTrendingCardDisplay() {
-  //   let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
-  // currentUser.findTrendingStepDays();
-  // trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStepDays[0]}</p>`;
-  // }
-
-
   ///////////// STEPS DISPLAY SECTION /////////////////////////////////
 
   stairsCardDisplay() {
     document.querySelector("#stairs-user-stairs-today").innerText = this.currentUser.activityInfo.getStairsByDay(this.todaysDate);
-    document.querySelector("#stairs-calendar-flights-average-weekly").innerText = this.currentUser.activityInfo.getWeeklyStairsClimbed();
-    document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = this.currentUser.activityInfo.getWeeklyFlightsClimbed();
+    document.querySelector("#stairs-calendar-flights-average-weekly").innerText = this.currentUser.activityInfo.getWeeklyFlightsClimbed();
+    document.querySelector("#stairs-calendar-stairs-average-weekly").innerText = this.currentUser.activityInfo.getWeeklyStairsClimbed();
     document.querySelector("#stairs-friend-flights-average-today").innerText = this.userRepository.getCommunityAvgFlightsOverall(this.todaysDate);
     document.querySelector("#input-stairs").value = "";
   },
 
-
-  // stairsTrendingCardDisplay() {
-  //   currentUser.findTrendingStairsDays();
-  //   let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
-  //   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${currentUser.trendingStairsDays[0]}</p>`;
-  // },
-
-
   //////////// HYDRATION DISPLAY SECTION /////////////////////////////////
-
 
   hydrationCardDisplay() {
     document.getElementById("hydration-user-ounces-today").innerText = `${this.currentUser.hydrationInfo.getOuncesByDay(this.todaysDate)}`;
@@ -153,8 +138,6 @@ const domUpdates = {
     document.querySelector("#hydration-friend-ounces-today").innerText = `${this.userRepository.getCommunityAvgOuncesOverall()}`;
     document.querySelector("#input-ounces").value = ''; 
   },
-
-  
 
   //////// SLEEP DISPLAY SECTION //////////////////////////////////////
 
