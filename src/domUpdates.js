@@ -154,7 +154,8 @@ const domUpdates = {
   
   displaySleepStats() {// this displays all of the information for sleep stats
     document.querySelector('#sleep-info-quality-today').innerText = `${this.currentUser.sleepInfo.findLastNightsSleepQual(this.todaysDate)}`
-    document.getElementById('input-sleep-quality')
+    document.getElementById('sleep-info-hours-average-alltime').innerText =  `${this.currentUser.sleepInfo.getAveHoursSleptOverall()}`
+    
 
     // document.querySelector('#sleep-info-hours-average-alltime').innerText = this.currentUser.hoursSleptAverage;
     // document.querySelector('#sleep-info-quality-average-alltime').innerText = this.currentUser.sleepQualityAverage;
