@@ -6,7 +6,7 @@
   border: none;
   display: inline;
   height: 3.4vw;
-  margin-left: 1vw;
+  margin: .5vw 1vw;
   width: 3.4vw;
   background-image: url("../images/#{$image}")
 }
@@ -37,6 +37,7 @@
 
 .hydration-go-back-button {
   @include buttons('hydration-goback.png');
+  margin: 1vw 1vw;
 }
 
 .hydration-info-button {
@@ -53,12 +54,12 @@
 
 .stairs-go-back-button {
   @include buttons('stairs-goback.png');
+  margin: 1vw 1vw;
 }
 
 .stairs-info-button {
   @include buttons('stairs-info.png');
 }
-
 
 .stairs-friends-button {
   @include buttons('stairs-friends.png');
@@ -70,6 +71,7 @@
 
 .sleep-go-back-button {
   @include buttons('sleep-goback.png');
+  margin: 1vw 1vw;
 }
 
 .sleep-info-button {
@@ -77,18 +79,9 @@
 }
 
 .sleep-friends-button {
-  // background-image: url(../images/sleep-friends.png);
   @include buttons('sleep-friends.png');
 }
 
 .sleep-calendar-button {
   @include buttons('sleep-calendar.png');
-}
-
-.steps-trending-button {
-  @include buttons('steps-trending.png');
-}
-
-.stairs-trending-button {
-  @include buttons('stairs-trending.png');
 }

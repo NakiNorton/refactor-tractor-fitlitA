@@ -130,6 +130,19 @@ class UserRepository {
     );
     return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
   }
+
+  findBestSleeper() {
+    let bestSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual() > 3);
+    let sortedBest =  bestSleepers.sort((a, b) => a.sleepQuality - b.sleepQuality);
+    return sortedBest.pop().name;
+  }
+
+  findWorstSleeper() {
+    let worstSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual() < 3);
+    let sortedWorst =  worstSleepers.sort((a, b) => a.sleepQuality - b.sleepQuality);
+    return sortedWorst.shift().name;
+  }
+
 }
 
 
