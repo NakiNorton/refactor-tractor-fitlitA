@@ -77,15 +77,6 @@ class User {
     })[0].flightsOfStairs;
   }
 
-  calculateDailyCalories(date) {
-    let totalMinutes = this.activityRecord.filter(activity => {
-      return activity.date === date
-    }).reduce((sumMinutes, activity) => {
-      return sumMinutes += activity.minutesActive
-    }, 0);
-    return Math.round(totalMinutes * 7.6);
-  }
-
   calculateAverageFlightsThisWeek(todaysDate) {
     return (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todaysDate));
@@ -95,6 +86,25 @@ class User {
       return sum;
     }, 0) / 7).toFixed(1);
   }
+
+  ////// NOT USING THIS:
+  calculateDailyCalories(date) {
+    let totalMinutes = this.activityRecord.filter(activity => {
+      return activity.date === date
+    }).reduce((sumMinutes, activity) => {
+      return sumMinutes += activity.minutesActive
+    }, 0);
+    return Math.round(totalMinutes * 7.6);
+  }
+
+
+
+  findFriendsNames(users) {
+    this.friends.forEach(friend => {
+      this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
+    })
+  }
+
 
   // findTrendingStepDays() {
   //   let positiveDays = [];
@@ -108,29 +118,8 @@ class User {
   //   }
   // }
 
-  // findTrendingStairsDays() {
-  //   let positiveDays = [];
-  //   for (var i = 0; i < this.activityRecord.length; i++) {
-  //     if (this.activityRecord[i + 1] && this.activityRecord[i].flightsOfStairs > this.activityRecord[i + 1].flightsOfStairs) {
-  //       positiveDays.unshift(this.activityRecord[i].date);
-  //     } else if (positiveDays.length > 2) {
-  //       this.trendingStairsDays.push(`Your most recent positive climbing streak was ${positiveDays[0]} - ${positiveDays[positiveDays.length - 1]}!`);
-  //       positiveDays = [];
-  //     }
-  //   }
-  // }
-  // ^^ trend stuff is iteration 5
 
-  findFriendsNames(users) {
-    this.friends.forEach(friend => {
-      this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
-    })
-  }
-  // ^^ friend stuff is iteration 5
 
-  
-
- 
 }
 
 export default User;

@@ -125,30 +125,27 @@ describe('ActivityRepository', function() {
     expect(mockActivityRepo.individualEntryRecords.length).to.deep.equal(4);
   });
 
-  it('should hold a date', function() {
+  it('should have a date', function() {
     mockActivityRepo.individualEntryRecords.push(...mockRawData.activityData);
     expect(mockActivityRepo.individualEntryRecords[0].date).to.equal("07/20/2020");
   });
 
-  it('should hold number of steps', function() {
+  it('should have a number of steps', function() {
     mockActivityRepo.individualEntryRecords.push(...mockRawData.activityData);
     expect(mockActivityRepo.individualEntryRecords[0].numSteps).to.equal(3577);
   });
 
-  it('should hold minutes active', function() {
+  it('should have amount of minutes active', function() {
     mockActivityRepo.individualEntryRecords.push(...mockRawData.activityData);
     expect(mockActivityRepo.individualEntryRecords[0].minutesActive).to.equal(140);
   });
 
-  it('should hold flights of stairs', function() {
+  it('should have flights of stairs', function() {
     mockActivityRepo.individualEntryRecords.push(...mockRawData.activityData);
     expect(mockActivityRepo.individualEntryRecords[0].flightsOfStairs).to.equal(16);
   });
 
-  it.skip('should have a default value of null for reached step goal', function() {
-    expect(mockActivityRepo[1].reachedStepGoal).to.equal(null);
-  });
-
+  
   it.skip('should have a default value of 0 for miles walked', function() {
     mockActivityRepo.individualEntryRecords.push(...mockRawData.activityData);
     expect(mockActivityRepo[1].milesWalked).to.equal(0);
@@ -160,20 +157,18 @@ describe('ActivityRepository', function() {
   // ^^ curious if you could write a conditional in the calc miles to return 0 if no steps are given, combine
   // both of these mileage tests somehow? 
 
-  describe('compareStepGoal', function() {
+  ///**** CAN'T GET THIS WORKING */
+  
     it.skip('should return false if goal isn\'t met', function() {
-      activity1.compareStepGoal(mockActivityRepo);
-      expect(activity1.reachedStepGoal).to.equal(false);
+      expect(mockActivityRepo.checkIfStepGoalAchieved('2019/06/14', user)).to.equal(false);
     });
 
     it.skip('should return true if goal is met', function() {
-      activity2.compareStepGoal(mockActivityRepo);
-      expect(activity2.reachedStepGoal).to.equal(true);
+      mockActivityRepo.individualEntryRecords.push(...mockRawData.activityData);
+      expect(mockActivityRepo.checkIfStepGoalAchieved('2019/06/14', activity)).to.equal(true);
     });
-  });
-
-  // ^^curious if you could pass in the date to check if the numSteps exceeded the dailyStepGoal for the user, 
-  // unsure why we are looping through users as a whole if it's only for the individual user
+ 
+//////////////////////
 
   it('should add user input to records array, or update existing entry', function() {
     mockActivityRepo.individualEntryRecords.push(...mockRawData.activityData);
