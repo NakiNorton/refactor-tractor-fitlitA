@@ -9,6 +9,7 @@ class SleepRepository {
   }
   
   findTodaysTotalSleep(date) {
+    console.log('asdfa', this.individualEntryRecords)
     let hoursSleptToday = this.individualEntryRecords.filter(record => {
       return record.date === date;
     })
@@ -34,6 +35,7 @@ class SleepRepository {
   }
 
   getAveQualitySleptOverall() {
+    console.log('Lives in getAveQualSleptOVerall', this.individualEntryRecords)
     let qualityHours = this.individualEntryRecords.reduce((sum, entry) => {
       sum += entry.numOunces;
       return sum;
@@ -51,14 +53,14 @@ class SleepRepository {
     return Number(overallAverageHoursSlept)
   }
 
-  getWeekAvgQualityHrsSlept() {
-    let week = this.getWeeksDailyQualHours();
-    let qualHrsSleptTotal = week.reduce((sum, entry) => {
-      sum += entry;
+  getWeekAvgQualityHrsSlept(todaysDate) {
+    return (this.individualEntryRecords.reduce((sum, sleep) => {
+      let index = this.individualEntryRecords.indexOf(this.individualEntryRecords.find(sleep => sleep.date === todaysDate));
+      if (index <= this.individualEntryRecords.indexOf(sleep) && this.individualEntryRecords.indexOf(sleep) <= (index + 6)) {
+        sum += sleep.sleepQuality;
+      }
       return sum;
-    }, 0);
-    let weeklyQualHrsSlept = (qualHrsSleptTotal / 7).toFixed(0);
-    return Number(weeklyQualHrsSlept);
+    }, 0) / 7).toFixed(0);
   }
 
   getWeekAveHoursSlept(todaysDate) {
