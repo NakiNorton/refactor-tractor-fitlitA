@@ -1,34 +1,98 @@
-import Sleep from "../src/Sleep";
+// import Sleep from "../src/Sleep";
 
 class SleepRepository {
-  constructor(rawSleepData) {
-    this.individualEntryRecord = [];
-    // this.hoursSlept = [];
+  constructor(todaysDate) {
+    this.individualEntryRecords = [];
+    // this.hoursSlept = this.findTodaysTotalSleep(todaysDate);
+    // this.weeklyHoursSlept = this.getWeekAveHoursSlept()
+    // this.weeklyQualHoursSlept = this.calculateAverageHoursThisWeek(todaysDate)
+  }
+  
+  findLastNightsSleepQual(date) {
+    console.log(this.individualEntryRecords[0])
+    return this.individualEntryRecords[0].sleepQuality
+    // let QualityHrsSleptToday = this.individualEntryRecords.filter(record => {
+    //   return record.date === date;
+    // })
+    //   .reduce((sum, entry) => {
+    //     sum += entry.hoursSlept;
+    //     return sum;
+    //   }, 0);
+    //   console.log(QualityHrsSleptToday)
+    // return QualityHrsSleptToday;
   }
 
-  instantiateRawData(rawSleepData) {
-    return rawSleepData.map(data => new Sleep(data));
+  findLastNightsHoursSlept(date) {
+    let hoursSleptToday = this.individualEntryRecords.filter(record => {
+      return record.date === date;
+    })
+      .reduce((sum, entry) => {
+        sum += entry.hoursSlept;
+        return sum;
+      }, 0);
+    return hoursSleptToday;
   }
 
+  getWeeksDailyHours() {
+    let week = this.individualEntryRecords.slice(-7, -1)
+    return week.map(day => {
+      return day.hoursSlept
+    })
+  }
 
-    calculateAverageHoursThisWeek(todayDate) {
-    return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
-      let index = this.sleepHoursRecord.indexOf(this.sleepHoursRecord.find(sleep => sleep.date === todayDate));
-      if (index <= this.sleepHoursRecord.indexOf(sleepAct) && this.sleepHoursRecord.indexOf(sleepAct) <= (index + 6)) {
-        sum += sleepAct.hours;
+  getWeeksDailyQualHours() {
+    let week = this.individualEntryRecords.slice(-7, -1)
+    return week.map(day => {
+      return day.sleepQuality
+    })
+  }
+
+  getAveQualitySleptOverall() {
+    console.log('Lives in getAveQualSleptOVerall', this.individualEntryRecords)
+    let qualityHours = this.individualEntryRecords.reduce((sum, entry) => {
+      sum += entry.numOunces;
+      return sum;
+    }, 0);
+    let overallAverageQuality = (qualityHours / this.individualEntryRecords.length).toFixed(0)
+    return Number(overallAverageQuality);
+  }
+ 
+  getAveHoursSleptOverall() {
+    let hoursSlept = this.individualEntryRecords.reduce((sum, entry) => {
+      sum += entry.hoursSlept;
+      return sum;
+    }, 0);
+    let overallAverageHoursSlept = (hoursSlept / this.individualEntryRecords.length).toFixed(0)
+    return Number(overallAverageHoursSlept)
+  }
+
+  getWeekAvgQualityHrsSlept(todaysDate) {
+    return (this.individualEntryRecords.reduce((sum, sleep) => {
+      let index = this.individualEntryRecords.indexOf(this.individualEntryRecords.find(sleep => sleep.date === todaysDate));
+      if (index <= this.individualEntryRecords.indexOf(sleep) && this.individualEntryRecords.indexOf(sleep) <= (index + 6)) {
+        sum += sleep.sleepQuality;
       }
       return sum;
-    }, 0) / this.sleepHoursRecord.length).toFixed(1);
+    }, 0) / 7).toFixed(0);
   }
 
-  calculateAverageQualityThisWeek(todayDate) {
-    return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
-      let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todayDate));
-      if (index <= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
-        sum += sleepAct.quality;
-      }
+  getWeekAveHoursSlept(todaysDate) {
+    let week = this.getWeeksDailyHours();
+    let hoursSleptTotal = week.reduce((sum, entry) => {
+      sum += entry;
       return sum;
-    }, 0) / this.sleepQualityRecord.length).toFixed(1);
+    }, 0);
+    let weeklyHoursSlept = (hoursSleptTotal / 7).toFixed(0);
+    return Number(weeklyHoursSlept);
+  }
+
+  addSleepInput(input) {
+    let foundInRecord = this.individualEntryRecords.find(record => record.date === input.date);
+    if (foundInRecord) {
+      foundInRecord.hoursSlept = foundInRecord.numOunces + input.numOunces;
+    } else {
+      this.individualEntryRecords.push(input);
+    }
   }
 }
 

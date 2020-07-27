@@ -18,7 +18,8 @@ function getData() {
   return fetchData().then((data) => {
     todaysDate = moment().format("L");
     let userRepository = new UserRepository(data, todaysDate);
-    currentUser = userRepository.users[0];
+    currentUser = userRepository.users[0]
+    console.log(currentUser)
     domUpdates.defineData(currentUser, todaysDate, userRepository);
   }).then(() => {
     domUpdates.displayPage()
@@ -192,10 +193,78 @@ function sleepCardHandler() {
       hoursSlept: inputHours.value,
       sleepQuality: inputQuality.value
     };
-    currentUser.updateSleep(todaysDate, Number(sleepObj.hoursSlept), Number(sleepObj.sleepQuality));
-    domUpdates.sleepCardDisplay(inputHours, inputQuality);
+    currentUser.sleepInfo.addSleepInput(sleepObj);
+    domUpdates.sleepCardDisplay();
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
   }
+}
+
+///////Post Section ///////////////////////////////
+
+function postHydrationData() {
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ 
+      "userID": integer,
+      "date": string, 
+      "numOunces": integer 
+    })
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    console.log('we are winning!:' data)
+  })
+  .catch((error) => {
+    console.log('we are losing!', error)
+  })
+}
+
+function postSleepData() {
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ 
+      "userID": integer,
+      "date": string, 
+      "hoursSlept": integer, 
+      "sleepQuality": integer 
+    })
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    console.log('we are winning!:' data)
+  })
+  .catch((error) => {
+    console.log('we are losing!', error)
+  })
+}
+
+function postActivityData() {
+  fetch('	https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ 
+      "userID": integer, 
+      "date": string, 
+      "numSteps": integer, 
+      "minutesActive": integer, 
+      "flightsOfStairs": integer
+    })
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    console.log('we are winning!:' data)
+  })
+  .catch((error) => {
+    console.log('we are losing!', error)
+  })
 }
 
 /////// EVENT LISTENERS ////////
