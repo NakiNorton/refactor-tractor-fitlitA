@@ -9,7 +9,15 @@ class HydrationRepository {
     return dayFound ? dayFound.numOunces : 0;
   }
 
-
+  getAverageOuncesOverall() {
+    let sumOunces = this.individualEntryRecords.reduce((sum, entry) => {
+      sum += entry.numOunces;
+      return sum;
+    }, 0);
+    let overallAverageOunces = (sumOunces / this.individualEntryRecords.length).toFixed(0)
+    return Number(overallAverageOunces);
+  }
+  
   getWeeksDailyOunces() {
     let week = this.individualEntryRecords.slice(-7, -1);
     return week.map(day => {
