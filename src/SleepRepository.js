@@ -9,14 +9,17 @@ class SleepRepository {
   }
   
   findLastNightsSleepQual(date) {
-    let QualityHrsSleptToday = this.individualEntryRecords.filter(record => {
-      return record.date === date;
-    })
-      .reduce((sum, entry) => {
-        sum += entry.hoursSlept;
-        return sum;
-      }, 0);
-    return QualityHrsSleptToday;
+    console.log(this.individualEntryRecords[0])
+    return this.individualEntryRecords[0].sleepQuality
+    // let QualityHrsSleptToday = this.individualEntryRecords.filter(record => {
+    //   return record.date === date;
+    // })
+    //   .reduce((sum, entry) => {
+    //     sum += entry.hoursSlept;
+    //     return sum;
+    //   }, 0);
+    //   console.log(QualityHrsSleptToday)
+    // return QualityHrsSleptToday;
   }
 
   findLastNightsHoursSlept(date) {
