@@ -177,12 +177,12 @@ describe('ActivityRepository', function() {
     expect(mockActivityRepo.getHighestStairsRecord()).to.equal(activity3);
   });
 
-  it.only('should return number of flights climbed in a week', function() {
+  it('should return number of flights climbed in a week', function() {
     mockActivityRepo.individualEntryRecords.push(...mockRawData.activityData);
     expect(mockActivityRepo.getWeeklyFlightsClimbed(todaysDate)).to.equal(91);
   });
 
-  it.only('should return total number of stairs climbed in a week', function() {
+  it('should return total number of stairs climbed in a week', function() {
     mockActivityRepo.individualEntryRecords.push(...mockRawData.activityData);
     expect(mockActivityRepo.getWeeklyStairsClimbed(todaysDate)).to.equal(1092);
   });

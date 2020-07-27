@@ -21,101 +21,71 @@
 }
 
 .steps-go-back-button {
-  // background-image: url('../images/steps-goback.png);
   @include buttons('steps-goback.png');
 }
 
 .steps-info-button {
-  // background-image: url(../images/steps-info.png);
   @include buttons('steps-info.png');
 }
 
 .steps-friends-button {
-  // background-image: url(../images/steps-friends.png);
   @include buttons('steps-friends.png');
 }
 .steps-calendar-button {
-  // background-image: url(../images/steps-calendar.png);
   @include buttons('steps-calendar.png');
 }
 
 .hydration-go-back-button {
-  // background-image: url(../images/hydration-goback.png);
   @include buttons('hydration-goback.png');
   margin: 1vw 1vw;
 
 }
 
 .hydration-info-button {
-  // background-image: url(../images/hydration-info.png);
   @include buttons('hydration-info.png');
 }
 
 .hydration-friends-button {
-  // background-image: url(../images/hydration-friends.png);
   @include buttons('hydration-friends.png');
 }
 
 .hydration-calendar-button {
-  // background-image: url(../images/hydration-calendar.png);
   @include buttons('hydration-calendar.png');
 }
 
 .stairs-go-back-button {
-  // background-image: url(../images/stairs-goback.png);
   @include buttons('stairs-goback.png');
   margin: 1vw 1vw;
 
 }
 
 .stairs-info-button {
-  // background-image: url(../images/stairs-info.png);
   @include buttons('stairs-info.png');
 }
 
 
 .stairs-friends-button {
-  // background-image: url(../images/stairs-friends.png);
   @include buttons('stairs-friends.png');
 }
 
 .stairs-calendar-button {
-  // background-image: url(../images/stairs-calendar.png);
   @include buttons('stairs-calendar.png');
 }
 
 .sleep-go-back-button {
-  // background-image: url(../images/sleep-goback.png);
   @include buttons('sleep-goback.png');
   margin: 1vw 1vw;
 
 }
 
 .sleep-info-button {
-  // background-image: url(../images/sleep-info.png);
   @include buttons('sleep-info.png');
 }
 
 .sleep-friends-button {
-  // background-image: url(../images/sleep-friends.png);
   @include buttons('sleep-friends.png');
 }
 
 .sleep-calendar-button {
-  // background-image: url(../images/sleep-calendar.png);
   @include buttons('sleep-calendar.png');
 }
-
-// .sleep-trending-button {
-//   @include buttons('sleep-trending.png');
-// }
-
-// .steps-trending-button {
-//   // background-image: url(../images/steps-trending.png);
-//   @include buttons('steps-trending.png');
-// }
-
-// .stairs-trending-button {
-//   // background-image: url(../images/stairs-trending.png);
-//   @include buttons('stairs-trending.png');
-// }

@@ -167,9 +167,9 @@ describe('UserRepository', function() {
             "numOunces": 52,
             "userID": 1
           } 
-        ], averageOuncesAllTime: NaN},
+        ]},
       sleepInfo: {
-        "individualEntryRecord": [
+        "individualEntryRecords": [
           {
             "date": "2019/06/15",
             "hoursSlept": 6.1,
@@ -216,8 +216,8 @@ describe('UserRepository', function() {
   it('should match each sleep data point with appropriate user', function() {
     userRepository.matchDataWithUsers(rawData, todayDate);
 
-    expect(userRepository.users[0].sleepInfo.individualEntryRecord.length).to.deep.equal(2);
-    expect(userRepository.users[1].sleepInfo.individualEntryRecord.length).to.deep.equal(1);
+    expect(userRepository.users[0].sleepInfo.individualEntryRecords.length).to.deep.equal(2);
+    expect(userRepository.users[1].sleepInfo.individualEntryRecords.length).to.deep.equal(1);
   })
 
   it('should match each activity data point with appropriate user', function() {
@@ -228,32 +228,32 @@ describe('UserRepository', function() {
   })
 
   it('should return average step goal for all users', function () {
-    expect(userRepository.calculateCommunityAvgStepGoal()).to.equal(10000);
+    expect(userRepository.getCommunityAvgStepGoal()).to.equal(10000);
   });
 
   it.skip('calculateAverageSleepQuality should return average sleep quality for all users', function () {
     user1.sleepQualityAverage = 3.3;
     user2.sleepQualityAverage = 5;
     user3.sleepQualityAverage = 1;
-    expect(userRepository.calculateAverageSleepQuality()).to.equal(3.1);
+    expect(userRepository.getAverageSleepQuality()).to.equal(3.1);
   });
 
   it.skip('should have a method that calculates average number of steps for users', function () {
     user1.activityRecord = [{ date: "2019/09/17", steps: 100 }, { date: "2019/09/17", steps: 2000 }];
     user2.activityRecord = [{ date: "2019/09/16", steps: 9820 }, { date: "2019/09/17", steps: 234 }];
-    expect(userRepository.calculateAverageSteps("2019/09/17")).to.equal(778);
+    expect(userRepository.getAverageSteps("2019/09/17")).to.equal(778);
   })
 
   it.skip('should have a method that calculates average number of stairs for users', function () {
     user1.activityRecord = [{ date: "2019/09/17", flightsOfStairs: 10 }, { date: "2019/09/17", flightsOfStairs: 15 }];
     user2.activityRecord = [{ date: "2019/09/16", flightsOfStairs: 8 }, { date: "2019/09/17", flightsOfStairs: 4 }];
-    expect(userRepository.calculateAverageStairs("2019/09/17")).to.equal(10);
+    expect(userRepository.getAverageStairs("2019/09/17")).to.equal(10);
   })
 
   it.skip('should have a method that calculates average number of active minutes for users', function () {
     user1.activityRecord = [{ date: "2019/09/17", minutesActive: 100 }, { date: "2019/09/17", minutesActive: 20 }];
     user2.activityRecord = [{ date: "2019/09/16", minutesActive: 78 }, { date: "2019/09/17", minutesActive: 12 }];
-    expect(userRepository.calculateAverageMinutesActive("2019/09/17")).to.equal(44);
+    expect(userRepository.getAverageMinutesActive("2019/09/17")).to.equal(44);
   })
 
   it.skip('should have a method that finds the best sleepers', function() {

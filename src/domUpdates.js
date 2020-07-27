@@ -29,7 +29,7 @@ const domUpdates = {
     document.querySelector('#dropdown-name').innerText = this.currentUser.name.toUpperCase();
     document.querySelector('#dropdown-goal').innerText = `DAILY STEP GOAL | ${this.currentUser.dailyStepGoal}`;
     document.querySelector('#dropdown-email').innerText = `EMAIL | ${this.currentUser.email}`;
-    this.showLeaderBoard(); // CSS is finnicky on it
+    this.showLeaderBoard();
   },
 
   showLeaderBoard() {
@@ -47,9 +47,6 @@ const domUpdates = {
       }
       if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
         paragraph.classList.add('red-text');
-      }
-      if (paragraph.innerText.includes('YOU')) {
-        paragraph.classList.add('yellow-text');
       }
     });
   },
