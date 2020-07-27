@@ -47,6 +47,20 @@ const populateUserProfile = () => {
 }
 
 /////// STEP SECTION /////////
+const addNewActivityRecord = () => {
+  let inputStairs = document.querySelector("#input-stairs");
+  let inputSteps = document.querySelector('#input-steps');
+  let inputMinutes = document.querySelector("#input-steps-minutes");
+  let newActivityEntry = {
+    userID: currentUser.id,
+    date: todaysDate,
+    numSteps: Number(inputSteps.value),
+    minutesActive: Number(inputMinutes.value),
+    flightsOfStairs: inputStairs.value * 12
+  }
+  postActivityData(newActivityEntry);
+  console.log('this is our activityInfo stuff', currentUser.activityInfo)
+}
 
 const stepCardHandler = () => {
   let stepsMainCard = document.querySelector('#steps-main-card');
@@ -71,19 +85,7 @@ const stepCardHandler = () => {
   }
   if (event.target.classList.contains('user-steps-submit')) {
     event.preventDefault();
-    let inputStairs = document.querySelector("#input-stairs");
-    let inputSteps = document.querySelector('#input-steps');
-    let inputMinutes = document.querySelector("#input-steps-minutes");
-    let newActivityEntry = {
-      userID: currentUser.id,
-      date: todaysDate,
-      numSteps: Number(inputSteps.value),
-      minutesActive: Number(inputMinutes.value),
-      flightsOfStairs: inputStairs.value * 12
-    };
-
-    postActivityData(newActivityEntry)
-    console.log(currentUser.activityInfo)
+    addNewActivityRecord()
     // currentUser.activityInfo.addActivityInput(newActivityEntry);
     domUpdates.resetInputField('#input-steps', '#input-steps-minutes') 
     domUpdates.stepCardDisplay();
@@ -117,13 +119,14 @@ const stairsCardHandler = () => {
   }
   if (event.target.classList.contains("user-stairs-submit")) {
     event.preventDefault();
-    let inputStairs = document.querySelector("#input-stairs");
-    let activityObj = {
-      userID: currentUser.id,
-      date: todaysDate,
-      flightsOfStairs: inputStairs.value * 12
-    };
-    currentUser.activityInfo.addStairsInput(activityObj);
+    // // let inputStairs = document.querySelector("#input-stairs");
+    // let activityObj = {
+    //   userID: currentUser.id,
+    //   date: todaysDate,
+    //   flightsOfStairs: inputStairs.value * 12
+    // };
+    addNewActivityRecord()
+    // currentUser.activityInfo.addStairsInput(activityObj);
     domUpdates.stairsCardDisplay();
     domUpdates.flipCard(stairsInfoCard, stairsMainCard);
   }
@@ -151,9 +154,12 @@ const hydrationCardHandler = () => {
   if (event.target.classList.contains('user-ounces-submit')) {
     event.preventDefault();
     let input = document.querySelector('#input-ounces');
-    let hydrationObj = {userID: currentUser.id, date: todaysDate, numOunces: Number(input.value)};
-    currentUser.hydrationInfo.addHydroInput(hydrationObj);
-    // postData(hydrationObj, hydration);
+    let newHydrationEntry = {userID: currentUser.id, 
+      date: todaysDate, 
+      numOunces: Number(input.value
+    )};
+    // currentUser.hydrationInfo.addHydroInput(newHydrationEntry);
+    postHydrationData(newHydrationEntry)
     domUpdates.hydrationCardDisplay(input); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
@@ -198,18 +204,14 @@ function sleepCardHandler() {
 
 ///////Post Section ///////////////////////////////
 
-function postHydrationData() {
+function postHydrationData(hydrationEntry) {
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
 
-    body: JSON.stringify({
-      "userID": integer,
-      "date": string,
-      "numOunces": integer
-    })
+    body: JSON.stringify(hydrationEntry)
   })
     .then((response) => response.json())
     .then((data) => {
