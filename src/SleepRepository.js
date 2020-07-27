@@ -1,36 +1,16 @@
 // import Sleep from "../src/Sleep";
 
 class SleepRepository {
-  constructor(todaysDate) {
+  constructor() {
     this.individualEntryRecords = [];
-    // this.hoursSlept = this.findTodaysTotalSleep(todaysDate);
-    // this.weeklyHoursSlept = this.getWeekAveHoursSlept()
-    // this.weeklyQualHoursSlept = this.calculateAverageHoursThisWeek(todaysDate)
   }
   
-  findLastNightsSleepQual(date) {
-    console.log(this.individualEntryRecords[0])
+  findLastNightsSleepQual() {
     return this.individualEntryRecords[0].sleepQuality
-    // let QualityHrsSleptToday = this.individualEntryRecords.filter(record => {
-    //   return record.date === date;
-    // })
-    //   .reduce((sum, entry) => {
-    //     sum += entry.hoursSlept;
-    //     return sum;
-    //   }, 0);
-    //   console.log(QualityHrsSleptToday)
-    // return QualityHrsSleptToday;
   }
 
-  findLastNightsHoursSlept(date) {
-    let hoursSleptToday = this.individualEntryRecords.filter(record => {
-      return record.date === date;
-    })
-      .reduce((sum, entry) => {
-        sum += entry.hoursSlept;
-        return sum;
-      }, 0);
-    return hoursSleptToday;
+  findLastNightsHours() {
+    return this.individualEntryRecords[0].hoursSlept
   }
 
   getWeeksDailyHours() {
@@ -50,7 +30,7 @@ class SleepRepository {
   getAveQualitySleptOverall() {
     console.log('Lives in getAveQualSleptOVerall', this.individualEntryRecords)
     let qualityHours = this.individualEntryRecords.reduce((sum, entry) => {
-      sum += entry.numOunces;
+      sum += entry.sleepQuality;
       return sum;
     }, 0);
     let overallAverageQuality = (qualityHours / this.individualEntryRecords.length).toFixed(0)

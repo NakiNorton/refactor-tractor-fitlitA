@@ -5,7 +5,7 @@ import UserRepository from '../src/UserRepository';
 
 describe('SleepRepository', function() {
   let sleep1, sleep2, sleep3, mockRawData, mockSleepRepo, todaysDate;
-  this.beforeEach(() => {
+  beforeEach(() => {
     sleep1 = {
       "userID": 1,
       "date": "2019/06/15",
@@ -34,6 +34,7 @@ describe('SleepRepository', function() {
   it('should be a function', function() {
     expect(SleepRepository).to.be.a("function")
   })
+  
 })
 
 
