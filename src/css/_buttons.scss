@@ -6,7 +6,7 @@
   border: none;
   display: inline;
   height: 3.4vw;
-  margin-left: 1vw;
+  margin: 0vw 1vw;
   width: 3.4vw;
   background-image: url("../images/#{$image}")
 }
@@ -42,6 +42,8 @@
 .hydration-go-back-button {
   // background-image: url(../images/hydration-goback.png);
   @include buttons('hydration-goback.png');
+  margin: 1vw 1vw;
+
 }
 
 .hydration-info-button {
@@ -62,6 +64,8 @@
 .stairs-go-back-button {
   // background-image: url(../images/stairs-goback.png);
   @include buttons('stairs-goback.png');
+  margin: 1vw 1vw;
+
 }
 
 .stairs-info-button {
@@ -83,6 +87,8 @@
 .sleep-go-back-button {
   // background-image: url(../images/sleep-goback.png);
   @include buttons('sleep-goback.png');
+  margin: 1vw 1vw;
+
 }
 
 .sleep-info-button {
@@ -104,12 +110,12 @@
 //   @include buttons('sleep-trending.png');
 // }
 
-.steps-trending-button {
-  // background-image: url(../images/steps-trending.png);
-  @include buttons('steps-trending.png');
-}
+// .steps-trending-button {
+//   // background-image: url(../images/steps-trending.png);
+//   @include buttons('steps-trending.png');
+// }
 
-.stairs-trending-button {
-  // background-image: url(../images/stairs-trending.png);
-  @include buttons('stairs-trending.png');
-}
+// .stairs-trending-button {
+//   // background-image: url(../images/stairs-trending.png);
+//   @include buttons('stairs-trending.png');
+// }
