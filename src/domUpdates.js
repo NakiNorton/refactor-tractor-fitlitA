@@ -140,9 +140,9 @@ const domUpdates = {
 
   sleepCardDisplay() {
     document.querySelector('#sleep-user-hours-today').innerText = `${this.currentUser.sleepInfo.findTodaysTotalSleep('2019/06/15')}`;
-    document.querySelector('#sleep-calendar-hours-average-weekly').innerText = this.currentUser.calculateAverageHoursThisWeek(this.todaysDate);
-    document.querySelector('#sleep-calendar-quality-average-weekly').innerText = this.currentUser.calculateAverageQualityThisWeek(this.todaysDate);
-    this.sleepInfoCardDisplay();
+    document.querySelector('#sleep-calendar-hours-average-weekly').innerText = `${this.currentUser.sleepInfo.getWeekAveHoursSlept(this.todaysDate)}`;
+    document.querySelector('#sleep-calendar-quality-average-weekly').innerText = `${this.currentUser.sleepInfo.getWeekAvgQualityHrsSlept()}`
+    // this.sleepStatsCardDisplay();
 
     // input1.innerText = "";
     // input2.innerText - "";
