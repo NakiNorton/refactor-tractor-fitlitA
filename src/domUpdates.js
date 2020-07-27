@@ -58,7 +58,7 @@ const domUpdates = {
 
   stepCardDisplay() {
     this.stepMainCardDisplay();
-    this.stepsInfoCard();
+    this.stepsInfoCard(this.todaysDate);
     this.stepCalendarCardMinutesDisplay();
     this.stepCalendarCardStepsDisplay();
     this.stepFriendstepsCardDisplay();
@@ -83,7 +83,7 @@ const domUpdates = {
   },
 
   stepInfoCardMilesDisplay(date) {
-    document.getElementById('steps-info-miles-walked-today').innerText = `${this.currentUser.activityInfo.getMiles(this.currentUser, date)}`;
+    document.getElementById('steps-info-miles-walked-today').innerText = `${this.currentUser.activityInfo.getUsersMilesforDay(this.currentUser, date)}`;
   },
 
   stepInfoCardMinutesDisplay(date) {
