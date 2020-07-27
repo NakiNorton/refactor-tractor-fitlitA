@@ -9,7 +9,7 @@ class SleepRepository {
     return this.individualEntryRecords[0].sleepQuality
   }
 
-  findLastNightsHoursSlept(date) {
+  findLastNightsHours() {
     return this.individualEntryRecords[0].hoursSlept
   }
 
