@@ -159,7 +159,7 @@ const domUpdates = {
   //////// SLEEP DISPLAY SECTION //////////////////////////////////////
 
   sleepCardDisplay() {
-    document.querySelector('#sleep-user-hours-today').innerText = `${this.currentUser.sleepInfo.findLastNightsHoursSlept('2019/06/15')}`;
+    document.querySelector('#sleep-user-hours-today').innerText = `${this.currentUser.sleepInfo.findLastNightsHours()}`;
     this.displaySleepCalendar()
     this.displaySleepStats();
     
@@ -174,8 +174,11 @@ const domUpdates = {
   
   displaySleepStats() {// this displays all of the information for sleep stats
     document.querySelector('#sleep-info-quality-today').innerText = `${this.currentUser.sleepInfo.findLastNightsSleepQual(this.todaysDate)}`
-    document.getElementById('input-sleep-quality')
-
+    document.getElementById('sleep-info-hours-average-alltime').innerText =  `${this.currentUser.sleepInfo.getAveHoursSleptOverall()}`
+    document.getElementById('sleep-info-quality-average-alltime').innerText = `${this.currentUser.sleepInfo.getAveQualitySleptOverall()}`
+    
+    
+    
     // document.querySelector('#sleep-info-hours-average-alltime').innerText = this.currentUser.hoursSleptAverage;
     // document.querySelector('#sleep-info-quality-average-alltime').innerText = this.currentUser.sleepQualityAverage;
     // document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todaysDate, sleepRepository)).getFirstName();
