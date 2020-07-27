@@ -208,7 +208,7 @@ function sleepCardHandler() {
 //   })
 //     .then((response) => response.json())
 //     .then((data) => {
-//       console.log('we are winning!:' data)
+//       console.log('we are winning!:', data)
 //     })
 //     .catch((error) => {
 //       console.log('we are losing!', error)
@@ -230,7 +230,7 @@ function sleepCardHandler() {
 //   })
 //     .then((response) => response.json())
 //     .then((data) => {
-//       console.log('we are winning!:' data)
+//       console.log('we are winning!:', data)
 //     })
 //     .catch((error) => {
 //       console.log('we are losing!', error)
@@ -253,7 +253,7 @@ function sleepCardHandler() {
 //   })
 //     .then((response) => response.json())
 //     .then((data) => {
-//       console.log('we are winning!:' data)
+//       console.log('we are winning!:', data)
 //     })
 //     .catch((error) => {
 //       console.log('we are losing!', error)
