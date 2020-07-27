@@ -5,6 +5,8 @@ main {
   'steps hydration'
   'stairs sleep';
   height: 100%;
+  grid-template-columns: 50%;
+  grid-template-rows: 50%;
 }
 
 .main-card {
@@ -26,6 +28,7 @@ main {
   text-align: center;
   width: 100%;
 }
+
 
 #steps-card-container {
   background-color: #F5634B;
