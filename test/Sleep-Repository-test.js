@@ -50,11 +50,11 @@ describe("SleepRepository", function () {
   });
 
   it('should return overall average hours of sleep', function () {
-    expect(mockSleepRepo.getAveHoursSleptOverall()).to.equal(8);
+    expect(mockSleepRepo.getAvgHoursSleptOverall()).to.equal(8);
   });
 
   it('should return overall average quality of sleep', function () {
-    expect(mockSleepRepo.getAveQualitySleptOverall()).to.equal(3.9);
+    expect(mockSleepRepo.getAvgQualitySleptOverall()).to.equal(3.9);
   });
 
   it('should return an array of sleep quality over a week', function () {

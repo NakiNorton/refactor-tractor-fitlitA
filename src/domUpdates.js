@@ -144,21 +144,16 @@ const domUpdates = {
   },
 
   displaySleepCalendar() {
-    document.querySelector('#sleep-calendar-hours-average-weekly').innerText = `${this.currentUser.sleepInfo.getWeekAveHoursSlept(this.todaysDate)}`;
-    document.querySelector('#sleep-calendar-quality-average-weekly').innerText = `${this.currentUser.sleepInfo.getWeekAvgQualityHrsSlept()}`
+    document.querySelector('#sleep-calendar-hours-average-weekly').innerText = `${this.currentUser.sleepInfo.getWeekAvgHoursSlept(this.todaysDate)}`;
+    document.querySelector('#sleep-calendar-quality-average-weekly').innerText = `${this.currentUser.sleepInfo.getWeekAvgQualitySlept()}`
   },
   
-  displaySleepStats() {// this displays all of the information for sleep stats
+  displaySleepStats() {
     document.querySelector('#sleep-info-quality-today').innerText = `${this.currentUser.sleepInfo.findLastNightsSleepQual(this.todaysDate)}`
-    document.getElementById('sleep-info-hours-average-alltime').innerText =  `${this.currentUser.sleepInfo.getAveHoursSleptOverall()}`
-    document.getElementById('sleep-info-quality-average-alltime').innerText = `${this.currentUser.sleepInfo.getAveQualitySleptOverall()}`
-    
-    
-    
-    // document.querySelector('#sleep-info-hours-average-alltime').innerText = this.currentUser.hoursSleptAverage;
-    // document.querySelector('#sleep-info-quality-average-alltime').innerText = this.currentUser.sleepQualityAverage;
-    // document.querySelector('#sleep-friend-longest-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getLongestSleepers(todaysDate, sleepRepository)).getFirstName();
-    // document.querySelector('#sleep-friend-worst-sleeper').innerText = userRepository.users.find(user => currentUser.id === userRepository.getWorstSleepers(todaysDate, sleepRepository)).getFirstName();
+    document.getElementById('sleep-info-hours-average-alltime').innerText =  `${this.currentUser.sleepInfo.getAvgHoursSleptOverall()}`
+    document.getElementById('sleep-info-quality-average-alltime').innerText = `${this.currentUser.sleepInfo.getAvgQualitySleptOverall()}`
+    document.querySelector('#sleep-friend-longest-sleeper').innerText = this.userRepository.findBestSleeper();
+    document.querySelector('#sleep-friend-worst-sleeper').innerText = this.userRepository.findWorstSleeper();    
   },
 
   sleepAddInputDisplay() {

@@ -230,90 +230,24 @@ describe('UserRepository', function() {
     expect(userRepository.getCommunityAvgStepGoal()).to.equal(10000);
   });
 
-  it.skip('calculateAverageSleepQuality should return average sleep quality for all users', function () {
-    user1.sleepQualityAverage = 3.3;
-    user2.sleepQualityAverage = 5;
-    user3.sleepQualityAverage = 1;
-    expect(userRepository.getAverageSleepQuality()).to.equal(3.1);
-  });
 
-  it.skip('should have a method that calculates average number of steps for users', function () {
-    user1.activityRecord = [{ date: "2019/09/17", steps: 100 }, { date: "2019/09/17", steps: 2000 }];
-    user2.activityRecord = [{ date: "2019/09/16", steps: 9820 }, { date: "2019/09/17", steps: 234 }];
-    expect(userRepository.getAverageSteps("2019/09/17")).to.equal(778);
+  it('should have a method that calculates average number of steps for users', function () {
+    expect(userRepository.getAllUsersAverageSteps("2019/06/15")).to.equal(5091);
   })
 
-  it.skip('should have a method that calculates average number of stairs for users', function () {
-    user1.activityRecord = [{ date: "2019/09/17", flightsOfStairs: 10 }, { date: "2019/09/17", flightsOfStairs: 15 }];
-    user2.activityRecord = [{ date: "2019/09/16", flightsOfStairs: 8 }, { date: "2019/09/17", flightsOfStairs: 4 }];
-    expect(userRepository.getAverageStairs("2019/09/17")).to.equal(10);
+  it('should have a method that calculates average number of flights for users', function () {
+    expect(userRepository.getCommunityAvgFlightsOverall()).to.equal(23);
   })
 
-  it.skip('should have a method that calculates average number of active minutes for users', function () {
-    user1.activityRecord = [{ date: "2019/09/17", minutesActive: 100 }, { date: "2019/09/17", minutesActive: 20 }];
-    user2.activityRecord = [{ date: "2019/09/16", minutesActive: 78 }, { date: "2019/09/17", minutesActive: 12 }];
-    expect(userRepository.getAverageMinutesActive("2019/09/17")).to.equal(44);
+  it('should have a method that calculates average number of active minutes for users', function () {
+    expect(userRepository.getAllUsersAverageMinutesActive("2019/06/15")).to.equal(131);
   })
 
-  it.skip('should have a method that finds the best sleepers', function() {
-    sleep1 = new Sleep({
-      "userID": 1,
-      "date": "2019/06/16",
-      "hoursSlept": 6.1,
-      "sleepQuality": 1000
-    }, userRepository);
-    sleep2 = new Sleep({
-      "userID": 2,
-      "date": "2019/06/15",
-      "hoursSlept": 7.3,
-      "sleepQuality": 500
-    }, userRepository);
-    sleep3 = new Sleep({
-      "userID": 3,
-      "date": "2019/06/15",
-      "hoursSlept": 9.3,
-      "sleepQuality": 1.4
-    }, userRepository);
-    expect(userRepository.findBestSleepers("2019/06/16")).to.deep.equal([user1, user2]);
+  it('should have a method that finds the best sleeper', function() {
+    expect(userRepository.findBestSleeper()).to.equal("Herminia Witting");
   });
 
-  it.skip('should have a method that finds the longest sleepers', function() {
-    sleepData = [{
-      "userID": 1,
-      "date": "2019/06/15",
-      "hoursSlept": 6.1,
-      "sleepQuality": 100
-    }, {
-      "userID": 2,
-      "date": "2019/06/15",
-      "hoursSlept": 7.3,
-      "sleepQuality": 1500
-    }, {
-      "userID": 3,
-      "date": "2019/06/15",
-      "hoursSlept": 9.3,
-      "sleepQuality": 1.4
-    }];
-    expect(userRepository.getLongestSleepers("2019/06/15")).to.equal(3);
-  });
-
-  it.skip('should have a method that finds the worst sleepers', function() {
-    sleepData = [{
-      "userID": 1,
-      "date": "2019/06/15",
-      "hoursSlept": 6.1,
-      "sleepQuality": 1000
-    }, {
-      "userID": 2,
-      "date": "2019/06/15",
-      "hoursSlept": 7.3,
-      "sleepQuality": 500
-    }, {
-      "userID": 3,
-      "date": "2019/06/15",
-      "hoursSlept": 9.3,
-      "sleepQuality": 1.4
-    }];
-    expect(userRepository.getWorstSleepers("2019/06/15")).to.equal(1);
+  it('should have a method that finds the worst sleeper', function() {
+    expect(userRepository.findWorstSleeper()).to.equal('Luisa Hane');
   });
 });

@@ -25,7 +25,7 @@ class SleepRepository {
     })
   }
 
-  getAveQualitySleptOverall() {
+  getAvgQualitySleptOverall() {
     let qualityHours = this.individualEntryRecords.reduce((sum, entry) => {
       sum += entry.sleepQuality;
       return sum;
@@ -34,7 +34,7 @@ class SleepRepository {
     return Number(overallAverageQuality);
   }
  
-  getAveHoursSleptOverall() {
+  getAvgHoursSleptOverall() {
     let hoursSlept = this.individualEntryRecords.reduce((sum, entry) => {
       sum += entry.hoursSlept;
       return sum;
