@@ -8,8 +8,18 @@ class SleepRepository {
     // this.weeklyQualHoursSlept = this.calculateAverageHoursThisWeek(todaysDate)
   }
   
-  findTodaysTotalSleep(date) {
-    console.log('asdfa', this.individualEntryRecords)
+  findLastNightsSleepQual(date) {
+    let QualityHrsSleptToday = this.individualEntryRecords.filter(record => {
+      return record.date === date;
+    })
+      .reduce((sum, entry) => {
+        sum += entry.hoursSlept;
+        return sum;
+      }, 0);
+    return QualityHrsSleptToday;
+  }
+
+  findLastNightsHoursSlept(date) {
     let hoursSleptToday = this.individualEntryRecords.filter(record => {
       return record.date === date;
     })
@@ -73,14 +83,14 @@ class SleepRepository {
     return Number(weeklyHoursSlept);
   }
 
-  // addSleepInput(input) {
-  //   let foundInRecord = this.individualEntryRecords.find(record => record.date === input.date);
-  //   if (foundInRecord) {
-  //     foundInRecord.hoursSlept = foundInRecord.numOunces + input.numOunces;
-  //   } else {
-  //     this.individualEntryRecords.push(input);
-  //   }
-  // }
+  addSleepInput(input) {
+    let foundInRecord = this.individualEntryRecords.find(record => record.date === input.date);
+    if (foundInRecord) {
+      foundInRecord.hoursSlept = foundInRecord.numOunces + input.numOunces;
+    } else {
+      this.individualEntryRecords.push(input);
+    }
+  }
 }
 
 export default SleepRepository;
