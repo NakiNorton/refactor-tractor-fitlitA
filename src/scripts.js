@@ -59,7 +59,7 @@ const addNewActivityRecord = () => {
     flightsOfStairs: inputStairs.value * 12
   }
   postActivityData(newActivityEntry);
-  console.log('this is our activityInfo stuff', currentUser.activityInfo)
+  // currentUser.activityInfo.addStairsInput(newActivityEntry);
 }
 
 const stepCardHandler = () => {
@@ -86,7 +86,6 @@ const stepCardHandler = () => {
   if (event.target.classList.contains('user-steps-submit')) {
     event.preventDefault();
     addNewActivityRecord()
-    // currentUser.activityInfo.addActivityInput(newActivityEntry);
     domUpdates.resetInputField('#input-steps', '#input-steps-minutes') 
     domUpdates.stepCardDisplay();
     domUpdates.flipCard(stepsInfoCard, stepsMainCard);
@@ -119,14 +118,7 @@ const stairsCardHandler = () => {
   }
   if (event.target.classList.contains("user-stairs-submit")) {
     event.preventDefault();
-    // // let inputStairs = document.querySelector("#input-stairs");
-    // let activityObj = {
-    //   userID: currentUser.id,
-    //   date: todaysDate,
-    //   flightsOfStairs: inputStairs.value * 12
-    // };
     addNewActivityRecord()
-    // currentUser.activityInfo.addStairsInput(activityObj);
     domUpdates.stairsCardDisplay();
     domUpdates.flipCard(stairsInfoCard, stairsMainCard);
   }
@@ -193,11 +185,12 @@ function sleepCardHandler() {
     let newSleepEntry = {
       userID: currentUser.id,
       date: todaysDate,
-      hoursSlept: inputHours.value,
-      sleepQuality: inputQuality.value
+      hoursSlept: Number(inputHours.value),
+      sleepQuality: Number(inputQuality.value)
     };
-    postSleepData(newSleepEntry)
+    // postSleepData(newSleepEntry)
     currentUser.sleepInfo.addSleepInput(newSleepEntry);
+    console.log(typeof newSleepEntry.hoursSlept)
     domUpdates.sleepCardDisplay();
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
   }
