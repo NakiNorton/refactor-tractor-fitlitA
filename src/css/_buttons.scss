@@ -32,7 +32,7 @@
 }
 
 .submit-button {
-  background-color: #54C6BE;
+  background-color: inherit;
   @include buttons('download.svg');
 }
 
@@ -116,6 +116,9 @@
   @include buttons('sleep-calendar.png');
 }
 
+// .sleep-trending-button {
+//   @include buttons('sleep-trending.png');
+// }
 
 .steps-trending-button {
   // background-image: url(../images/steps-trending.png);

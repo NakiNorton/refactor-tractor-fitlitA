@@ -3,17 +3,17 @@ import ActivityRepository from "./ActivityRepository";
 import SleepRepository from "./SleepRepository";
 
 class User {
-  constructor(userDetails, todayDate) {
+  constructor(userDetails, todaysDate) {
     this.id = this.checkUserId(userDetails.id);
     this.name = this.checkName(userDetails.name);
-    this.address = userDetails.address || 'No address added.';
-    this.email = userDetails.email || 'No email address added.';
-    this.strideLength = userDetails.strideLength || 'Stride length not added.';
-    this.dailyStepGoal = userDetails.dailyStepGoal || 'Daily step goal not added.';
-    this.friends = userDetails.friends || 'Add friends for friendly competition!';
-    this.hydrationInfo = new HydrationRepository(todayDate);
-    this.sleepInfo = new SleepRepository(todayDate);
-    this.activityInfo = new ActivityRepository(todayDate);
+    this.address = userDetails.address || "No address added.";
+    this.email = userDetails.email || "No email address added.";
+    this.strideLength = userDetails.strideLength || "Stride length not added.";
+    this.dailyStepGoal = userDetails.dailyStepGoal || 0;
+    this.friends = userDetails.friends || [];
+    this.hydrationInfo = new HydrationRepository(todaysDate);
+    this.sleepInfo = new SleepRepository(todaysDate);
+    this.activityInfo = new ActivityRepository(todaysDate);
   }
 
   checkUserId(user) {

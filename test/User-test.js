@@ -143,7 +143,7 @@ describe('User', function() {
   });
 
   it('should return default message if daily step goal not found', function() {
-    expect(user2.dailyStepGoal).to.equal('Daily step goal not added.')
+    expect(user2.dailyStepGoal).to.equal(0)
   });
 
   it('should return an array of friends IDs', function() {

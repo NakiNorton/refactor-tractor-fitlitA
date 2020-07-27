@@ -37,6 +37,7 @@ class HydrationRepository {
     let averageWeeklyOunces = (totalWeeklyOunces / 7).toFixed(0);
     return Number(averageWeeklyOunces);
   }
+  // ^^^^^ average ounces BY WEEK
 
 
   addHydroInput(input) {

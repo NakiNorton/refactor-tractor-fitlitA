@@ -15,7 +15,7 @@ class ActivityRepository {
 
   getUsersMilesforDay(user, date) {
     this.individualEntryRecords.filter(record => {
-      return record.date === date; // get record for today
+      return record.date === date; 
     })
     return Math.round(this.getStepsForToday(date) * user.strideLength / 5280).toFixed(1); 
   }
