@@ -159,8 +159,8 @@ describe('User', function() {
   });
 
   it('should compare users step goal with community step goal and return the difference', function() {
-    mockUserRepository.calculateCommunityAvgStepGoal(); 
-    expect(user.compareUserGoalWithCommunityGoal(mockUserRepository)).to.equal(-2500);
+    mockUserRepository.getCommunityAvgStepGoal(); 
+    expect(user.activityInfo.compareUserGoalWithCommunityGoal(user.dailyStepGoal, mockUserRepository)).to.equal('Your goal is 2500 steps above average!');
   });
 
 

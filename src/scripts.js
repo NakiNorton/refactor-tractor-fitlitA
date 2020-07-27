@@ -68,12 +68,6 @@ const stepCardHandler = () => {
   }
   if (event.target.classList.contains("steps-go-back-button")) {
     domUpdates.flipCard(event.target.parentNode, stepsMainCard);
-  } 
-  if (event.target.classList.contains('date-input-submit')) {
-    event.preventDefault();
-    let input = document.querySelector('#input-date');
-    domUpdates.stepsInfoCard(input.value);
-    input.value = ""; 
   }
   if (event.target.classList.contains('user-steps-submit')) {
     event.preventDefault();
@@ -85,10 +79,9 @@ const stepCardHandler = () => {
       numSteps: Number(inputSteps.value),
       minutesActive: Number(inputMinutes.value)
     };
-    currentUser.activityInfo.updateActivities(newActivityEntry);
+    currentUser.activityInfo.addActivityInput(newActivityEntry);
+    domUpdates.resetInputField('#input-steps', '#input-steps-minutes') 
     domUpdates.stepCardDisplay();
-    inputSteps.value = ""; 
-    inputMinutes.value = "";
     domUpdates.flipCard(stepsInfoCard, stepsMainCard);
   }
 }
@@ -128,7 +121,6 @@ const stairsCardHandler = () => {
     currentUser.activityInfo.addStairsInput(activityObj);
     domUpdates.stairsCardDisplay();
     domUpdates.flipCard(stairsInfoCard, stairsMainCard);
-    inputStairs.value = "";
   }
 }
 
@@ -201,72 +193,72 @@ function sleepCardHandler() {
 
 ///////Post Section ///////////////////////////////
 
-function postHydrationData() {
-  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+// function postHydrationData() {
+//   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
 
-    body: JSON.stringify({
-      "userID": integer,
-      "date": string,
-      "numOunces": integer
-    })
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('we are winning!:' data)
-    })
-    .catch((error) => {
-      console.log('we are losing!', error)
-    })
-}
+//     body: JSON.stringify({
+//       "userID": integer,
+//       "date": string,
+//       "numOunces": integer
+//     })
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       console.log('we are winning!:' data)
+//     })
+//     .catch((error) => {
+//       console.log('we are losing!', error)
+//     })
+// }
 
-function postSleepData() {
-  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      "userID": integer,
-      "date": string,
-      "hoursSlept": integer,
-      "sleepQuality": integer
-    })
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('we are winning!:' data)
-    })
-    .catch((error) => {
-      console.log('we are losing!', error)
-    })
-}
+// function postSleepData() {
+//   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({
+//       "userID": integer,
+//       "date": string,
+//       "hoursSlept": integer,
+//       "sleepQuality": integer
+//     })
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       console.log('we are winning!:' data)
+//     })
+//     .catch((error) => {
+//       console.log('we are losing!', error)
+//     })
+// }
 
-function postActivityData() {
-  fetch('	https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      "userID": integer,
-      "date": string,
-      "numSteps": integer,
-      "minutesActive": integer,
-      "flightsOfStairs": integer
-    })
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('we are winning!:' data)
-    })
-    .catch((error) => {
-      console.log('we are losing!', error)
-    })
-}
+// function postActivityData() {
+//   fetch('	https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({
+//       "userID": integer,
+//       "date": string,
+//       "numSteps": integer,
+//       "minutesActive": integer,
+//       "flightsOfStairs": integer
+//     })
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       console.log('we are winning!:' data)
+//     })
+//     .catch((error) => {
+//       console.log('we are losing!', error)
+//     })
+// }
 
 /////// EVENT LISTENERS ////////
 

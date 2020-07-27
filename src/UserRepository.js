@@ -42,7 +42,7 @@ class UserRepository {
     });
   }
 
-  calculateCommunityAvgStepGoal() {
+  getCommunityAvgStepGoal() {
     let communityStepGoals = this.users.map((user) => user.dailyStepGoal);
     let communityTotal = communityStepGoals.reduce((sum, goal) => {
       if (typeof goal === "number") {
@@ -98,7 +98,7 @@ class UserRepository {
     return Number(averageStairs);
   }
 
-  calculateAllUsersAverageSteps(date) {
+  getAllUsersAverageSteps(date) {
     let allUsersStepsCount = this.users.map((user) => {
       return user.activityInfo.individualEntryRecords.filter((activity) => {
         return activity.date === date;
@@ -113,7 +113,7 @@ class UserRepository {
     return Math.round(sumOfSteps / allUsersStepsCount.length);
   }
 
-  calculateAllUsersAverageMinutesActive(date) {
+  getAllUsersAverageMinutesActive(date) {
     let allUsersMinutesActiveCount = this.users.map((user) => {
       return user.activityInfo.individualEntryRecords.filter((activity) => {
         return activity.date === date;
@@ -130,66 +130,7 @@ class UserRepository {
     );
     return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
   }
-
-  // calculateAverageSleepQuality() {
-  //   let totalSleepQuality = this.users.reduce((sum, user) => {
-  //     sum += user.sleepQualityAverage;
-  //     return sum;
-  //   }, 0);
-  //   return totalSleepQuality / this.users.length;
-  // }
-
-  // findBestSleepers(today) {
-  //   return this.users.filter(user => user.calculateAverageQualityThisWeek(date) > 3);
-  // }
-
-  // getLongestSleepers(today, sleepRepository) {
-  //   let allSleepsOnDate = UserRepository.users.filter((sleep) => sleep.date === today);
-  //   return allSleepsOnDate ? allSleepsOnDate.sort((a, b) => b.hoursSlept - a.hoursSlept).shift().userID;
-  // }
-
-  // getWorstSleepers(date, sleepRepository) {
-  //   let allSleepsOnDate = sleepRepository.filter((sleep) => sleep.date === date);
-  //   return allSleepsOnDate ? allSleepsOnDate.sort((a, b) =>  a.hoursSlept - b.hoursSlept).shift().userID : "Data not found";
-  // }
 }
-
-
-// calculateAverageSteps(date) {
-//   let allUsersStepsCount = this.users.map(user => {
-//     return user.activityRecord.filter(activity => {
-//       return activity.date === date;
-//     });
-//   })
-//   let sumOfSteps = allUsersStepsCount
-//     .reduce((stepsSum, activityCollection) => {
-//       activityCollection.forEach(activity => {
-//         stepsSum += activity.steps
-//       })
-//       return stepsSum;
-//     }, 0);
-//   return Math.round(sumOfSteps / allUsersStepsCount.length);
-// }
-
-
-// calculateAverageMinutesActive(date) {
-//   let allUsersMinutesActiveCount = this.users.map(user => {
-//     return user.activityRecord.filter(activity => {
-//       return activity.date === date;
-//     });
-//   })
-//   let sumOfMinutesActive = allUsersMinutesActiveCount.reduce((minutesActiveSum, activityCollection) => {
-//     activityCollection.forEach(activity => {
-//       minutesActiveSum += activity.minutesActive
-//     })
-//     return minutesActiveSum;
-//   }, 0);
-//   return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
-// }
-
-
-
-
 
 
 export default UserRepository;
