@@ -190,13 +190,14 @@ function sleepCardHandler() {
     event.preventDefault();
     let inputHours = document.querySelector("#input-sleep");
     let inputQuality = document.querySelector("#input-sleep-quality");
-    let sleepObj = {
+    let newSleepEntry = {
       userID: currentUser.id,
       date: todaysDate,
       hoursSlept: inputHours.value,
       sleepQuality: inputQuality.value
     };
-    currentUser.sleepInfo.addSleepInput(sleepObj);
+    postSleepData(newSleepEntry)
+    currentUser.sleepInfo.addSleepInput(newSleepEntry);
     domUpdates.sleepCardDisplay();
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
   }
@@ -222,18 +223,13 @@ function postHydrationData(hydrationEntry) {
     })
 }
 
-function postSleepData() {
+function postSleepData(sleepEntry) {
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      "userID": integer,
-      "date": string,
-      "hoursSlept": integer,
-      "sleepQuality": integer
-    })
+    body: JSON.stringify(sleepEntry)
   })
     .then((response) => response.json())
     .then((data) => {
