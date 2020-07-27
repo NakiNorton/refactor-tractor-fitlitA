@@ -139,7 +139,7 @@ const domUpdates = {
   //////// SLEEP DISPLAY SECTION //////////////////////////////////////
 
   sleepCardDisplay() {
-    document.querySelector('#sleep-user-hours-today').innerText = `${this.currentUser.sleepInfo.findLastNightsHoursSlept('2019/06/15')}`;
+    document.querySelector('#sleep-user-hours-today').innerText = `${this.currentUser.sleepInfo.findLastNightsHours()}`;
     this.displaySleepCalendar()
     this.displaySleepStats();
     
