@@ -4,34 +4,21 @@ class ActivityRepository {
   }
 
   getStepsForToday(date) {
-    let todaysStepRecord = this.individualEntryRecords.filter(record => {
-      return record.date === date;
-    })
-      .reduce((sum, entry) => {
-        sum += entry.numSteps;
-        return sum;
-      }, 0);
-    return todaysStepRecord;
+    let todaysStepRecord = this.individualEntryRecords.find(record => record.date === date);
+    return todaysStepRecord ? (todaysStepRecord.numSteps) : 0;
   }
 
   getActiveMinutesForToday(date) {
-    let todaysActivityRecord = this.individualEntryRecords.filter(record => {
-      return record.date === date;
-    })
-      .reduce((sum, entry) => {
-        sum += entry.minutesActive;
-        return sum;
-      }, 0);
-    return todaysActivityRecord;
+    let todaysActivityRecord = this.individualEntryRecords.find(record => record.date === date)
+    return todaysActivityRecord ? (todaysActivityRecord.minutesActive) : 0;
   }
 
-  getMiles(user, date) {
+  getUsersMilesforDay(user, date) {
     this.individualEntryRecords.filter(record => {
       return record.date === date; // get record for today
     })
     return Math.round(this.getStepsForToday(date) * user.strideLength / 5280).toFixed(1); 
   }
-
 
   getTotalStepsThisWeek(todaysDate) {
     this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
@@ -69,8 +56,6 @@ class ActivityRepository {
     })
   }
   
-    
-
   getAverageStepsThisWeek(todaysDate) {
     return (this.individualEntryRecords.reduce((sum, activity) => {
       let dayFound = this.individualEntryRecords.find(activity => activity.date === todaysDate);
@@ -82,6 +67,7 @@ class ActivityRepository {
     }, 0) / 7).toFixed(0);
   }
 
+  //// ADDITIONAL FEATURE IF WE WANT TO DISPLAY IT
   calculateDailyCalories(date) {
     let totalMinutes = this.activityRecord.filter(activity => {
       return activity.date === date
@@ -90,7 +76,6 @@ class ActivityRepository {
     }, 0);
     return Math.round(totalMinutes * 7.6);
   }
-
 
   compareUserGoalWithCommunityGoal(userGoal, userRepo) {
     let communityStepGoal = userRepo.getCommunityAvgStepGoal()
@@ -103,7 +88,6 @@ class ActivityRepository {
     }
   }
  
-
   addActivityInput(input) {
     let dayFound = this.individualEntryRecords.find(record => record.date === input.date);
     if (dayFound) {
@@ -113,7 +97,6 @@ class ActivityRepository {
       this.individualEntryRecords.push(input);
     }
   }
-
 
   addStairsInput(input) {
     let dayFound = this.individualEntryRecords.find(record => record.date === input.date);
