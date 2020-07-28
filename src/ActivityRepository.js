@@ -71,10 +71,10 @@ class ActivityRepository {
   compareUserGoalWithCommunityGoal(userGoal, userRepo) {
     let communityStepGoal = userRepo.getCommunityAvgStepGoal();
     let goalDifference = userGoal - communityStepGoal;
-    if (goalDifference) { 
+    if (goalDifference > 0) { 
       return `Your goal is ${goalDifference} steps above average!`;
     } else {
-      return `Your goal is ${goalDifference} steps below average`;
+      return `Your goal is ${goalDifference} steps below average!`;
     }
   }
  
