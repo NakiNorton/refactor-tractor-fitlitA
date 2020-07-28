@@ -13,11 +13,12 @@ class ActivityRepository {
     return todaysActivityRecord ? (todaysActivityRecord.minutesActive) : 0;
   }
 
-  getUsersMilesforDay(user, date) {
-    this.individualEntryRecords.filter(record => {
-      return record.date === date; 
-    })
-    return Math.round(this.getStepsForToday(date) * user.strideLength / 5280).toFixed(1); 
+  getUsersMilesForDay(user, date) {
+    if (this.getStepsForToday(date) > 0) {
+      return Number((this.getStepsForToday(date) * user.strideLength / 5280).toFixed(1)); 
+    } else {
+      return 0;
+    }
   }
 
   getTotalStepsThisWeek(todaysDate) {
@@ -125,9 +126,9 @@ class ActivityRepository {
   }
 
   getWeeklyFlightsClimbed(date) {
+    let dayFound = this.individualEntryRecords.find(entry => entry.date === date);
+    let index = this.individualEntryRecords.indexOf(dayFound);
     return this.individualEntryRecords.reduce((sum, entry) => {
-      let dayFound = this.individualEntryRecords.find(entry => entry.date === date);
-      let index = this.individualEntryRecords.indexOf(dayFound);
       if (index <= this.individualEntryRecords.indexOf(entry) && this.individualEntryRecords.indexOf(entry) <= (index + 6)) {
         sum += entry.flightsOfStairs;
       }
@@ -135,8 +136,8 @@ class ActivityRepository {
     }, 0); 
   }
 
-  getWeeklyStairsClimbed() {
-    return this.getWeeklyFlightsClimbed() * 12;
+  getWeeklyStairsClimbed(date) {
+    return this.getWeeklyFlightsClimbed(date) * 12;
   }
 }
 

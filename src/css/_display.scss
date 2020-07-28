@@ -5,6 +5,8 @@ main {
   'steps hydration'
   'stairs sleep';
   height: 100%;
+  grid-template-columns: 50%;
+  grid-template-rows: 50%;
 }
 
 .main-card {
@@ -27,6 +29,7 @@ main {
   width: 100%;
 }
 
+
 #steps-card-container {
   background-color: #F5634B;
   grid-area: steps;
@@ -37,6 +40,7 @@ main {
   background-color: #54C6BE;
   grid-area: hydration;
   margin: .5vw;
+  overflow: scroll;
 }
 
 #stairs-card-container {
@@ -49,12 +53,12 @@ main {
   background-color: #FBD089;
   grid-area: sleep;
   margin: .5vw;
+  overflow: scroll;
 }
 
 .card-data-line {
   display: flex;
   justify-content: center;
-  margin-bottom: 2vw;
 }
 
 .input-box {
@@ -69,9 +73,10 @@ main {
   color: #FFFFFF;
   font-size: 16px;
   font-weight: 300;
+  margin-left: 5px;
   padding: 2px;
-  width: 75px;
-  height: 30px;
+  width: 80px;
+  height: 40px;
 }
 
 ::placeholder {
@@ -81,7 +86,7 @@ main {
 
 .hydration-weekly-label {
   font-size: 1vw;
-  padding-top: 1vw;
+  // padding-top: 1vw;
 }
 
 .hydration-weekly-amount {
@@ -90,18 +95,12 @@ main {
 
 .hydration-data-line {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-bottom: .2vw;
 }
 
 .hydration-weekly-avg,
 .hydration-week-data-list {
   text-align: center;
   width: 100%;
-}
-
-.trend-line {
-  font-size: 2vw;
-  text-align: center;
-  width: 20vw;
 }
