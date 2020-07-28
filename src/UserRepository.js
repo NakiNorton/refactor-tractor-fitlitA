@@ -1,4 +1,3 @@
-// import sleepRepository from './SleepRepository';
 import User from './User';
 
 class UserRepository {
@@ -131,27 +130,27 @@ class UserRepository {
     return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
   }
 
-  findBestSleeper() {
-    let bestSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual(this.todaysDate) > 3);
-    let sortedBest =  bestSleepers.sort((a, b) => a.sleepQuality - b.sleepQuality);
-    console.log(sortedBest.pop())
-    if (sortedBest) {
-      return sortedBest.pop().name;
-    } else { 
-      return "n/a"
-    }
-  }
+  // findBestSleeper() {
+  //   let bestSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual(this.todaysDate) > 3);
+  //   let sortedBest =  bestSleepers.sort((a, b) => a.sleepQuality - b.sleepQuality);
+  //   console.log(sortedBest.pop())
+  //   if (sortedBest) {
+  //     return sortedBest.pop().name;
+  //   } else { 
+  //     return "n/a"
+  //   }
+  // }
 
-  findWorstSleeper() {
-    console.log()
-    let worstSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual(this.todaysDate) < 3);
-    let sortedWorst =  worstSleepers.sort((a, b) => a.sleepQuality - b.sleepQuality);
-    if (sortedWorst) {
-      return sortedWorst.shift().name;    
-    } else {
-      return "n/a"
-    }
-  }
+  // findWorstSleeper() {
+  //   console.log()
+  //   let worstSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual(this.todaysDate) < 3);
+  //   let sortedWorst =  worstSleepers.sort((a, b) => a.sleepQuality - b.sleepQuality);
+  //   if (sortedWorst) {
+  //     return sortedWorst.shift().name;    
+  //   } else {
+  //     return "n/a"
+  //   }
+  // }
 }
 
 

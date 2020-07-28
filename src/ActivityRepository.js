@@ -42,16 +42,16 @@ class ActivityRepository {
   }
 
   checkIfStepGoalAchieved(date, user) {
-    let todaysRecord = this.individualEntryRecords.find(record => record.date === date)
-    let goalReached = (todaysRecord.numSteps >= user.dailyStepGoal)
+    let todaysRecord = this.individualEntryRecords.find(record => record.date === date);
+    let goalReached = (todaysRecord.numSteps >= user.dailyStepGoal);
     return goalReached;
   }
 
   findAllDaysStepsExceededGoal(user) {
-    let goalAchievedDates = []
+    let goalAchievedDates = [];
     this.individualEntryRecords.filter(record => { 
       if (record.numSteps >= user.dailyStepGoal) {
-        goalAchievedDates.push(record.date)
+        goalAchievedDates.push(record.date);
       }
       return goalAchievedDates;
     })
@@ -68,24 +68,13 @@ class ActivityRepository {
     }, 0) / 7).toFixed(0);
   }
 
-  //// ADDITIONAL FEATURE IF WE WANT TO DISPLAY IT
-  calculateDailyCalories(date) {
-    let totalMinutes = this.activityRecord.filter(activity => {
-      return activity.date === date
-    }).reduce((sumMinutes, activity) => {
-      return sumMinutes += activity.minutesActive
-    }, 0);
-    return Math.round(totalMinutes * 7.6);
-  }
-
   compareUserGoalWithCommunityGoal(userGoal, userRepo) {
-    let communityStepGoal = userRepo.getCommunityAvgStepGoal()
+    let communityStepGoal = userRepo.getCommunityAvgStepGoal();
     let goalDifference = userGoal - communityStepGoal;
     if (goalDifference) { 
-      return `Your goal is ${goalDifference} steps above average!`
+      return `Your goal is ${goalDifference} steps above average!`;
     } else {
-      return `Your goal is ${goalDifference} steps below average`
-  
+      return `Your goal is ${goalDifference} steps below average`;
     }
   }
  
@@ -99,11 +88,6 @@ class ActivityRepository {
       this.individualEntryRecords.push(input);
     }
   }
-
-  // addStairsInput(input) {
-  //   let dayFound = this.individualEntryRecords.find(record => record.date === input.date);
-  //   dayFound ? dayFound.flightsOfStairs += input.flightsOfStairs : this.individualEntryRecords.push(input);
-  // }
 
   getStairsByDay(date) {
     let dayFound = this.individualEntryRecords.find(entry => entry.date === date);
@@ -140,6 +124,5 @@ class ActivityRepository {
     return this.getWeeklyFlightsClimbed(date) * 12;
   }
 }
-
 
 export default ActivityRepository;

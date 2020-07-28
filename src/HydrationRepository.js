@@ -1,7 +1,6 @@
 class HydrationRepository {
-  constructor(today) {
+  constructor() {
     this.individualEntryRecords = [];
-    // this.averageOuncesAllTime = this.getAverageOuncesOverall();
   }
   
   getOuncesByDay(date) {
@@ -37,8 +36,6 @@ class HydrationRepository {
     let averageWeeklyOunces = (totalWeeklyOunces / 7).toFixed(0);
     return Number(averageWeeklyOunces);
   }
-  // ^^^^^ average ounces BY WEEK
-
 
   addHydroInput(input) {
     let foundInRecord = this.individualEntryRecords.find(record => record.date === input.date);
@@ -48,12 +45,6 @@ class HydrationRepository {
       this.individualEntryRecords.push(input);
     }
   }
-
-  
 }
-
-    
-
-
 
 export default HydrationRepository;

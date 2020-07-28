@@ -14,17 +14,17 @@ class SleepRepository {
   }
 
   getWeeksDailyHours() {
-    let week = this.individualEntryRecords.slice(-7)
+    let week = this.individualEntryRecords.slice(-7);
     return week.map(day => {
       return day.hoursSlept
-    })
+    });
   }
 
   getWeeksDailyQual() {
-    let week = this.individualEntryRecords.slice(-7)
+    let week = this.individualEntryRecords.slice(-7);
     return week.map(day => {
       return day.sleepQuality
-    })
+    });
   }
 
   getAvgQualitySleptOverall() {
@@ -32,7 +32,7 @@ class SleepRepository {
       sum += entry.sleepQuality;
       return sum;
     }, 0);
-    let overallAverageQuality = (qualityHours / this.individualEntryRecords.length).toFixed(1)
+    let overallAverageQuality = (qualityHours / this.individualEntryRecords.length).toFixed(1);
     return Number(overallAverageQuality);
   }
  
@@ -41,8 +41,8 @@ class SleepRepository {
       sum += entry.hoursSlept;
       return sum;
     }, 0);
-    let overallAverageHoursSlept = (hoursSlept / this.individualEntryRecords.length).toFixed(0)
-    return Number(overallAverageHoursSlept)
+    let overallAverageHoursSlept = (hoursSlept / this.individualEntryRecords.length).toFixed(0);
+    return Number(overallAverageHoursSlept);
   }
 
   getWeekAvgQualitySlept(todaysDate) {

@@ -29,40 +29,6 @@ class User {
     return names[0].toUpperCase();
   }
 
-  // calculateAverageHoursThisWeek(todaysDate) {
-  //   return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
-  //     let index = this.sleepHoursRecord.indexOf(this.sleepHoursRecord.find(sleep => sleep.date === todaysDate));
-  //     if (index <= this.sleepHoursRecord.indexOf(sleepAct) && this.sleepHoursRecord.indexOf(sleepAct) <= (index + 6)) {
-  //       sum += sleepAct.hours;
-  //     }
-  //     return sum;
-  //   }, 0) / this.sleepHoursRecord.length).toFixed(1);
-  // }
-
-  // calculateAverageQualityThisWeek(todaysDate) {
-  //   return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
-  //     let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todaysDate));
-  //     if (index <= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
-  //       sum += sleepAct.quality;
-  //     }
-  //     return sum;
-  //   }, 0) / this.sleepQualityRecord.length).toFixed(1);
-  // }
-
-  // updateSleep(date, hours, quality) {
-  //   this.sleepHoursRecord.unshift({date, hours});
-  //   this.sleepQualityRecord.unshift({date, quality});
-  //   if (this.sleepHoursRecord.length) {
-  //     this.hoursSleptAverage = ((hours + (this.hoursSleptAverage * (this.sleepHoursRecord.length - 1))) / this.sleepHoursRecord.length).toFixed(1);
-  //   } else {
-  //     this.hoursSleptAverage = hours;
-  //   }
-  //   if (this.sleepQualityRecord.length) {
-  //     this.sleepQualityAverage = ((quality + (this.sleepQualityAverage * (this.sleepQualityRecord.length - 1))) / this.sleepQualityRecord.length).toFixed(1);
-  //   } else {
-  //     this.sleepQualityAverage = quality;
-  //   }
-
   findClimbingRecord() {
     return this.activityRecord.sort((a, b) => {
       return b.flightsOfStairs - a.flightsOfStairs;
@@ -78,18 +44,6 @@ class User {
       }
       return sum;
     }, 0) / 7).toFixed(1);
-  }
-
-  ////// NOT USING THIS:
-  calculateDailyCalories(date) {
-    let totalMinutes = this.activityRecord
-      .filter((activity) => {
-        return activity.date === date;
-      })
-      .reduce((sumMinutes, activity) => {
-        return (sumMinutes += activity.minutesActive);
-      }, 0);
-    return Math.round(totalMinutes * 7.6);
   }
 
   findFriends(userRepository) {
