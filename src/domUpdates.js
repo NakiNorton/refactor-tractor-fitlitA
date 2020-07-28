@@ -78,7 +78,7 @@ const domUpdates = {
     document.getElementById('steps-goal-comparison').innerText = this.currentUser.activityInfo.compareUserGoalWithCommunityGoal(this.currentUser.dailyStepGoal, this.userRepository);
   },
 
-  ///////////// STEPS DISPLAY SECTION /////////////////////////////////
+  ///////////// STAIRS DISPLAY SECTION ////////////////////////////////
 
   displayStairsCard() {
     document.querySelector('#stairs-user-stairs-today').innerText = this.currentUser.activityInfo.getStairsByDay(this.todaysDate);
@@ -116,7 +116,7 @@ const domUpdates = {
     document.querySelector('#input-ounces').value = ''; 
   },
 
-  //////// SLEEP DISPLAY SECTION //////////////////////////////////////
+  //////// SLEEP DISPLAY SECTION ////////////////////////////////////
 
   displaySleepCard() {
     document.querySelector('#sleep-user-hours-today').innerText = `${this.currentUser.sleepInfo.findLastNightsHours(this.todaysDate)}`;
