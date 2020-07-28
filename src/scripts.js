@@ -206,15 +206,14 @@ function postHydrationData(hydrationEntry) {
     headers: {
       'Content-Type': 'application/json'
     },
-
     body: JSON.stringify(hydrationEntry)
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log('we are winning!:', data)
+      console.log('success:', data)
     })
     .catch((error) => {
-      console.log('we are losing!', error)
+      console.log('failed:', error)
     })
 }
 
@@ -228,10 +227,10 @@ function postSleepData(sleepEntry) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log('we are winning!:', data)
+      console.log('success:', data)
     })
     .catch((error) => {
-      console.log('we are losing!', error)
+      console.log('failed:', error)
     })
 }
 
@@ -245,7 +244,7 @@ function postActivityData(activityEntry) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log('we are winning!:', data)
+      console.log('failed:', data)
     })
     .catch((error) => {
       console.log('we are losing!', error)
