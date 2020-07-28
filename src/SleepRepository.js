@@ -68,7 +68,7 @@ class SleepRepository {
   addSleepInput(input) {
     let foundInRecord = this.individualEntryRecords.find(record => record.date === input.date);
     if (foundInRecord) {
-      foundInRecord.hoursSlept = foundInRecord.numOunces + input.numOunces;
+      foundInRecord.hoursSlept = foundInRecord.hoursSlept + input.hoursSlept;
     } else {
       this.individualEntryRecords.push(input);
     }
