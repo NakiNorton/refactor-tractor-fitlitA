@@ -132,17 +132,26 @@ class UserRepository {
   }
 
   findBestSleeper() {
-    let bestSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual() > 3);
+    let bestSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual(this.todaysDate) > 3);
     let sortedBest =  bestSleepers.sort((a, b) => a.sleepQuality - b.sleepQuality);
-    return sortedBest.pop().name;
+    console.log(sortedBest.pop())
+    if (sortedBest) {
+      return sortedBest.pop().name;
+    } else { 
+      return "n/a"
+    }
   }
 
   findWorstSleeper() {
-    let worstSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual() < 3);
+    console.log()
+    let worstSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual(this.todaysDate) < 3);
     let sortedWorst =  worstSleepers.sort((a, b) => a.sleepQuality - b.sleepQuality);
-    return sortedWorst.shift().name;
+    if (sortedWorst) {
+      return sortedWorst.shift().name;    
+    } else {
+      return "n/a"
+    }
   }
-
 }
 
 
