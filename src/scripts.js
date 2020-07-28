@@ -18,7 +18,7 @@ function getData() {
   return fetchData().then((data) => {
     todaysDate = moment().format('YYYY/MM/DD');
     let userRepository = new UserRepository(data, todaysDate);
-    currentUser = userRepository.users[0];
+    currentUser = userRepository.users[Math.floor(Math.random() * userRepository.users.length)]
     domUpdates.defineData(currentUser, todaysDate, userRepository);
   }).then(() => {
     domUpdates.displayPage();
@@ -163,7 +163,6 @@ function sleepCardHandler() {
     };
     // postSleepData(newSleepEntry)
     currentUser.sleepInfo.addSleepInput(newSleepEntry);
-    console.log(typeof newSleepEntry.hoursSlept)
     domUpdates.sleepCardDisplay();
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
   }
