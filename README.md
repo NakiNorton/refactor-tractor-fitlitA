@@ -57,8 +57,11 @@ In this project, we will refactor an existing code base for a fitness / health t
 
 ## Reflections / Project Progression
 This was an absolute whirlwind of a project, but we learned and grew all the same. We were able to work well as a team to navigate new territories of SCSS, Fetch API, and testing with Spies.</br>
+
 The refactoring took up the majority of this project. We found that it was important to really take our time with the code to understand what was happening and how information was being passed around. In some cases, we learned that it was too much energy trying to decipher what the original coders were trying to do and so it made sense to start some paths totally anew.</br>
+
 Given more time, we would implement more robust testing in general as well as make better use of spies for our dom updates. Additionally, more sad path implementation and testing that would restrict what and how a user could input information for each category, for example, Sleep Quality input should only take in a value between one through five. Preventing duplicate entries being sent to the server was also another feature we debated implementing were it not for the time restrictions.</br>
+
 In terms of new technologies, there were clear opportunities where we could implement inheritance within our code as most methods within each class share similarites to each other. Methods such as accessing data for the day or week could have been refactored using parameters instead of repeating ourselves across each class. Features we would have liked to have implemented for all categories include trending data and leaderboard displays.
 Overall, while we did struggle with this project, using the new technologies helped concretize the more nebulous aspects of what we have learned in this mod despite being a particularly trying project.
 
