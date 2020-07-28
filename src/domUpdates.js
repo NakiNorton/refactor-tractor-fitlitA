@@ -11,10 +11,10 @@ const domUpdates = {
 
   displayPage() {
     this.displayName();
-    this.stepCardDisplay();
-    this.sleepCardDisplay();
-    this.hydrationCardDisplay();
-    this.stairsCardDisplay();
+    this.displayStepCard();
+    this.displaySleepCard();
+    this.displayHydrationCard();
+    this.displayStairsCard();
   },
   
   displayName() {
@@ -47,34 +47,30 @@ const domUpdates = {
 
   ///////////// STEPS DISPLAY SECTION /////////////////////////////////
 
-  stepCardDisplay() {
-    this.stepMainCardDisplay();
-    this.stepsInfoCard();
-    this.stepCalendarCardDisplay();
-    this.stepFriendCardDisplay(); 
+  displayStepCard() {
+    document.getElementById('steps-user-steps-today').innerText = `${this.currentUser.activityInfo.getStepsForToday(this.todaysDate, 'numSteps')}`;
+    this.displayStepsInfo();
+    this.displayStepCalendarCard();
+    this.displayStepFriendCard(); 
     this.displayUsersStepGoalComparison();
   },
 
-  stepMainCardDisplay() {
-    document.getElementById('steps-user-steps-today').innerText = `${this.currentUser.activityInfo.getStepsForToday(this.todaysDate)}`;
-  },
-
-  stepsInfoCard() {
+  displayStepsInfo() {
     document.querySelector('#input-steps-minutes').value = '';
     document.querySelector('#input-steps').value = '';
     document.getElementById('steps-info-miles-walked-today').innerText = 
     `${this.currentUser.activityInfo.getUsersMilesForDay(this.currentUser, this.todaysDate)}`;
-    document.getElementById('steps-info-active-minutes-today').innerText = `${this.currentUser.activityInfo.getActiveMinutesForToday(this.todaysDate)}`;
+    document.getElementById('steps-info-active-minutes-today').innerText = `${this.currentUser.activityInfo.getStepsForToday(this.todaysDate)}`;
   },
   
-  stepCalendarCardDisplay() {
+  displayStepCalendarCard() {
     document.querySelector('#steps-calendar-total-active-minutes-weekly').innerText = this.currentUser.activityInfo.getAverageMinutesActiveThisWeek(this.todaysDate);
     document.querySelector('#steps-calendar-total-steps-weekly').innerText = this.currentUser.activityInfo.getAverageStepsThisWeek(this.todaysDate);
   },
 
-  stepFriendCardDisplay() {
-    document.getElementById('steps-friend-steps-average-today').innerText = this.userRepository.getAllUsersAverageSteps(this.todaysDate);
-    document.getElementById('steps-friend-active-minutes-average-today').innerText = this.userRepository.getAllUsersAverageMinutesActive(this.todaysDate);
+  displayStepFriendCard() {
+    document.getElementById('steps-friend-steps-average-today').innerText = this.userRepository.getCommunityAverageSteps(this.todaysDate);
+    document.getElementById('steps-friend-active-minutes-average-today').innerText = this.userRepository.getCommunityAverageMinutesActive(this.todaysDate);
     document.getElementById('steps-friend-average-step-goal').innerText = this.userRepository.getCommunityAvgStepGoal();
   },
 
@@ -84,29 +80,45 @@ const domUpdates = {
 
   ///////////// STEPS DISPLAY SECTION /////////////////////////////////
 
-  stairsCardDisplay() {
+  displayStairsCard() {
     document.querySelector('#stairs-user-stairs-today').innerText = this.currentUser.activityInfo.getStairsByDay(this.todaysDate);
+    document.querySelector('#input-stairs').value = '';
+    this.displayStairsCalendar() 
+    this.displayCommunityStairInfo()
+  },
+    
+  displayStairsCalendar() {
     document.querySelector('#stairs-calendar-flights-average-weekly').innerText = this.currentUser.activityInfo.getWeeklyFlightsClimbed();
     document.querySelector('#stairs-calendar-stairs-average-weekly').innerText = this.currentUser.activityInfo.getWeeklyStairsClimbed();
+  },
+
+  displayCommunityStairInfo() {
     document.querySelector('#stairs-friend-flights-average-today').innerText = this.userRepository.getCommunityAvgFlightsOverall(this.todaysDate);
-    document.querySelector('#input-stairs').value = '';
   },
 
   //////////// HYDRATION DISPLAY SECTION /////////////////////////////////
 
-  hydrationCardDisplay() {
+  displayHydrationCard() {
     document.getElementById('hydration-user-ounces-today').innerText = `${this.currentUser.hydrationInfo.getOuncesByDay(this.todaysDate)}`;
+    this.displayHydrationCalendar();
+    this.displayCommunityHydrationInfo();
+  },
+
+  displayHydrationCalendar() {
     document.querySelector('.hydration-weekly-avg').innerText = `You averaged ${this.currentUser.hydrationInfo.getWeeklyAvgOunces(this.todaysDate)} ounces this week!`;
     let dailyOz = document.querySelectorAll('.daily-oz');
     let allDaysOuncesOverWeek = this.currentUser.hydrationInfo.getWeeksDailyOunces().sort((a, b) => a - b);
     dailyOz.forEach((dailyOunces, i) => dailyOunces.innerText = allDaysOuncesOverWeek[i]);
+  },
+
+  displayCommunityHydrationInfo() {
     document.querySelector('#hydration-friend-ounces-today').innerText = `${this.userRepository.getCommunityAvgOuncesOverall()}`;
     document.querySelector('#input-ounces').value = ''; 
   },
 
   //////// SLEEP DISPLAY SECTION //////////////////////////////////////
 
-  sleepCardDisplay() {
+  displaySleepCard() {
     document.querySelector('#sleep-user-hours-today').innerText = `${this.currentUser.sleepInfo.findLastNightsHours(this.todaysDate)}`;
     this.displaySleepCalendar();
     this.displaySleepStats();
