@@ -1,36 +1,34 @@
 import { expect } from 'chai'
 import User from '../src/User';
 import ActivityRepository from '../src/ActivityRepository';
-import UserRepository from '../src/UserRepository';
-
 
 describe('ActivityRepository', function() {
   let activity1, activity2, activity3, activity4, mockRawData, mockActivityRepo, todaysDate, user;
   beforeEach(() => {
     activity1 = {
       userID: 1,
-      date: "07/20/2020",
+      date: '07/20/2020',
       numSteps: 3577,
       minutesActive: 140,
       flightsOfStairs: 16,
     },
     activity2 = {
       userID: 1,
-      date: "07/22/2020",
+      date: '07/22/2020',
       numSteps: 14294,
       minutesActive: 138,
       flightsOfStairs: 10
     },
     activity3 =  {
       userID: 1,
-      date: "07/24/2020",
+      date: '07/24/2020',
       numSteps: 11022,
       minutesActive: 116,
       flightsOfStairs: 33
     },
     activity4 = {
       userID: 1,
-      date: "07/27/2020",
+      date: '07/27/2020',
       numSteps: 3486,
       minutesActive: 114,
       flightsOfStairs: 32
@@ -47,28 +45,27 @@ describe('ActivityRepository', function() {
         8
       ]}], 
     activityData: [activity1, activity2, activity3, activity4],
-    sleepData: [{userID: "blah"}],
-    hydrationData: [{userID: "blah"}], sleepData: [{userID: "blah"}], activityData: [activity1, activity2, activity3, activity4]},
+    sleepData: [{userID: 'blah'}],
+    hydrationData: [{userID: 'blah'}], sleepData: [{userID: 'blah'}]}, 
     todaysDate = '07/27/2020',
-    // mockUserRepo = new UserRepository(mockRawData, todaysDate);
     mockActivityRepo = new ActivityRepository(todaysDate),
     user = new User({
       id: 1,
-      name: "Luisa Hane",
-      address: "15195 Nakia Tunnel, Erdmanport VA 19901-1697",
-      email: "Diana.Hayes1@hotmail.com",
+      name: 'Luisa Hane',
+      address: '15195 Nakia Tunnel, Erdmanport VA 19901-1697',
+      email: 'Diana.Hayes1@hotmail.com',
       dailyStepGoal: 10000,
       friends: [16, 4, 8],
       strideLength: 4.3,
       hydrationInfo: {
         individualEntryRecords: [
           {
-            date: "2019/06/15",
+            date: '2019/06/15',
             numOunces: 37,
             userID: 1,
           },
           {
-            date: "2019/06/14",
+            date: '2019/06/14',
             numOunces: 52,
             userID: 1,
           },
@@ -78,13 +75,13 @@ describe('ActivityRepository', function() {
       sleepInfo: {
         individualEntryRecord: [
           {
-            date: "2019/06/15",
+            date: '2019/06/15',
             hoursSlept: 6.1,
             sleepQuality: 2.2,
             userID: 1,
           },
           {
-            date: "2019/06/14",
+            date: '2019/06/14',
             hoursSlept: 7,
             sleepQuality: 3.2,
             userID: 1,
@@ -94,14 +91,14 @@ describe('ActivityRepository', function() {
       activityInfo: {
         individualEntryRecords: [
           {
-            date: "2019/06/15",
+            date: '2019/06/15',
             flightsOfStairs: 16,
             minutesActive: 140,
             numSteps: 3577,
             userID: 1,
           },
           {
-            date: "2019/06/14",
+            date: '2019/06/14',
             flightsOfStairs: 35,
             minutesActive: 120,
             numSteps: 10123,
@@ -127,7 +124,7 @@ describe('ActivityRepository', function() {
 
   it('should return a date for each entry', function() {
     mockActivityRepo.individualEntryRecords.push(...mockRawData.activityData);
-    expect(mockActivityRepo.individualEntryRecords[0].date).to.equal("07/20/2020");
+    expect(mockActivityRepo.individualEntryRecords[0].date).to.equal('07/20/2020');
   });
 
   it('should return a number of steps for each entry', function() {
@@ -162,8 +159,8 @@ describe('ActivityRepository', function() {
  
   it('should add user input to records array, or update existing entry', function() {
     mockActivityRepo.individualEntryRecords.push(...mockRawData.activityData);
-    let userInput = {userID: 1, date: "07/22/2020", flightsOfStairs: 10};
-    mockActivityRepo.addStairsInput(userInput);
+    let userInput = {userID: 1, date: '07/22/2020', flightsOfStairs: 10};
+    mockActivityRepo.addActivityInput(userInput);
     expect(mockActivityRepo.individualEntryRecords[1].flightsOfStairs).to.equal(20);
   });
 
