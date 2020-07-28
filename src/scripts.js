@@ -41,7 +41,7 @@ const postNewActivityRecord = () => {
     minutesActive: Number(inputMinutes.value),
     flightsOfStairs: inputStairs.value * 12
   }
-  // postActivityData(newActivityEntry);
+  postActivityData(newActivityEntry);
   currentUser.activityInfo.addActivityInput(newActivityEntry);
 }
 
