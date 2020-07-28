@@ -18,7 +18,7 @@ const domUpdates = {
   },
   
   displayName() {
-    document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
+    document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S FITLIT`;
   },
 
   flipCard(cardToHide, cardToShow) {
@@ -119,7 +119,7 @@ const domUpdates = {
   
   displaySleepStats() {
     document.getElementById('sleep-info-quality-today').innerText = '';
-    document.querySelector('#sleep-info-quality-today').innerText = `${this.currentUser.sleepInfo.findLastNightsSleepQual(this.todaysDate)};`
+    document.querySelector('#sleep-info-quality-today').innerText = `${this.currentUser.sleepInfo.findLastNightsSleepQual(this.todaysDate)}`;
     document.getElementById('sleep-info-hours-average-alltime').innerText =  `${this.currentUser.sleepInfo.getAvgHoursSleptOverall()}`;
     document.getElementById('sleep-info-quality-average-alltime').innerText = `${this.currentUser.sleepInfo.getAvgQualitySleptOverall()}`;
   }
