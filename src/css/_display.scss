@@ -4,15 +4,17 @@ main {
   grid-template-areas:
   'steps hydration'
   'stairs sleep';
-  height: auto;
+  height: 100%;
 }
 
 .main-card {
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 20vw;
+  height: 25vw;
   justify-content: space-around;
+  margin-top: 0.5vw;
+  margin-bottom: 0.5vw;
 }
 
 .main-card-top-row {
@@ -68,10 +70,10 @@ main {
 .inputs {
   background-color: transparent;
   color: #FFFFFF;
-  font-size: 16px;
+  font-size: 20px;
   text-align: center;
   font-weight: 300;
-  width: 75px;
+  width: 90px;
   height: 30px;
   border-radius: 5px;
   border-color: black;
