@@ -12,13 +12,17 @@ const domUpdates = {
   ////////// GENERAL DISPLAY //////////////////////////////////////////
   displayPage() {
     console.log(this.currentUser)
-    document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
+    this.displayName()
     this.stepCardDisplay();
     this.sleepCardDisplay();
     this.hydrationCardDisplay();
     this.stairsCardDisplay();
   },
   
+  displayName() {
+    document.querySelector('#header-name').innerText = `${this.currentUser.getFirstName()}'S `;
+  },
+
   flipCard(cardToHide, cardToShow) {
     cardToHide.classList.add('hide');
     cardToShow.classList.remove('hide');

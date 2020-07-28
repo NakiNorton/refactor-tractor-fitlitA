@@ -93,15 +93,16 @@ class ActivityRepository {
     if (dayFound) {
       dayFound.numSteps += input.numSteps;
       dayFound.minutesActive += input.minutesActive;
+      dayFound.flightsOfStairs += input.flightsOfStairs;
     } else {
       this.individualEntryRecords.push(input);
     }
   }
 
-  addStairsInput(input) {
-    let dayFound = this.individualEntryRecords.find(record => record.date === input.date);
-    dayFound ? dayFound.flightsOfStairs += input.flightsOfStairs : this.individualEntryRecords.push(input);
-  }
+  // addStairsInput(input) {
+  //   let dayFound = this.individualEntryRecords.find(record => record.date === input.date);
+  //   dayFound ? dayFound.flightsOfStairs += input.flightsOfStairs : this.individualEntryRecords.push(input);
+  // }
 
   getStairsByDay(date) {
     let dayFound = this.individualEntryRecords.find(entry => entry.date === date);

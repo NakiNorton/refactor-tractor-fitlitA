@@ -46,7 +46,7 @@ const populateUserProfile = () => {
   domUpdates.showDropdown(currentUser);
 }
 
-/////// STEP SECTION /////////
+
 const addNewActivityRecord = () => {
   let inputStairs = document.querySelector("#input-stairs");
   let inputSteps = document.querySelector('#input-steps');
@@ -58,9 +58,11 @@ const addNewActivityRecord = () => {
     minutesActive: Number(inputMinutes.value),
     flightsOfStairs: inputStairs.value * 12
   }
-  postActivityData(newActivityEntry);
-  // currentUser.activityInfo.addStairsInput(newActivityEntry);
+  // postActivityData(newActivityEntry);
+  currentUser.activityInfo.addActivityInput(newActivityEntry);
 }
+
+/////// STEP SECTION /////////
 
 const stepCardHandler = () => {
   let stepsMainCard = document.querySelector('#steps-main-card');
@@ -150,8 +152,8 @@ const hydrationCardHandler = () => {
       date: todaysDate, 
       numOunces: Number(input.value
     )};
-    // currentUser.hydrationInfo.addHydroInput(newHydrationEntry);
-    postHydrationData(newHydrationEntry)
+    currentUser.hydrationInfo.addHydroInput(newHydrationEntry);
+    // postHydrationData(newHydrationEntry)
     domUpdates.hydrationCardDisplay(input); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
