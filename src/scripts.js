@@ -16,7 +16,7 @@ const stairsSection = document.querySelector("#stairs-card-container");
 
 function getData() {
   return fetchData().then((data) => {
-    todaysDate = moment().format("L");
+    todaysDate = moment().format("YYYY/MM/DD");
     let userRepository = new UserRepository(data, todaysDate);
     currentUser = userRepository.users[0]
     console.log(currentUser)
@@ -46,6 +46,22 @@ const populateUserProfile = () => {
   domUpdates.showDropdown(currentUser);
 }
 
+
+const addNewActivityRecord = () => {
+  let inputStairs = document.querySelector("#input-stairs");
+  let inputSteps = document.querySelector('#input-steps');
+  let inputMinutes = document.querySelector("#input-steps-minutes");
+  let newActivityEntry = {
+    userID: currentUser.id,
+    date: todaysDate,
+    numSteps: Number(inputSteps.value),
+    minutesActive: Number(inputMinutes.value),
+    flightsOfStairs: inputStairs.value * 12
+  }
+  // postActivityData(newActivityEntry);
+  currentUser.activityInfo.addActivityInput(newActivityEntry);
+}
+
 /////// STEP SECTION /////////
 
 const stepCardHandler = () => {
@@ -71,15 +87,7 @@ const stepCardHandler = () => {
   }
   if (event.target.classList.contains('user-steps-submit')) {
     event.preventDefault();
-    let inputSteps = document.querySelector('#input-steps');
-    let inputMinutes = document.querySelector("#input-steps-minutes");
-    let newActivityEntry = {
-      userID: currentUser.id,
-      date: todaysDate,
-      numSteps: Number(inputSteps.value),
-      minutesActive: Number(inputMinutes.value)
-    };
-    currentUser.activityInfo.addActivityInput(newActivityEntry);
+    addNewActivityRecord()
     domUpdates.resetInputField('#input-steps', '#input-steps-minutes') 
     domUpdates.stepCardDisplay();
     domUpdates.flipCard(stepsInfoCard, stepsMainCard);
@@ -112,13 +120,7 @@ const stairsCardHandler = () => {
   }
   if (event.target.classList.contains("user-stairs-submit")) {
     event.preventDefault();
-    let inputStairs = document.querySelector("#input-stairs");
-    let activityObj = {
-      userID: currentUser.id,
-      date: todaysDate,
-      flightsOfStairs: inputStairs.value * 12
-    };
-    currentUser.activityInfo.addStairsInput(activityObj);
+    addNewActivityRecord()
     domUpdates.stairsCardDisplay();
     domUpdates.flipCard(stairsInfoCard, stairsMainCard);
   }
@@ -146,9 +148,12 @@ const hydrationCardHandler = () => {
   if (event.target.classList.contains('user-ounces-submit')) {
     event.preventDefault();
     let input = document.querySelector('#input-ounces');
-    let hydrationObj = {userID: currentUser.id, date: todaysDate, numOunces: Number(input.value)};
-    currentUser.hydrationInfo.addHydroInput(hydrationObj);
-    // postData(hydrationObj, hydration);
+    let newHydrationEntry = {userID: currentUser.id, 
+      date: todaysDate, 
+      numOunces: Number(input.value
+    )};
+    currentUser.hydrationInfo.addHydroInput(newHydrationEntry);
+    // postHydrationData(newHydrationEntry)
     domUpdates.hydrationCardDisplay(input); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
@@ -179,13 +184,15 @@ function sleepCardHandler() {
     event.preventDefault();
     let inputHours = document.querySelector("#input-sleep");
     let inputQuality = document.querySelector("#input-sleep-quality");
-    let sleepObj = {
+    let newSleepEntry = {
       userID: currentUser.id,
       date: todaysDate,
-      hoursSlept: inputHours.value,
-      sleepQuality: inputQuality.value
+      hoursSlept: Number(inputHours.value),
+      sleepQuality: Number(inputQuality.value)
     };
-    currentUser.sleepInfo.addSleepInput(sleepObj);
+    // postSleepData(newSleepEntry)
+    currentUser.sleepInfo.addSleepInput(newSleepEntry);
+    console.log(typeof newSleepEntry.hoursSlept)
     domUpdates.sleepCardDisplay();
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
   }
@@ -193,67 +200,51 @@ function sleepCardHandler() {
 
 ///////Post Section ///////////////////////////////
 
-function postHydrationData() {
+function postHydrationData(hydrationEntry) {
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-
-    body: JSON.stringify({
-      "userID": integer,
-      "date": string,
-      "numOunces": integer
-    })
+    body: JSON.stringify(hydrationEntry)
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log('we are winning!:', data)
+      console.log('success:', data)
     })
     .catch((error) => {
-      console.log('we are losing!', error)
+      console.log('failed:', error)
     })
 }
 
-function postSleepData() {
+function postSleepData(sleepEntry) {
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      "userID": integer,
-      "date": string,
-      "hoursSlept": integer,
-      "sleepQuality": integer
-    })
+    body: JSON.stringify(sleepEntry)
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log('we are winning!:', data)
+      console.log('success:', data)
     })
     .catch((error) => {
-      console.log('we are losing!', error)
+      console.log('failed:', error)
     })
 }
 
-function postActivityData() {
+function postActivityData(activityEntry) {
   fetch('	https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      "userID": integer,
-      "date": string,
-      "numSteps": integer,
-      "minutesActive": integer,
-      "flightsOfStairs": integer
-    })
+    body: JSON.stringify(activityEntry)
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log('we are winning!:', data)
+      console.log('failed:', data)
     })
     .catch((error) => {
       console.log('we are losing!', error)

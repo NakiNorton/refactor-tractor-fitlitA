@@ -6,15 +6,18 @@ import User from '../src/User';
 import domUpdates from '../src/domUpdates';
 chai.use(spies);
 
-describe('UpdatesToDOM', function () {
+describe.only('UpdatesToDOM', function () {
   beforeEach(() => {
     global.domUpdates = {};
     chai.spy.on(domUpdates, "stepCardDisplay", () => {});
     chai.spy.on(domUpdates, "flipCard", () => {});
-    chai.spy.on(domUpdates, 'hydrationCardDisplay', () => {});
-
+    chai.spy.on(domUpdates, "hydrationCardDisplay", () => {});
+    chai.spy.on(domUpdates, "displayPage", () => {})
+    chai.spy.on(domUpdates, "displayName", () => {})
   });
-
+  afterEach(() {
+    chai.spy.restore(domUpdates);
+  })
   it('should change whats being displayed on card', function () {
     expect(domUpdates.flipCard).to.have.been.called(1);
   })
@@ -31,9 +34,13 @@ describe('UpdatesToDOM', function () {
     domUpdates.hydrationCardDisplay(input)
     expect(domUpdates.hydrationCardDisplay).to.have.been.called(1)
     expect(domUpdates.hydrationCardDisplay).to.have.been.called.with(input)
-    
-
   });
+
+  it('Should display the currentUser name', () => {
+    domUpdates.displayName()
+    expect(domUpdates.displayName).to.have.been.called(1)
+    expect(domUpdates.displayName).to.have.been.called.with()
+  })
 
   // beforeEach(() => {
   //   global.document = {};

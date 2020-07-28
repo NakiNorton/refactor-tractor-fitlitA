@@ -3,12 +3,14 @@ class SleepRepository {
     this.individualEntryRecords = [];
   }
   
-  findLastNightsSleepQual() {
-    return this.individualEntryRecords[0].sleepQuality
+  findLastNightsSleepQual(date) {
+    let dayFound = this.individualEntryRecords.find(entry => entry.date === date);
+    return dayFound ? dayFound.sleepQuality : 0;
   }
 
-  findLastNightsHours() {
-    return this.individualEntryRecords[0].hoursSlept
+  findLastNightsHours(date) {
+    let dayFound = this.individualEntryRecords.find(entry => entry.date === date);
+    return dayFound ? dayFound.hoursSlept : 0;
   }
 
   getWeeksDailyHours() {
