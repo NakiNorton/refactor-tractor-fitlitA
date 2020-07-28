@@ -3,6 +3,17 @@ class ActivityRepository {
     this.individualEntryRecords = [];
   }
 
+  addActivityInput(input) {
+    let dayFound = this.individualEntryRecords.find(record => record.date === input.date);
+    if (dayFound) {
+      dayFound.numSteps += input.numSteps;
+      dayFound.minutesActive += input.minutesActive;
+      dayFound.flightsOfStairs += input.flightsOfStairs;
+    } else {
+      this.individualEntryRecords.push(input);
+    }
+  }
+
   getStepsForToday(date) {
     let todaysStepRecord = this.individualEntryRecords.find(record => record.date === date);
     return todaysStepRecord ? (todaysStepRecord.numSteps) : 0;
@@ -78,17 +89,6 @@ class ActivityRepository {
     }
   }
  
-  addActivityInput(input) {
-    let dayFound = this.individualEntryRecords.find(record => record.date === input.date);
-    if (dayFound) {
-      dayFound.numSteps += input.numSteps;
-      dayFound.minutesActive += input.minutesActive;
-      dayFound.flightsOfStairs += input.flightsOfStairs;
-    } else {
-      this.individualEntryRecords.push(input);
-    }
-  }
-
   getStairsByDay(date) {
     let dayFound = this.individualEntryRecords.find(entry => entry.date === date);
     return dayFound ? (dayFound.flightsOfStairs * 12) : 0;
