@@ -142,31 +142,24 @@ const domUpdates = {
   //////// SLEEP DISPLAY SECTION //////////////////////////////////////
 
   sleepCardDisplay() {
-    document.querySelector('#sleep-user-hours-today').innerText = `${this.currentUser.sleepInfo.findLastNightsHours()}`;
-    this.displaySleepCalendar()
+    document.querySelector('#sleep-user-hours-today').innerText = `${this.currentUser.sleepInfo.findLastNightsHours("2019/06/27")}`;
+    this.displaySleepCalendar();
     this.displaySleepStats();
-  
   },
 
   displaySleepCalendar() {
     document.querySelector('#sleep-calendar-hours-average-weekly').innerText = `${this.currentUser.sleepInfo.getWeekAvgHoursSlept(this.todaysDate)}`;
-    document.querySelector('#sleep-calendar-quality-average-weekly').innerText = `${this.currentUser.sleepInfo.getWeekAvgQualitySlept()}`
+    document.querySelector('#sleep-calendar-quality-average-weekly').innerText = `${this.currentUser.sleepInfo.getWeekAvgQualitySlept()}`;
   },
   
   displaySleepStats() {
-    document.querySelector('#sleep-info-quality-today').innerText = `${this.currentUser.sleepInfo.findLastNightsSleepQual(this.todaysDate)}`
-    document.getElementById('sleep-info-hours-average-alltime').innerText =  `${this.currentUser.sleepInfo.getAvgHoursSleptOverall()}`
-    document.getElementById('sleep-info-quality-average-alltime').innerText = `${this.currentUser.sleepInfo.getAvgQualitySleptOverall()}`
+    document.getElementById("sleep-info-quality-today").innerText = '';
+    document.querySelector('#sleep-info-quality-today').innerText = `${this.currentUser.sleepInfo.findLastNightsSleepQual(this.todaysDate)};`
+    document.getElementById('sleep-info-hours-average-alltime').innerText =  `${this.currentUser.sleepInfo.getAvgHoursSleptOverall()}`;
+    document.getElementById('sleep-info-quality-average-alltime').innerText = `${this.currentUser.sleepInfo.getAvgQualitySleptOverall()}`;
     document.querySelector('#sleep-friend-longest-sleeper').innerText = this.userRepository.findBestSleeper();
     document.querySelector('#sleep-friend-worst-sleeper').innerText = this.userRepository.findWorstSleeper();    
-  },
-
-  sleepAddInputDisplay() {
-    document.getElementById("sleep-info-quality-today").innerText = '';
-    document.getElementById("sleep-info-quality-today").innerText = `${this.currentUser.sleepInfo.findLastNightsSleepQual(this.todaysDate)}`;
-    document.getElementById("sleep-info-quality-today").innerText = '';
-    document.getElementById("sleep-info-quality-today").innerText = `${this.currentUser.sleepInfo.findLastNightsSleepQual(this.todaysDate)}`;
-  },
-
+  }
 }
+
 export default domUpdates;
