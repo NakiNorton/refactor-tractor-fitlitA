@@ -12,7 +12,7 @@ Mod2 Group Project
 - [Project Spec](https://frontend.turing.io/projects/module-2/refactor-tractor.html)
 
 ## Abstract 
-In this project, we will refactor an existing code base for a fitness / health tracker. We will implement new features of our own, namely SCSS, Accessibility, Fetch API, and testing with Spies. We considered our MVP to fulfill all requirements on the original FitLit spec, score a 95% or higher on Accessibility in Lighthouse, utilize SCSS/SASS in styling, implement Spies and fetching / posting data from/to API server.  
+In this project, we will refactor an existing code base for a fitness / health tracker. We will implement new features of our own, namely SCSS, Accessibility, Fetch API, and testing with Spies. We considered our MVP to fulfill all requirements on the original FitLit spec, score a 95% or higher on Accessibility in Lighthouse, utilize SCSS/SASS in styling, implement Spies and fetching / posting data from/to API server, all of which we fulfilled.   
 
 ## Technologies / Systems
 - Javascript
