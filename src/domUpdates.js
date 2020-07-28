@@ -60,11 +60,11 @@ const domUpdates = {
   },
 
   stepsInfoCard() {
-    document.getElementById('steps-info-miles-walked-today').innerText = 
-    `${this.currentUser.activityInfo.getUsersMilesForDay(this.currentUser, this.todaysDatedate)}`;
-    document.getElementById('steps-info-active-minutes-today').innerText = `${this.currentUser.activityInfo.getActiveMinutesForToday(this.todaysDatedate)}`;
     document.querySelector('#input-steps-minutes').value = '';
     document.querySelector('#input-steps').value = '';
+    document.getElementById('steps-info-miles-walked-today').innerText = 
+    `${this.currentUser.activityInfo.getUsersMilesForDay(this.currentUser, this.todaysDate)}`;
+    document.getElementById('steps-info-active-minutes-today').innerText = `${this.currentUser.activityInfo.getActiveMinutesForToday(this.todaysDate)}`;
   },
   
   stepCalendarCardDisplay() {
