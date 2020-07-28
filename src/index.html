@@ -2,13 +2,13 @@
 <html lang='en'>
   <head>
     <meta charset='UTF-8'>
-    <title>Trisha & Kayla's FitLit</title>
+    <title>FitLit</title>
     <link href="https://fonts.googleapis.com/css?family=Oswald:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,700&display=swap" rel="stylesheet">
   </head>
   <body>
     <header>
-      <h1><span id='header-name'></span>FITLIT</h1>
+      <h1><span id='header-name'></h1>
       <button name='button' id='profile-button' aria-label='Expand User Profile Information'></button>
       <section class='hide' id='user-info-dropdown' aria-expanded='false'>
         <h5 id='dropdown-name'></h5>
@@ -30,7 +30,7 @@
             </button>
           </div>
           <h2 id='steps-user-steps-today'>0</h2>
-          <div class='main-card-bottom-row'>
+          <div class='main-card-bottom-row'> 
             <h3>STEPS TODAY</h3>
             <button name='button' class='calendar-button steps-calendar-button' aria-label='Open Calendar'></button>
           </div>
@@ -46,6 +46,7 @@
             <p>TOTAL MILES WALKED TODAY:</p>
             <h4 id='steps-info-miles-walked-today'>0</h4>
           </div>
+            <p class='steps-input-instructions'>Add steps and active minutes for today:</p>
           <div class="input-box">
             <input type="number" class="inputs" id="input-steps-minutes" placeholder="minutes" maxlength="10" minlength="0" min="0">
             <input type="number" class="inputs" id="input-steps" placeholder="steps" maxlength="10" minlength="0" min="0">
@@ -69,7 +70,6 @@
             <p id='steps-goal-comparison' class='step-goal-comparison-all-users'></p>
           </div>
         </section>
-        </section>
         <section class='calendar-card hide' id='steps-calendar-card'>
           <button name='button' class='go-back-button steps-go-back-button' aria-label='Return To Previous Information'></button>
           <div class='card-data-line'>
@@ -89,7 +89,7 @@
             <h3>YOU DRANK</h3>
             <button name='button' class='friends-button hydration-friends-button' aria-label='Open Friends Hydration Information'></button>
           </div>
-          <h2 id='hydration-user-ounces-today'></h2>
+          <h2 id='hydration-user-ounces-today'>0</h2>
           <div class='main-card-bottom-row'>
             <h3>OZ OF WATER TODAY</h3>
             <button name='button' class='calendar-button hydration-calendar-button' aria-label='Open Hydration Calendar'> 
@@ -152,7 +152,7 @@
             <h3>YOU CLIMBED</h3>
             <button name='button' class='friends-button stairs-friends-button' aria-label='Open Friends Stair Count Information'></button>
           </div>
-          <h2 id='stairs-user-stairs-today'></h2>
+          <h2 id='stairs-user-stairs-today'>0</h2>
           <div class='main-card-bottom-row'>
             <h3>STAIRS TODAY</h3>
             <button name='button' class='calendar-button stairs-calendar-button' aria-label='Open Calendar'></button>
@@ -161,7 +161,7 @@
         <section class='info-card hide' id='stairs-info-card'>
           <button name='button' class='go-back-button stairs-go-back-button' aria-label='Return to Previous Information'></button>
           <div class='card-data-line'>
-            <p>FLIGHTS CLIMBED TODAY:</p>
+            <p>ADD STAIRS CLIMBED TODAY:</p>
             <h4 id='stairs-info-flights-today'></h4>
             <div class="input-box">
               <input type="number" class="inputs" id="input-stairs" placeholder="flights" maxlength="5" minlength="0">
@@ -174,7 +174,6 @@
             <p>ALL USERS' AVERAGE FLIGHTS:</p>
             <h4 id='stairs-friend-flights-average-today'></h4>
           </div>
-        </section>
         </section>
         <section class='calendar-card hide' id='stairs-calendar-card'>
           <button name='button' class='go-back-button stairs-go-back-button' aria-label='Return to Previous Information'></button>
@@ -194,18 +193,16 @@
             <button name='button' class='info-button sleep-info-button' aria-label='Open Users Sleep Information'>
             </button>
             <h3>YOU SLEPT</h3>
-            <button name='button' class='friends-button sleep-friends-button' aria-label='Open Friends Sleep Information'>
-            </button>
+            <button name='button' class='calendar-button sleep-calendar-button' aria-label='Open Sleep Calendar'></button>
           </div>
           <h2 id='sleep-user-hours-today'>0</h2>
           <div class='main-card-bottom-row'>
             <h3>HOURS LAST NIGHT</h3>
-            <button name='button' class='calendar-button sleep-calendar-button' aria-label='Open Sleep Calendar'></button>
           </div>
         </section>
         <section class='info-card hide' id='sleep-info-card'>
           <button name='button' class='go-back-button sleep-go-back-button' aria-label='Return to Previous Information'></button>
-          <p>Add last night's approximate hours of sleep and sleep quality (scale 1-5):</p>
+          <p class='sleep-input-instructions'>Add last night's approximate hours of sleep and sleep quality (scale 1-5):</p>
           <div class="input-box">
             <input type="number" class="inputs" id="input-sleep" placeholder="hours" max="24" maxlength="5" minlength="0">
             <input type="number" class="inputs" id="input-sleep-quality" placeholder="quality" max="5" min="1" maxlength="5" minlength="0">
@@ -222,17 +219,6 @@
           <div class='card-data-line'>
             <p>Average Quality Overall</p>
             <h4 id='sleep-info-quality-average-alltime'></h4>
-          </div>
-        </section>
-        <section class='friends-card hide' id='sleep-friends-card'>
-          <button name='button' class='go-back-button sleep-go-back-button' aria-label='Return to Previous Information'></button>
-          <div class='card-data-line'>
-            <p>LAST NIGHT'S SUPERIOR SLEEPER:</p>
-            <h4 id='sleep-friend-longest-sleeper'></h4>
-          </div>
-          <div class='card-data-line'>
-            <p>LAST NIGHT'S INFERIOR SLEEPER:</p>
-            <h4 id='sleep-friend-worst-sleeper'></h4>
           </div>
         </section>
         <section class='calendar-card hide' id='sleep-calendar-card'>

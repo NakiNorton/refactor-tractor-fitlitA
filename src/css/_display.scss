@@ -5,16 +5,16 @@ main {
   'steps hydration'
   'stairs sleep';
   height: 100%;
-  grid-template-columns: 50%;
-  grid-template-rows: 50%;
 }
 
 .main-card {
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 20vw;
+  height: 25vw;
   justify-content: space-around;
+  margin-top: 0.5vw;
+  margin-bottom: 0.5vw;
 }
 
 .main-card-top-row {
@@ -29,7 +29,6 @@ main {
   width: 100%;
 }
 
-
 #steps-card-container {
   background-color: #F5634B;
   grid-area: steps;
@@ -40,7 +39,6 @@ main {
   background-color: #54C6BE;
   grid-area: hydration;
   margin: .5vw;
-  overflow: scroll;
 }
 
 #stairs-card-container {
@@ -53,12 +51,12 @@ main {
   background-color: #FBD089;
   grid-area: sleep;
   margin: .5vw;
-  overflow: scroll;
 }
 
 .card-data-line {
   display: flex;
   justify-content: center;
+  margin-bottom: 2vw;
 }
 
 .input-box {
@@ -66,17 +64,21 @@ main {
   justify-content: center;
   align-items: flex-end;
   margin-left: 7px;
+  border-radius: 5%;
 }
 
 .inputs {
   background-color: transparent;
   color: #FFFFFF;
-  font-size: 16px;
+  font-size: 20px;
+  text-align: center;
   font-weight: 300;
-  margin-left: 5px;
-  padding: 2px;
-  width: 80px;
-  height: 40px;
+  width: 90px;
+  height: 30px;
+  border-radius: 5px;
+  border-color: black;
+  border-width: thin;
+  margin-bottom: 1.5vw;
 }
 
 ::placeholder {
@@ -86,7 +88,7 @@ main {
 
 .hydration-weekly-label {
   font-size: 1vw;
-  // padding-top: 1vw;
+  padding-top: 1vw;
 }
 
 .hydration-weekly-amount {
@@ -95,12 +97,18 @@ main {
 
 .hydration-data-line {
   display: flex;
-  align-items: center;
   justify-content: center;
+  margin-bottom: .2vw;
 }
 
 .hydration-weekly-avg,
 .hydration-week-data-list {
   text-align: center;
   width: 100%;
+}
+
+.trend-line {
+  font-size: 2vw;
+  text-align: center;
+  width: 20vw;
 }

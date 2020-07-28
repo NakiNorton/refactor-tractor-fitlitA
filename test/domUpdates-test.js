@@ -2,52 +2,57 @@
 const chai = require('chai');
 const expect = chai.expect;
 const spies = require("chai-spies");
-import User from '../src/User';
-import domUpdates from '../src/domUpdates';
 chai.use(spies);
 
-describe.only('UpdatesToDOM', function () {
+import domUpdates from '../src/domUpdates';
+
+describe('UpdatesToDOM', function () {
   beforeEach(() => {
     global.domUpdates = {};
-    chai.spy.on(domUpdates, "stepCardDisplay", () => {});
-    chai.spy.on(domUpdates, "flipCard", () => {});
-    chai.spy.on(domUpdates, "hydrationCardDisplay", () => {});
-    chai.spy.on(domUpdates, "displayPage", () => {})
-    chai.spy.on(domUpdates, "displayName", () => {})
+    chai.spy.on(domUpdates, 'defineData', () => { })
+    chai.spy.on(domUpdates, 'displayStepCard', () => {})
+    chai.spy.on(domUpdates, 'displaySleepCard', () => {})
+    chai.spy.on(domUpdates, 'displayHydrationCard', () => {})
+    chai.spy.on(domUpdates, 'displayName', () => {})
+    chai.spy.on(domUpdates, 'displayStairsCard', () => {})
+    chai.spy.on(domUpdates, 'flipCard', () => {})
   });
-  afterEach(() {
+
+  afterEach(() => {
     chai.spy.restore(domUpdates);
   })
-  it('should change whats being displayed on card', function () {
-    expect(domUpdates.flipCard).to.have.been.called(1);
-  })
-
-  it('should be able to view users step activity card on DOM', () => {
-    domUpdates.stepCardDisplay()
-    expect(domUpdates.stepCardDisplay).to.have.been.called(1)
-  })
-
-
-  it('should be able to view users step activity card on DOM', () => {
-    const input = 20;
   
-    domUpdates.hydrationCardDisplay(input)
-    expect(domUpdates.hydrationCardDisplay).to.have.been.called(1)
-    expect(domUpdates.hydrationCardDisplay).to.have.been.called.with(input)
+  it('should display users step card on the on DOM on page load', () => {
+    domUpdates.displayPage()
+    expect(domUpdates.displayStepCard).to.have.been.called(1)
   });
 
-  it('Should display the currentUser name', () => {
-    domUpdates.displayName()
+  it('should display users sleep card on the on DOM on page load', () => {
+    domUpdates.displayPage()
+    expect(domUpdates.displaySleepCard).to.have.been.called(1)
+  });
+
+  it('should display users hydration card on the on DOM on page load', () => {
+    domUpdates.displayPage()
+    expect(domUpdates.displayHydrationCard).to.have.been.called(1)
+  });
+
+  it('should display users stairs card on the on DOM on page load', () => {
+    domUpdates.displayPage()
+    expect(domUpdates.displayStairsCard).to.have.been.called(1)
+  });
+
+  it('should display the users name when page is loaded', () => {
+    domUpdates.displayPage()
     expect(domUpdates.displayName).to.have.been.called(1)
-    expect(domUpdates.displayName).to.have.been.called.with()
   })
 
-  // beforeEach(() => {
-  //   global.document = {};
-  //   chai.spy.on(document, ['querySelector'],
-  //     () => {
-  //       return { innerText: '' }
-  //     });
-  // });
- 
+  it('should change whats being displayed', () => {
+    let infoDisplay = 'infoDisplay'
+    let mainDisplay = 'mainDisplay'
+
+    domUpdates.flipCard(infoDisplay, mainDisplay)
+    expect(domUpdates.flipCard).to.have.been.called(1)
+    expect(domUpdates.flipCard).to.have.been.called.with(infoDisplay, mainDisplay)
+  })
 })

@@ -37,13 +37,23 @@ h5 {
 
 p {
   font-family: 'Work Sans', sans-serif;
-  font-size: 1vw;
+  font-size: 1.2vw;
   font-weight: 600;
   letter-spacing: .2vw;
   margin-right: 1vw;
   padding-top: 1.75vw;
   text-align: right;
-  width: 10vw;
+  width: 15vw;
   word-break: keep-all;
 }
 
+.sleep-input-instructions,
+.steps-input-instructions {
+  font-size: 1.5vw;
+  font-weight: 500;
+  margin-right: 2.5vw;
+  margin-left: 2.5vw;
+  text-align: center;
+  width: auto;
+  padding-bottom: 1.5vw;
+}

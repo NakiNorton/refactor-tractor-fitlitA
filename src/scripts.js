@@ -9,48 +9,31 @@ import UserRepository from './UserRepository';
 let currentUser;
 let todaysDate;
 
-const hydrationSection = document.querySelector("#hydration-card-container");
-const sleepSection = document.querySelector("#sleep-card-container");
-const stepSection = document.querySelector("#steps-card-container");
-const stairsSection = document.querySelector("#stairs-card-container");
+const hydrationSection = document.querySelector('#hydration-card-container');
+const sleepSection = document.querySelector('#sleep-card-container');
+const stepSection = document.querySelector('#steps-card-container');
+const stairsSection = document.querySelector('#stairs-card-container');
 
 function getData() {
   return fetchData().then((data) => {
-    todaysDate = moment().format("YYYY/MM/DD");
+    todaysDate = moment().format('YYYY/MM/DD');
     let userRepository = new UserRepository(data, todaysDate);
-    currentUser = userRepository.users[0]
-    console.log(currentUser)
+    currentUser = userRepository.users[Math.floor(Math.random() * userRepository.users.length)]
     domUpdates.defineData(currentUser, todaysDate, userRepository);
   }).then(() => {
-    domUpdates.displayPage()
+    domUpdates.displayPage();
   })
     .catch((err) => console.log(err.message));
 }
-
-// categories would be sleep, hydration, and activity
-// function postData(dataObj, category) {
-//    fetch(`https://fe-apps.herokuapp.com/api/v1/fitlit/1908/${category}/${category}Data`, {
-//   method: 'POST',
-//   headers: {
-//   	'Content-Type': 'application/json'
-//   },
-//   body: JSON.stringify(dataObj),
-// })
-//   .then(response => response.json())
-//   .then(json => /*do something with json*/) // i actually don't think we need this line, postman is a good tool for this
-//   .catch(err => console.log(err.message));
-// }
-
 
 const populateUserProfile = () => {
   domUpdates.showDropdown(currentUser);
 }
 
-
-const addNewActivityRecord = () => {
-  let inputStairs = document.querySelector("#input-stairs");
+const postNewActivityRecord = () => {
+  let inputStairs = document.querySelector('#input-stairs');
   let inputSteps = document.querySelector('#input-steps');
-  let inputMinutes = document.querySelector("#input-steps-minutes");
+  let inputMinutes = document.querySelector('#input-steps-minutes');
   let newActivityEntry = {
     userID: currentUser.id,
     date: todaysDate,
@@ -58,17 +41,16 @@ const addNewActivityRecord = () => {
     minutesActive: Number(inputMinutes.value),
     flightsOfStairs: inputStairs.value * 12
   }
-  // postActivityData(newActivityEntry);
+  postActivityData(newActivityEntry);
   currentUser.activityInfo.addActivityInput(newActivityEntry);
 }
 
-/////// STEP SECTION /////////
+/////// STEP SECTION ////////////////////////
 
 const stepCardHandler = () => {
   let stepsMainCard = document.querySelector('#steps-main-card');
   let stepsInfoCard = document.querySelector('#steps-info-card');
   let stepsFriendsCard = document.querySelector('#steps-friends-card');
-  let stepsTrendingCard = document.querySelector('#steps-trending-card');
   let stepsCalendarCard = document.querySelector('#steps-calendar-card');
   if (event.target.classList.contains('steps-info-button')) {
     domUpdates.flipCard(stepsMainCard, stepsInfoCard);
@@ -76,20 +58,16 @@ const stepCardHandler = () => {
   if (event.target.classList.contains('steps-friends-button')) {
     domUpdates.flipCard(stepsMainCard, stepsFriendsCard);
   }
-  if (event.target.classList.contains('steps-trending-button')) {
-    domUpdates.flipCard(stepsMainCard, stepsTrendingCard);
-  }
   if (event.target.classList.contains('steps-calendar-button')) {
     domUpdates.flipCard(stepsMainCard, stepsCalendarCard);
   }
-  if (event.target.classList.contains("steps-go-back-button")) {
+  if (event.target.classList.contains('steps-go-back-button')) {
     domUpdates.flipCard(event.target.parentNode, stepsMainCard);
   }
   if (event.target.classList.contains('user-steps-submit')) {
     event.preventDefault();
-    addNewActivityRecord()
-    domUpdates.resetInputField('#input-steps', '#input-steps-minutes') 
-    domUpdates.stepCardDisplay();
+    postNewActivityRecord();
+    domUpdates.displayStepCard();
     domUpdates.flipCard(stepsInfoCard, stepsMainCard);
   }
 }
@@ -97,36 +75,31 @@ const stepCardHandler = () => {
 ////// STAIRS SECTION ///////
 
 const stairsCardHandler = () => {
-  let stairsMainCard = document.querySelector("#stairs-main-card");
-  let stairsInfoCard = document.querySelector("#stairs-info-card");
-  let stairsFriendsCard = document.querySelector("#stairs-friends-card");
-  let stairsCalendarCard = document.querySelector("#stairs-calendar-card");
-  let stairsTrendingCard = document.querySelector("#stairs-trending-card");
+  let stairsMainCard = document.querySelector('#stairs-main-card');
+  let stairsInfoCard = document.querySelector('#stairs-info-card');
+  let stairsFriendsCard = document.querySelector('#stairs-friends-card');
+  let stairsCalendarCard = document.querySelector('#stairs-calendar-card');
   if (event.target.classList.contains('stairs-info-button')) {
     domUpdates.flipCard(stairsMainCard, stairsInfoCard);
   }
   if (event.target.classList.contains('stairs-friends-button')) {
     domUpdates.flipCard(stairsMainCard, stairsFriendsCard);
   }
-  if (event.target.classList.contains('stairs-trending-button')) {
-    domUpdates.flipCard(stairsMainCard, stairsTrendingCard);
-    // updateTrendingStairsDays();
-  }
   if (event.target.classList.contains('stairs-calendar-button')) {
     domUpdates.flipCard(stairsMainCard, stairsCalendarCard);
   }
-  if (event.target.classList.contains("stairs-go-back-button")) {
+  if (event.target.classList.contains('stairs-go-back-button')) {
     domUpdates.flipCard(event.target.parentNode, stairsMainCard);
   }
-  if (event.target.classList.contains("user-stairs-submit")) {
+  if (event.target.classList.contains('user-stairs-submit')) {
     event.preventDefault();
-    addNewActivityRecord()
-    domUpdates.stairsCardDisplay();
+    postNewActivityRecord();
+    domUpdates.displayStairsCard();
     domUpdates.flipCard(stairsInfoCard, stairsMainCard);
   }
 }
 
-///// HYDRATION SECTION ///////////
+///// HYDRATION SECTION ///////////////
 
 const hydrationCardHandler = () => {
   let hydrationMainCard = document.querySelector('#hydration-main-card');
@@ -142,7 +115,7 @@ const hydrationCardHandler = () => {
   if (event.target.classList.contains('hydration-calendar-button')) {
     domUpdates.flipCard(hydrationMainCard, hydrationCalendarCard);
   }
-  if (event.target.classList.contains("hydration-go-back-button")) {
+  if (event.target.classList.contains('hydration-go-back-button')) {
     domUpdates.flipCard(event.target.parentNode, hydrationMainCard);
   }
   if (event.target.classList.contains('user-ounces-submit')) {
@@ -151,15 +124,13 @@ const hydrationCardHandler = () => {
     let newHydrationEntry = {userID: currentUser.id, 
       date: todaysDate, 
       numOunces: Number(input.value
-    )};
+      )};
     currentUser.hydrationInfo.addHydroInput(newHydrationEntry);
-    // postHydrationData(newHydrationEntry)
-    domUpdates.hydrationCardDisplay(input); 
+    postHydrationData(newHydrationEntry);
+    domUpdates.displayHydrationCard(input); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
 }
-
-
 
 ////// SLEEP SECTION ///////
 
@@ -177,23 +148,22 @@ function sleepCardHandler() {
   if (event.target.classList.contains('sleep-calendar-button')) {
     domUpdates.flipCard(sleepMainCard, sleepCalendarCard);
   }
-  if (event.target.classList.contains("sleep-go-back-button")) {
+  if (event.target.classList.contains('sleep-go-back-button')) {
     domUpdates.flipCard(event.target.parentNode, sleepMainCard);
   }
-  if (event.target.classList.contains("user-sleep-submit")) {
+  if (event.target.classList.contains('user-sleep-submit')) {
     event.preventDefault();
-    let inputHours = document.querySelector("#input-sleep");
-    let inputQuality = document.querySelector("#input-sleep-quality");
+    let inputHours = document.querySelector('#input-sleep');
+    let inputQuality = document.querySelector('#input-sleep-quality');
     let newSleepEntry = {
       userID: currentUser.id,
       date: todaysDate,
       hoursSlept: Number(inputHours.value),
       sleepQuality: Number(inputQuality.value)
     };
-    // postSleepData(newSleepEntry)
+    postSleepData(newSleepEntry)
     currentUser.sleepInfo.addSleepInput(newSleepEntry);
-    console.log(typeof newSleepEntry.hoursSlept)
-    domUpdates.sleepCardDisplay();
+    domUpdates.displaySleepCard();
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
   }
 }
@@ -210,10 +180,10 @@ function postHydrationData(hydrationEntry) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log('success:', data)
+      console.log('Success:', data)
     })
     .catch((error) => {
-      console.log('failed:', error)
+      console.log('Failed:', error)
     })
 }
 
@@ -227,10 +197,10 @@ function postSleepData(sleepEntry) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log('success:', data)
+      console.log('Success:', data)
     })
     .catch((error) => {
-      console.log('failed:', error)
+      console.log('Failed:', error)
     })
 }
 
@@ -244,17 +214,17 @@ function postActivityData(activityEntry) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log('failed:', data)
+      console.log('Success:', data)
     })
     .catch((error) => {
-      console.log('we are losing!', error)
+      console.log('Failed', error)
     })
 }
 
 /////// EVENT LISTENERS ////////
 
-window.addEventListener("load", getData);
-document.querySelector('#profile-button').addEventListener("click", populateUserProfile);
+window.addEventListener('load', getData);
+document.querySelector('#profile-button').addEventListener('click', populateUserProfile);
 sleepSection.addEventListener('click', sleepCardHandler);
 hydrationSection.addEventListener('click', hydrationCardHandler);
 stairsSection.addEventListener('click', stairsCardHandler);

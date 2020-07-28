@@ -1,4 +1,3 @@
-// import sleepRepository from './SleepRepository';
 import User from './User';
 
 class UserRepository {
@@ -45,7 +44,7 @@ class UserRepository {
   getCommunityAvgStepGoal() {
     let communityStepGoals = this.users.map((user) => user.dailyStepGoal);
     let communityTotal = communityStepGoals.reduce((sum, goal) => {
-      if (typeof goal === "number") {
+      if (typeof goal === 'number') {
         sum += goal;
       }
       return sum;
@@ -98,7 +97,7 @@ class UserRepository {
     return Number(averageStairs);
   }
 
-  getAllUsersAverageSteps(date) {
+  getCommunityAverageSteps(date) {
     let allUsersStepsCount = this.users.map((user) => {
       return user.activityInfo.individualEntryRecords.filter((activity) => {
         return activity.date === date;
@@ -113,7 +112,7 @@ class UserRepository {
     return Math.round(sumOfSteps / allUsersStepsCount.length);
   }
 
-  getAllUsersAverageMinutesActive(date) {
+  getCommunityAverageMinutesActive(date) {
     let allUsersMinutesActiveCount = this.users.map((user) => {
       return user.activityInfo.individualEntryRecords.filter((activity) => {
         return activity.date === date;
@@ -134,7 +133,6 @@ class UserRepository {
   findBestSleeper() {
     let bestSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual(this.todaysDate) > 3);
     let sortedBest =  bestSleepers.sort((a, b) => a.sleepQuality - b.sleepQuality);
-    console.log(sortedBest.pop())
     if (sortedBest) {
       return sortedBest.pop().name;
     } else { 
@@ -143,7 +141,6 @@ class UserRepository {
   }
 
   findWorstSleeper() {
-    console.log()
     let worstSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual(this.todaysDate) < 3);
     let sortedWorst =  worstSleepers.sort((a, b) => a.sleepQuality - b.sleepQuality);
     if (sortedWorst) {
@@ -153,6 +150,5 @@ class UserRepository {
     }
   }
 }
-
 
 export default UserRepository;
