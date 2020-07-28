@@ -67,7 +67,7 @@ const stepCardHandler = () => {
   if (event.target.classList.contains('user-steps-submit')) {
     event.preventDefault();
     postNewActivityRecord();
-    domUpdates.stepCardDisplay();
+    domUpdates.displayStepCard();
     domUpdates.flipCard(stepsInfoCard, stepsMainCard);
   }
 }
@@ -94,7 +94,7 @@ const stairsCardHandler = () => {
   if (event.target.classList.contains('user-stairs-submit')) {
     event.preventDefault();
     postNewActivityRecord();
-    domUpdates.stairsCardDisplay();
+    domUpdates.displayStairsCard();
     domUpdates.flipCard(stairsInfoCard, stairsMainCard);
   }
 }
@@ -126,8 +126,8 @@ const hydrationCardHandler = () => {
       numOunces: Number(input.value
       )};
     currentUser.hydrationInfo.addHydroInput(newHydrationEntry);
-    // postHydrationData(newHydrationEntry);
-    domUpdates.hydrationCardDisplay(input); 
+    postHydrationData(newHydrationEntry);
+    domUpdates.displayHydrationCard(input); 
     domUpdates.flipCard(hydrationInfoCard, hydrationMainCard);
   }
 }
@@ -161,9 +161,9 @@ function sleepCardHandler() {
       hoursSlept: Number(inputHours.value),
       sleepQuality: Number(inputQuality.value)
     };
-    // postSleepData(newSleepEntry)
+    postSleepData(newSleepEntry)
     currentUser.sleepInfo.addSleepInput(newSleepEntry);
-    domUpdates.sleepCardDisplay();
+    domUpdates.displaySleepCard();
     domUpdates.flipCard(sleepInfoCard, sleepMainCard);
   }
 }
