@@ -243,10 +243,10 @@ describe('UserRepository', function() {
   })
 
   it('should have a method that finds the best sleeper', function() {
-    expect(userRepository.findBestSleeper()).to.equal('Herminia Witting');
+    expect(userRepository.findBestSleeper('2019/06/15')).to.equal('Herminia Witting');
   });
 
   it('should have a method that finds the worst sleeper', function() {
-    expect(userRepository.findWorstSleeper()).to.equal('Luisa Hane');
+    expect(userRepository.findWorstSleeper('2019/06/15')).to.equal('Luisa Hane');
   });
 });
