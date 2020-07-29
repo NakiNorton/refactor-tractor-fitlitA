@@ -45,7 +45,7 @@ class SleepRepository {
     return Number(overallAverageHoursSlept);
   }
 
-  getWeekAvgQualitySlept(todaysDate) {
+  getWeekAvgQualitySlept() {
     let week = this.getWeeksDailyQual();
     let sleepQualityTotal = week.reduce((sum, entry) => {
       sum += entry;
@@ -55,7 +55,7 @@ class SleepRepository {
     return Number(weeklyQuality); 
   }
 
-  getWeekAvgHoursSlept(todaysDate) {
+  getWeekAvgHoursSlept() {
     let week = this.getWeeksDailyHours();
     let hoursSleptTotal = week.reduce((sum, entry) => {
       sum += entry;

@@ -130,8 +130,8 @@ class UserRepository {
     return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
   }
 
-  findBestSleeper() {
-    let bestSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual(this.todaysDate) > 3);
+  findBestSleeper(todaysDate) {
+    let bestSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual(todaysDate) > 3);
     let sortedBest =  bestSleepers.sort((a, b) => a.sleepQuality - b.sleepQuality);
     if (sortedBest) {
       return sortedBest.pop().name;
@@ -140,8 +140,8 @@ class UserRepository {
     }
   }
 
-  findWorstSleeper() {
-    let worstSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual(this.todaysDate) < 3);
+  findWorstSleeper(todaysDate) {
+    let worstSleepers = this.users.filter(user => user.sleepInfo.findLastNightsSleepQual(todaysDate) < 3);
     let sortedWorst =  worstSleepers.sort((a, b) => a.sleepQuality - b.sleepQuality);
     if (sortedWorst) {
       return sortedWorst.shift().name;    

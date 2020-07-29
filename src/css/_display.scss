@@ -1,20 +1,36 @@
 /* MAIN */
-main {
-  display: grid;
-  grid-template-areas:
-  'steps hydration'
-  'stairs sleep';
-  height: 100%;
-}
-
-.main-card {
+@mixin cardDisplay() {
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 25vw;
+  height: 100%;
   justify-content: space-around;
-  margin-top: 0.5vw;
-  margin-bottom: 0.5vw;
+  padding: 1%;
+}
+
+@mixin bottom-row-text($margin) {
+  justify-content: space-evenly;
+  width: 89%;
+  margin-left: $margin;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.card-container {
+  height: 25vw;
+  width: 45vw;
+  overflow: scroll;
+}
+
+.main-card, 
+#card {
+  @include cardDisplay();
 }
 
 .main-card-top-row {
@@ -26,7 +42,19 @@ main {
 
 .main-card-bottom-row {
   text-align: center;
-  width: 100%;
+  margin-left: auto;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#long-text-bottom-row {
+  @include bottom-row-text(68px)
+}
+
+#sleep-bottom-row {
+  @include bottom-row-text(20px)
 }
 
 #steps-card-container {
@@ -78,7 +106,7 @@ main {
   border-radius: 5px;
   border-color: black;
   border-width: thin;
-  margin-bottom: 1.5vw;
+  margin-bottom: 2vw;
 }
 
 ::placeholder {
@@ -107,8 +135,3 @@ main {
   width: 100%;
 }
 
-.trend-line {
-  font-size: 2vw;
-  text-align: center;
-  width: 20vw;
-}
