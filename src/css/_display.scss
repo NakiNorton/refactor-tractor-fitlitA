@@ -8,6 +8,12 @@
   padding: 1%;
 }
 
+@mixin bottom-row-text($margin) {
+  justify-content: space-evenly;
+  width: 89%;
+  margin-left: $margin;
+}
+
 main {
   display: flex;
   flex-wrap: wrap;
@@ -44,10 +50,11 @@ main {
 }
 
 #long-text-bottom-row {
-  justify-content: space-evenly;
-  width: 89%;
-  margin-left: 68px;
+  @include bottom-row-text(68px)
+}
 
+#sleep-bottom-row {
+  @include bottom-row-text(20px)
 }
 
 #steps-card-container {
