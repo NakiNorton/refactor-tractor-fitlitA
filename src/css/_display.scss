@@ -1,4 +1,13 @@
 /* MAIN */
+@mixin cardDisplay() {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+  padding: 1%;
+}
+
 main {
   display: flex;
   flex-wrap: wrap;
@@ -9,19 +18,13 @@ main {
 
 .card-container {
   height: 25vw;
-  width: 47%;
+  width: 45vw;
   overflow: scroll;
 }
 
 .main-card, 
 #card {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 25vw;
-  justify-content: space-around;
-  margin-top: 0.5vw;
-  margin-bottom: 0.5vw;
+  @include cardDisplay();
 }
 
 .main-card-top-row {
@@ -38,6 +41,13 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+#long-text-bottom-row {
+  justify-content: space-evenly;
+  width: 89%;
+  margin-left: 68px;
+
 }
 
 #steps-card-container {

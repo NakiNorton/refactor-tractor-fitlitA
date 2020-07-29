@@ -31,6 +31,7 @@
 .steps-friends-button {
   @include buttons('steps-friends.png');
 }
+
 .steps-calendar-button {
   @include buttons('steps-calendar.png');
 }
@@ -50,6 +51,7 @@
 
 .hydration-calendar-button {
   @include buttons('hydration-calendar.png');
+  width: 55px;
 }
 
 .stairs-go-back-button {
